@@ -1,87 +1,24 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-
+import AppHeader from '@/components/AppHeader.vue'
+import AppFooter from '@/components/AppFooter.vue'
 </script>
 
 <template>
-  <header>
-    <h1>Вы хотите кушоц?</h1>
-     <div class="wrapper">
-      
-
+  <app-header>
+    <template v-slot:navigation>
       <nav>
-        <RouterLink to="/">Домашняя еда</RouterLink>
-        <RouterLink to="/recipes">Рецепты</RouterLink>
-        <RouterLink to="/restaurants">Рестораны</RouterLink>
+        <RouterLink to="/" class="header__nav-link">Планировщик</RouterLink>
+        <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
+        <!-- <RouterLink to="/recipes">Рецепты</RouterLink> -->
+        <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
       </nav>
-    </div>
-  </header>
+    </template>
+  </app-header>
 
   <RouterView />
+
+  <app-footer></app-footer>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-  border-bottom: 1px solid white !important;
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    flex-direction: column;
-    place-items: center;
-    /* padding-right: calc(var(--section-gap) / 2); */
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    /* margin-left: -1rem; */
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
+<style></style>

@@ -1,50 +1,38 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-const courses = ['Первое', 'Второе', 'Салат', 'Десерт']
-type Cource = (typeof courses)[number]
+<script setup>
+import AppHero from '@/components/AppHero.vue'
+import NewRecipe from '@/components/NewRecipe.vue'
+import RecipeCard from '@/components/RecipeCard.vue'
+import { ref, computed } from 'vue'
 
-interface Recipe {
-  id?: string
-  link?: string
-  name?: string
-  course?: Cource
-}
-const newRecipe = ref<Recipe>({})
-const recipeList = ref<Recipe[]>([])
+import { useRecipesStore } from '@/stores/recipes'
+import { storeToRefs } from 'pinia'
 
-function addRecipe() {
-  const date = new Date()
-  const nr = newRecipe.value
-  recipeList.value.push({
-    id: date.toString(),
-    link: nr.link,
-    name: nr.name,
-    course: nr.course
-  })
-}
+const store = useRecipesStore()
+const { recipes } = storeToRefs(store)
+
+const heroSubtitle = 'Munch squad поможет сохранить любимые рецепты'
 </script>
 
 <template>
   <main>
-    <h2>Рецепты</h2>
-    <form @submit.prevent="addRecipe">
-      <div class="input-group">
-        <label for="recipe-name">Название блюда</label>
-        <input id="recipe-name" type="text" v-model="newRecipe.name" />
+    <app-hero :subtitle="heroSubtitle" />
+    <div class="container">
+      <div class="page__wrapper">
+        <div class="page__main-content">
+          <div class="recipe__card-wrapper" v-for="recipe in recipes" :key="recipe.id">
+            <recipe-card :recipe="recipe"></recipe-card>
+          </div>
+        </div>
+        <aside class="new-x-form">
+          <new-recipe></new-recipe>
+        </aside>
       </div>
-      <div class="input-group">
-        <label for="recipe-link">Ссылка на рецепт</label>
-        <input id="recipe-link" type="text" v-model="newRecipe.link" />
-      </div>
-      <div class="input-group">
-        <label for="recipe-course">Вид</label>
-        <select id="recipe-course" v-model="newRecipe.course">
-          <option v-for="course in courses" :value="course" :key="course">
-            {{ course }}
-          </option>
-        </select>
-      </div>
-      <button type="submit">Добавить рецепт</button>
-    </form>
+    </div>
   </main>
 </template>
+
+<style scoped>
+.recipe__card {
+  min-height: 100%;
+}
+</style>

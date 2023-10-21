@@ -1,0 +1,17 @@
+/* Error: "+" and "-" must be surrounded by whitespace in calculations.
+ *     ,
+ * 174 |   flex-basis: calc(50%-12px);  
+ *     |                       ^
+ *     '
+ *   src/styles/style.scss 174:23  root stylesheet */
+
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: 'Error: "+" and "-" must be surrounded by whitespace in calculations.\a     \2577 \a 174 \2502    flex-basis: calc(50%-12px);  \a     \2502                        ^\a     \2575 \a   src/styles/style.scss 174:23  root stylesheet';
+}
