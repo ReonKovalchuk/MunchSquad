@@ -24,7 +24,7 @@ function addRestaurant() {
       <input id="restaurant-name" type="text" v-model="newRestaurant.name" class="input" required />
     </div>
     <div class="input-group">
-      <label for="restaurant-link" class="input-label">Ссылка на сайт ресторан </label>
+      <label for="restaurant-link" class="input-label">Ссылка на сайт ресторана </label>
 
       <input id="restaurant-link" type="text" v-model="newRestaurant.link" class="input" required />
     </div>
@@ -48,6 +48,6 @@ function addRestaurant() {
         class="input"
       ></textarea>
     </div>
-    <button type="submit" class="btn-primary">Добавить ресторан</button>
+    <button type="submit" class="btn btn-primary">Добавить ресторан</button>
   </form>
 </template>

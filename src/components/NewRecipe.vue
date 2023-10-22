@@ -54,6 +54,6 @@ function addRecipe() {
       ></textarea>
     </div>
 
-    <button type="submit" class="btn-primary">Добавить рецепт</button>
+    <button type="submit" class="btn btn-primary">Добавить рецепт</button>
   </form>
 </template>

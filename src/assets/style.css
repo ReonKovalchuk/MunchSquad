@@ -3,18 +3,25 @@ body {
   background-color: var(--primary-color);
 }
 
+a:link {
+  opacity: 1;
+  cursor: pointer;
+}
+
+a:link:hover {
+  opacity: 0.75;
+}
+
 a {
   -webkit-transition: 0.2s;
   transition: 0.2s;
+  opacity: 0.5;
+  cursor: not-allowed;
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
   max-width: fit-content;
   text-decoration: none;
   color: var(--color-text);
-}
-
-a:hover {
-  opacity: 0.75;
 }
 
 select {
@@ -32,7 +39,7 @@ main {
 
 form {
   border: 2px solid var(--primary-color);
-  border-radius: 33px;
+  border-radius: var(--border-radius-primary);
   padding: 24px;
 }
 
@@ -116,15 +123,22 @@ select .input {
   height: 40px;
 }
 
-.btn-primary {
+.btn {
   display: block;
   margin: 0px;
   border: 0px;
   border-radius: 32px;
-  background-color: var(--primary-color);
   padding: 9px 33px;
   color: #000;
   font-weight: 600;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
 }
 
 .input-group {
@@ -164,7 +178,7 @@ select .input {
   font-size: 40px;
 }
 
-.homecooked__current-week {
+.hero__title {
   text-align: center;
   font-size: 40px;
   font-weight: 700;
@@ -186,16 +200,16 @@ select .input {
 .planner__card-wrapper {
   -ms-flex-preferred-size: calc(50% - 24px);
       flex-basis: calc(50% - 24px);
-  border-radius: 33px;
+  border-radius: var(--border-radius-primary);
   -webkit-box-shadow: var(--shadow);
           box-shadow: var(--shadow);
-  background-color: #c6cacb;
+  background-color: var(--secondary-color);
   background-blend-mode: multiply;
 }
 
 .planner__day-of-week {
   border-bottom: var(--border);
-  border-radius: 33px 33px 0px 0px;
+  border-radius: var(--border-radius-primary) var(--border-radius-primary) 0px 0px;
   padding: 6px;
   text-align: center;
   color: #fff;
@@ -214,6 +228,15 @@ select .input {
 }
 
 .planner__meal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-preferred-size: 50%;
+      flex-basis: 50%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   padding: 12px;
 }
 
@@ -228,7 +251,7 @@ select .input {
   font-weight: 700;
 }
 
-.recipe__card {
+.card {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -236,19 +259,24 @@ select .input {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  border-radius: 33px;
-  background-color: #F5F2F2;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  border-radius: var(--border-radius-primary);
+  -webkit-box-shadow: var(--shadow);
+          box-shadow: var(--shadow);
+  background-color: var(--card-background);
   overflow: hidden;
 }
 
-.recipe__image {
+.card__image {
   min-width: 100%;
   max-height: 120px;
   -o-object-fit: cover;
      object-fit: cover;
 }
 
-.recipe__content {
+.card__content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -263,15 +291,23 @@ select .input {
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 12px;
-  min-height: 100%;
 }
 
-.recipe__title {
+.card__title {
   display: block;
   margin-bottom: 12px;
   line-height: 1.5;
   font-size: 18px;
   font-weight: 700;
+}
+
+.card__actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .page__wrapper {

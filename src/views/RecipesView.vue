@@ -1,8 +1,8 @@
 <script setup>
 import AppHero from '@/components/AppHero.vue'
 import NewRecipe from '@/components/NewRecipe.vue'
-import RecipeCard from '@/components/RecipeCard.vue'
-import { ref, computed } from 'vue'
+import AppCard from '@/components/AppCard.vue'
+// import { ref, computed } from 'vue'
 
 import { useRecipesStore } from '@/stores/recipes'
 import { storeToRefs } from 'pinia'
@@ -19,9 +19,9 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
     <div class="container">
       <div class="page__wrapper">
         <div class="page__main-content">
-          <div class="recipe__card-wrapper" v-for="recipe in recipes" :key="recipe.id">
-            <recipe-card :recipe="recipe"></recipe-card>
-          </div>
+          <!-- <div class="card__wrapper" > -->
+          <app-card v-for="recipe in recipes" :key="recipe.id" :object="recipe"></app-card>
+          <!-- </div> -->
         </div>
         <aside class="new-x-form">
           <new-recipe></new-recipe>
@@ -30,9 +30,3 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
     </div>
   </main>
 </template>
-
-<style scoped>
-.recipe__card {
-  min-height: 100%;
-}
-</style>

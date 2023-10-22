@@ -2,15 +2,20 @@
 body {
 	background-color: var(--primary-color);
 }
+a:link {
+	opacity: 1;
+	cursor: pointer;
+}
+a:link:hover {
+	opacity: 0.75;
+}
 a {
 	transition: 0.2s;
+	opacity: 0.5;
+	cursor: not-allowed;
 	max-width: fit-content;
 	text-decoration: none;
 	color: var(--color-text);
-	
-}
-a:hover {
-	opacity: 0.75;
 }
 select {
 	background-color: unset;
@@ -18,14 +23,13 @@ select {
 header,
 main {
 	background-color: #fff;
-	
 }
 main {
 	padding-bottom: 12px;
 }
 form {
 	border: 2px solid var(--primary-color);
-	border-radius: 33px;
+	border-radius: var(--border-radius-primary);
 	padding: 24px;
 }
 .header {
@@ -67,10 +71,8 @@ nav a.router-link-exact-active:hover {
 	background-color: transparent;
 }
 nav a {
-	
-  display: inline-block;
-	
-  padding: 0 1rem;
+	display: inline-block;
+	padding: 0 1rem;
 }
 nav a:hover {
 	opacity: 0.75;
@@ -83,22 +85,25 @@ nav a:hover {
 	padding: 8px;
 	width: 100%;
 	line-height: 1.5rem;
-	
 }
 input .input,
 select .input {
 	height: 40px;
 }
-.btn-primary {
+.btn {
 	display: block;
 	margin: 0px;
 	border: 0px;
 	border-radius: 32px;
-	background-color: var(--primary-color);
 	padding: 9px 33px;
 	color: #000;
 	font-weight: 600;
-	
+}
+.btn-primary {
+	background-color: var(--primary-color);
+}
+.btn-secondary {
+	background-color: var(--secondary-color);
 }
 .input-group {
 	margin-bottom: 12px;
@@ -126,7 +131,7 @@ select .input {
 	color: #fff;
 	font-size: 40px;
 }
-.homecooked__current-week {
+.hero__title {
 	text-align: center;
 	font-size: 40px;
 	font-weight: 700;
@@ -140,14 +145,14 @@ select .input {
 }
 .planner__card-wrapper {
 	flex-basis: calc(50% - 24px);
-	border-radius: 33px;
+	border-radius: var(--border-radius-primary);
 	box-shadow: var(--shadow);
-	background-color: #c6cacb;
+	background-color: var(--secondary-color);
 	background-blend-mode: multiply;
 }
 .planner__day-of-week {
 	border-bottom: var(--border);
-	border-radius: 33px 33px 0px 0px;
+	border-radius: var(--border-radius-primary) var(--border-radius-primary) 0px 0px;
 	padding: 6px;
 	text-align: center;
 	color: #fff;
@@ -159,6 +164,9 @@ select .input {
 	flex-direction: row;
 }
 .planner__meal {
+	display: flex;
+	flex-basis: 50%;
+	flex-direction: column;
 	padding: 12px;
 }
 .planner__meal:nth-child(odd) {
@@ -170,33 +178,38 @@ select .input {
 	font-size: 20px;
 	font-weight: 700;
 }
-//////////////////////////////////////////////recipe card
-.recipe__card {
+////////////////////////////////////////////// card
+.card {
 	display: flex;
 	flex-direction: column;
-	border-radius: 33px;
-	background-color: #F5F2F2;
+	flex-grow: 1;
+	border-radius: var(--border-radius-primary);
+	box-shadow: var(--shadow);
+	background-color: var(--card-background);
 	overflow: hidden;
 }
-.recipe__image {
+.card__image {
 	min-width: 100%;
 	max-height: 120px;
 	object-fit: cover;
 }
-.recipe__content {
+.card__content {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
 	justify-content: space-between;
 	padding: 12px;
-	min-height: 100%;
 }
-.recipe__title {
+.card__title {
 	display: block;
 	margin-bottom: 12px;
 	line-height: 1.5;
 	font-size: 18px;
 	font-weight: 700;
+}
+.card__actions {
+	display: flex;
+	justify-content: space-between;
 }
 //////////////////////////////////////////////// recipes and restaurants pages
 
@@ -216,7 +229,6 @@ select .input {
 	flex-basis: 25%;
 	flex-shrink: 0;
 }
-
 /////////////////////////////////////////////////footer
  footer {
 	padding: 24px 0px;

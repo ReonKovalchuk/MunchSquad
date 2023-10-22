@@ -28,7 +28,7 @@ const currentWeek = computed(() => {
   return `${firstday} - ${lastday}`
 })
 
-const heroSubtitle = 'Munch squad - удобный способ спланировать обеды и ужины для вашей семьи!'
+const heroSubtitle = 'Munch squad - удобный способ спланировать меню для вашей семьи!'
 </script>
 
 <template>
@@ -47,8 +47,4 @@ const heroSubtitle = 'Munch squad - удобный способ спланиро
   </main>
 </template>
 
-<style scoped>
-.recipe__card {
-  min-height: auto;
-}
-</style>
+<style scoped></style>
