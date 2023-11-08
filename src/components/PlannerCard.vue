@@ -64,7 +64,7 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
           :object="meals.dinner"
           :remove-from-planner="true"
           :is-recipe="isRecipe(plannerDay.dinnerId)"
-          @removeFromPlanner="async () => await edit('dinnerId')"
+          @removeFromPlanner="async () => await edit('dinner')"
         ></app-card>
         <app-search
           v-else
@@ -78,7 +78,7 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
           :object="meals.supper"
           :remove-from-planner="true"
           :is-recipe="isRecipe(plannerDay.supperId)"
-          @removeFromPlanner="edit('supperId')"
+          @removeFromPlanner="edit('supper')"
         ></app-card>
 
         <app-search
