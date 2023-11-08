@@ -4,8 +4,7 @@ import { computed } from 'vue'
 import AppHero from '@/components/AppHero.vue'
 // import NewRecipe from '@/components/NewRecipe.vue'
 import PlannerCard from '@/components/PlannerCard.vue'
-
-import { DaysOfWeek } from '@/types/types'
+import { DateTime } from 'luxon'
 
 // const firstDay = computed(() => {
 //   const curr = new Date() // get current date
@@ -14,33 +13,41 @@ import { DaysOfWeek } from '@/types/types'
 // })
 
 const currentWeek = computed(() => {
-  const curr = new Date()
-  const first = curr.getDate() - curr.getDay() + 1
-  // const daysOfWeek = [new Date(curr.setDate(first))]
-  // for (let index = 0; index < 7; index++) {
-  //   // daysOfWeek.push
-  // }
-  const last = first + 6 // last day is the first day + 6
+  const firsDay = DateTime.now().startOf('week').startOf('day')
 
-  const formatOptions: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' }
-  const firstday = new Date(curr.setDate(first)).toLocaleDateString('ru-RU', formatOptions)
-  const lastday = new Date(curr.setDate(last)).toLocaleDateString('ru-RU', formatOptions)
-  return `${firstday} - ${lastday}`
+  let week = [firsDay]
+
+  for (let index = 1; index < 7; index++) {
+    week.push(firsDay.plus({ days: index }))
+  }
+  // const last = first + 6 // last day is the first day + 6
+
+  // const formatOptions: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' }
+  // const firstday = new Date(curr.setDate(first)).toLocaleDateString('ru-RU', formatOptions)
+  // const lastday = new Date(curr.setDate(last)).toLocaleDateString('ru-RU', formatOptions)
+
+  return week
 })
-
+const getTitle = (day: DateTime) => {
+  return day.setLocale('ru').toLocaleString({ day: 'numeric', month: 'short', weekday: 'long' })
+}
 const heroSubtitle = 'Munch squad - удобный способ спланировать меню для вашей семьи!'
 </script>
 
 <template>
   <main>
-    <app-hero :title="currentWeek" :subtitle="heroSubtitle" />
+    <app-hero :subtitle="heroSubtitle" /><!-- :title="currentWeek" -->
 
     <div class="container">
       <!-- <recipes-soups /> -->
       <div class="planner">
-        <div v-for="day in DaysOfWeek" :key="day" class="planner__card-wrapper">
-          <planner-card :day="day"></planner-card>
-          <!-- :date="" -->
+        <div v-for="day in currentWeek" :key="day.toUnixInteger()" class="planner__card-wrapper">
+          <suspense>
+            <planner-card :dayId="day.toUnixInteger()" :title="getTitle(day)"></planner-card>
+            <template #fallback>
+              <p>грузимся</p>
+            </template>
+          </suspense>
         </div>
       </div>
     </div>

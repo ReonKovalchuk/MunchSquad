@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRecipesStore } from '@/stores/recipes'
+import { ref, computed } from 'vue'
+import { addNewRecipe, getCourceOptions } from '@/stores/recipesData'
+// import { useRecipesStore } from '@/stores/recipes'
 import type { Recipe } from '@/types/types'
 
-const { addNewRecipe, courceOptions } = useRecipesStore()
+// const { addNewRecipe, courceOptions } = useRecipesStore()
 const newRecipe = ref<Recipe>({})
-
+const courseOptions = computed(getCourceOptions)
 function addRecipe() {
   addNewRecipe(newRecipe.value)
   newRecipe.value.course = undefined
@@ -38,7 +39,7 @@ function addRecipe() {
       <label for="recipe-course" class="input-label">Вид</label>
 
       <select id="recipe-course" v-model="newRecipe.course" class="input" required>
-        <option v-for="course in courceOptions" :value="course" :key="course">
+        <option v-for="course in courseOptions" :value="course" :key="course">
           {{ course }}
         </option>
       </select>

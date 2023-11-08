@@ -32,3 +32,9 @@ export interface Restaurant {
   linkToImage?: string
   review?: string
 }
+
+export interface PlannerDay {
+  id: string
+  dinnerId?: string
+  supperId?: string
+}

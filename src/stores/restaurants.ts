@@ -18,7 +18,7 @@ export const useRestaurantsStore = defineStore('restaurants', () => {
     const saved = getRestaurants()
 
     saved.push({
-      id: Date.now().toString(),
+      id: 'res' + Date.now().toString(),
       link: restaurant.link,
       name: restaurant.name,
       linkToImage: restaurant.linkToImage,
@@ -35,6 +35,8 @@ export const useRestaurantsStore = defineStore('restaurants', () => {
     window.localStorage.setItem('restaurants', JSON.stringify(res))
     restaurants.value = res
   }
+  function editRestaurantInfo(id: string, data: Restaurant) {}
+
   return {
     restaurants,
     addNewRestaurant,

@@ -1,34 +1,91 @@
-<script setup>
+<script setup lang="ts">
 import AppCard from '@/components/AppCard.vue'
-import { useRecipesStore } from '@/stores/recipes'
-import { storeToRefs } from 'pinia'
-const props = defineProps(['day'])
-const store = useRecipesStore()
-const { recipes } = storeToRefs(store)
-// const recipe1 = {
-//   course: 'Первое',
-//   id: 'Sun Oct 15 2023 14:50:29 GMT+0400 (Самарское стандартное время)',
-//   link: 'https://1000.menu/cooking/276-sup-gorohovji-s-kopchenostyami',
-//   linkToImage:
-//     'https://static.1000.menu/res/640/img/content-v2/45/29/276/sup-gorohovji-s-kopchenostyami_1592818097_16_max.jpg',
-//   name: 'Суп Гороховый с копченостями'
-// }
+import { ref } from 'vue'
+
+import AppSearch from './AppSearch.vue'
+import { findPlannerDayById, editPlannerDay } from '@/stores/plannerData'
+import { findRecipeById } from '@/stores/recipesData'
+import { findRestaurantById } from '@/stores/restaurantsData'
+import type { PlannerDay, Recipe, Restaurant } from '@/types/types'
+
+const { title, dayId } = defineProps(['title', 'dayId'])
+
+// const plannerDay = ref<PlannerDay>(await findPlannerDayById(dayId))
+const plannerDay = ref<PlannerDay>(await findPlannerDayById('' + dayId))
+const meals = ref({
+  dinner: await getObject(plannerDay.value.dinnerId),
+  supper: await getObject(plannerDay.value.supperId)
+})
+function isRecipe(id: string) {
+  return id.includes('rec')
+}
+
+async function getObject(id: string | undefined) {
+  let obj = {}
+  if (id) {
+    if (isRecipe(id)) {
+      obj = await findRecipeById(id)
+    } else {
+      obj = await findRestaurantById(id)
+    }
+  }
+  return obj
+}
+
+const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe | Restaurant) => {
+  type PlannerKey = keyof typeof plannerDay.value
+  const propertyMealId = (mealType + 'Id') as PlannerKey
+  plannerDay.value[propertyMealId] = mealId
+  await editPlannerDay(plannerDay.value)
+
+  type MealsKey = keyof typeof meals.value
+  const propertyMeal = mealType as MealsKey
+  meals.value[propertyMeal] = meal
+}
+// watch(plannerDay, async () => {
+//   meals.value = {
+//     dinner: await getObject(plannerDay.value.dinnerId),
+//     supper: await getObject(plannerDay.value.supperId)
+//   }
+// })
 </script>
 
 <template>
-  <!-- <div class="planner__card-wrapper"> -->
   <div class="planner__day-of-week">
-    {{ props.day }}
+    {{ title }}
   </div>
-  <div class="planner__meals">
-    <div class="planner__meal">
-      <p class="planner__title">Обед</p>
-      <app-card :object="recipes[0]"></app-card>
+  <suspense>
+    <div class="planner__meals">
+      <div class="planner__meal">
+        <p class="planner__title">Обед</p>
+
+        <app-card
+          v-if="plannerDay.dinnerId"
+          :object="meals.dinner"
+          :remove-from-planner="true"
+          :is-recipe="isRecipe(plannerDay.dinnerId)"
+          @removeFromPlanner="async () => await edit('dinnerId')"
+        ></app-card>
+        <app-search
+          v-else
+          @selected="async (item) => await edit('dinner', item.id, item)"
+        ></app-search>
+      </div>
+      <div class="planner__meal">
+        <p class="planner__title">Ужин</p>
+        <app-card
+          v-if="plannerDay.supperId"
+          :object="meals.supper"
+          :remove-from-planner="true"
+          :is-recipe="isRecipe(plannerDay.supperId)"
+          @removeFromPlanner="edit('supperId')"
+        ></app-card>
+
+        <app-search
+          v-else
+          @selected="async (item) => await edit('supper', item.id, item)"
+        ></app-search>
+      </div>
     </div>
-    <div class="planner__meal">
-      <p class="planner__title">Ужин</p>
-      <app-card :object="recipes[2]"></app-card>
-    </div>
-  </div>
-  <!-- </div> -->
+  </suspense>
 </template>

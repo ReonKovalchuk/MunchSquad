@@ -2,63 +2,67 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Recipe, Course } from '@/types/types'
 import { CourseEnum } from '@/types/types'
+// import axios from 'axios'
 
-export const useRecipesStore = defineStore('recipes', () => {
-  function getRecipes() {
-    try {
-      // @ts-ignore
-      return JSON.parse(window.localStorage.getItem('recipes')) || []
-    } catch (error) {
-      console.log('ошибка при получении данных из хранилища:', error)
-      return []
-    }
-  }
-  const recipes = ref<Recipe[]>(getRecipes())
-  const courceOptions = computed(() => {
-    return Object.keys(CourseEnum).filter((v) => isNaN(Number(v)))
-  })
-  function addNewRecipe(recipe: Recipe) {
-    const saved = getRecipes()
-
-    saved.push({
-      id: Date.now().toString(),
-      link: recipe.link,
-      name: recipe.name,
-      course: recipe.course,
-      linkToImage: recipe.linkToImage
+import firestore from '@/firebase/init'
+import { doc, collection, setDoc, deleteDoc, getDocs } from 'firebase/firestore'
+// const BASE_URL = 'http://localhost:3000/recipes'
+// const colRef = collection(firestore, 'recipes')
+export const useRecipesStore = defineStore('recipes', async () => {
+  const loading = ref(false)
+  export async function getRecipes() {
+    loading.value = true
+    const firestoreData = <Recipe[]>[]
+    const querySnapshot = await getDocs(collection(firestore, 'recipes'))
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      firestoreData.push({ id: doc.id, ...doc.data() })
     })
-    window.localStorage.setItem('recipes', JSON.stringify(saved))
-    recipes.value = saved
+    loading.value = false
+    return firestoreData
   }
 
-  function removeRecipe(id: string) {
-    const res = recipes.value.filter((recipe) => {
-      return recipe.id !== id
-    })
-    window.localStorage.setItem('recipes', JSON.stringify(res))
-    recipes.value = res
+  const courceOptions = Object.keys(CourseEnum).filter((v) => isNaN(Number(v)))
+
+  async function addNewRecipe(recipe: Recipe) {
+    await setDoc(doc(firestore, 'recipes', 'rec' + Date.now().toString()), recipe)
   }
 
-  function filterRecipesbyCourse(value: Course) {
-    return recipes.value.filter((recipe) => {
+  async function removeRecipe(id: string) {
+    await deleteDoc(doc(firestore, 'recipes', id))
+  }
+
+  function filterRecipesbyCourse(recipes: Recipe[], value: Course) {
+    return recipes.filter((recipe) => {
       return recipe.course === value
     })
   }
 
-  function findRecipeById(id: string) {
-    const res = recipes.value.find((recipe) => {
-      return recipe.id === id
-    })
-    return res
+  async function findRecipeById(id: string) {
+    const docRef = doc(firestore, 'recipes', id)
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists()) {
+      return { id, ...docSnap.data() }
+    } else {
+      console.log('No such document!')
+      return {}
+    }
   }
 
-  // function editRecipe(id: string, recipe) {}
+  async function editRecipe(id: string, newData: Recipe) {
+    const recipeRef = doc(firestore, 'recipes', id)
+    await setDoc(recipeRef, newData, { merge: true })
+  }
+
   return {
     recipes,
     courceOptions,
+    getRecipes,
     addNewRecipe,
     removeRecipe,
     findRecipeById,
-    filterRecipesbyCourse
+    filterRecipesbyCourse,
+    editRecipe
   }
 })

@@ -4,7 +4,7 @@
   --color-text: #2b2b2b;
   --color-border: #959595;
   --shadow: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  --border: 2px solid lightgray;
+  --border: 1px solid lightgray;
   --border-radius-primary: 33px;
   --card-background: #f5f2f2;
 }

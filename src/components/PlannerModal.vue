@@ -24,14 +24,6 @@ const changeDescription = async () => {
         </button>
         <!-- </div> -->
         <div class="modal__inner-container">
-          <!-- <div class="modal-wrapper"> -->
-          <img
-            v-if="object.linkToImage"
-            :src="object.linkToImage"
-            :alt="object.name"
-            class="modal__image"
-          />
-          <!-- <div class="modal__content"> -->
           <div class="modal__header">
             <h3>{{ object.name }}</h3>
           </div>

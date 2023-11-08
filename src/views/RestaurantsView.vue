@@ -4,12 +4,10 @@ import type { Restaurant } from '@/types/types'
 import AppHero from '@/components/AppHero.vue'
 import NewRestaurant from '@/components/NewRestaurant.vue'
 import AppCard from '@/components/AppCard.vue'
-import { useRestaurantsStore } from '@/stores/restaurants'
-import { storeToRefs } from 'pinia'
+import { getRestaurants } from '@/stores/restaurantsData'
+// import { storeToRefs } from 'pinia'
 
-const store = useRestaurantsStore()
-const { restaurants } = storeToRefs(store)
-
+const restaurants = ref<Restaurant[]>(await getRestaurants())
 const newRestaurant = ref<Restaurant>({})
 
 const heroSubtitle = 'Munch squad - сохрани впечатления о ресторанах в одном месте'
@@ -25,6 +23,7 @@ const heroSubtitle = 'Munch squad - сохрани впечатления о р�
             v-for="restaurant in restaurants"
             :key="restaurant.id"
             :object="restaurant"
+            :is-recipe="false"
           ></app-card>
         </div>
         <aside class="new-x-form">
