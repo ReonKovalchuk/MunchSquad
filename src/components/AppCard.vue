@@ -13,15 +13,14 @@ const { object, removeFromPlanner, isRecipe } = defineProps([
 ])
 const showModal = ref(false)
 
-const emit = defineEmits(['removeFromPlanner'])
+const emit = defineEmits(['removeFromPlanner', 'remove'])
 
-const remove = async () => {
+const remove = () => {
   if (removeFromPlanner) {
     emit('removeFromPlanner')
-  } else if (isRecipe) {
-    await removeRecipe(object.id)
   } else {
-    await removeRestaurant(object.id)
+    emit('removeFromPlanner')
+    emit('remove', object.id)
   }
 }
 </script>

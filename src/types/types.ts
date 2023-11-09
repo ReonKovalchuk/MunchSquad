@@ -1,5 +1,5 @@
 export interface Recipe {
-  id?: string
+  id: string
   link?: string
   linkToImage?: string
   name?: string
@@ -26,7 +26,7 @@ export const DaysOfWeek = [
 ]
 
 export interface Restaurant {
-  id?: string
+  id: string
   name?: string
   link?: string
   linkToImage?: string

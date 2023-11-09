@@ -6,13 +6,18 @@ import NewRestaurant from '@/components/NewRestaurant.vue'
 import AppCard from '@/components/AppCard.vue'
 import { getRestaurants } from '@/stores/restaurantsData'
 // import { storeToRefs } from 'pinia'
+import { removeRestaurant } from '@/stores/restaurantsData'
 
 const restaurants = ref<Restaurant[]>(await getRestaurants())
-const newRestaurant = ref<Restaurant>({})
 
 const heroSubtitle = 'Munch squad - сохрани впечатления о ресторанах в одном месте'
+const remove = (id: string) => {
+  removeRestaurant(id)
+  restaurants.value = restaurants.value.filter((res) => {
+    return res.id !== id
+  })
+}
 </script>
-
 <template>
   <main>
     <app-hero :subtitle="heroSubtitle" />
@@ -24,6 +29,7 @@ const heroSubtitle = 'Munch squad - сохрани впечатления о р�
             :key="restaurant.id"
             :object="restaurant"
             :is-recipe="false"
+            @remove="remove"
           ></app-card>
         </div>
         <aside class="new-x-form">

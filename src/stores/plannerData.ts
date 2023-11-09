@@ -1,4 +1,4 @@
-import firestore from '@/firebase/init'
+import { firestore } from '@/firebase/init'
 import { doc, collection, setDoc, getDocs, getDoc } from 'firebase/firestore'
 import type { PlannerDay } from '@/types/types'
 

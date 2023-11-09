@@ -4,7 +4,7 @@ import { useRestaurantsStore } from '@/stores/restaurants'
 import type { Restaurant } from '@/types/types'
 
 const { addNewRestaurant } = useRestaurantsStore()
-const newRestaurant = ref<Restaurant>({})
+const newRestaurant = ref<Restaurant>({ id: '' })
 
 function addRestaurant() {
   addNewRestaurant(newRestaurant.value)

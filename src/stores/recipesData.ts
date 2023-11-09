@@ -1,4 +1,4 @@
-import firestore from '@/firebase/init'
+import { firestore } from '@/firebase/init'
 import { doc, collection, setDoc, deleteDoc, getDocs, getDoc } from 'firebase/firestore'
 import type { Recipe, Course } from '@/types/types'
 import { CourseEnum } from '@/types/types'
@@ -18,7 +18,8 @@ export const getCourceOptions = () => {
 }
 
 export async function addNewRecipe(recipe: Recipe) {
-  await setDoc(doc(firestore, 'recipes', 'rec' + Date.now().toString()), recipe)
+  recipe.id = 'rec' + Date.now().toString()
+  await setDoc(doc(firestore, 'recipes', recipe.id), recipe)
 }
 
 export async function removeRecipe(id: string) {
@@ -36,10 +37,10 @@ export async function findRecipeById(id: string) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    return { id, ...docSnap.data() }
+    return { ...docSnap.data() }
   } else {
-    console.log('No such document!')
-    return {}
+    console.log(`No document with id ${id}!`)
+    return { id: '' }
   }
 }
 

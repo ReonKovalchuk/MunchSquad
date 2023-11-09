@@ -4,7 +4,7 @@ import type { Recipe, Course } from '@/types/types'
 import { CourseEnum } from '@/types/types'
 // import axios from 'axios'
 
-import firestore from '@/firebase/init'
+import { firestore } from '@/firebase/init'
 import { doc, collection, setDoc, deleteDoc, getDocs } from 'firebase/firestore'
 // const BASE_URL = 'http://localhost:3000/recipes'
 // const colRef = collection(firestore, 'recipes')

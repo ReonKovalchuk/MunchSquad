@@ -48,6 +48,7 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
 //     supper: await getObject(plannerDay.value.supperId)
 //   }
 // })
+console.log(plannerDay.value.dinnerId, plannerDay.value.supperId)
 </script>
 
 <template>
@@ -60,11 +61,12 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
         <p class="planner__title">Обед</p>
 
         <app-card
-          v-if="plannerDay.dinnerId"
+          v-if="plannerDay.dinnerId && meals.dinner.id"
           :object="meals.dinner"
           :remove-from-planner="true"
           :is-recipe="isRecipe(plannerDay.dinnerId)"
           @removeFromPlanner="async () => await edit('dinner')"
+          :key="plannerDay.dinnerId"
         ></app-card>
         <app-search
           v-else
@@ -74,11 +76,12 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
       <div class="planner__meal">
         <p class="planner__title">Ужин</p>
         <app-card
-          v-if="plannerDay.supperId"
+          v-if="plannerDay.supperId && meals.supper.id"
           :object="meals.supper"
           :remove-from-planner="true"
           :is-recipe="isRecipe(plannerDay.supperId)"
           @removeFromPlanner="edit('supper')"
+          :key="plannerDay.supperId"
         ></app-card>
 
         <app-search

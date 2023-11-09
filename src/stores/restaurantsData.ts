@@ -1,4 +1,4 @@
-import firestore from '@/firebase/init'
+import { firestore } from '@/firebase/init'
 import { doc, collection, setDoc, deleteDoc, getDocs, getDoc } from 'firebase/firestore'
 import type { Restaurant } from '@/types/types'
 
@@ -25,10 +25,10 @@ export async function findRestaurantById(id: string) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    return { id, ...docSnap.data() }
+    return { ...docSnap.data() }
   } else {
-    console.log('No such document!')
-    return {}
+    console.log(`No document with id ${id}!`)
+    return { id: '' }
   }
 }
 

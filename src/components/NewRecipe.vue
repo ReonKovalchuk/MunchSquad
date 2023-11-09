@@ -5,7 +5,7 @@ import { addNewRecipe, getCourceOptions } from '@/stores/recipesData'
 import type { Recipe } from '@/types/types'
 
 // const { addNewRecipe, courceOptions } = useRecipesStore()
-const newRecipe = ref<Recipe>({})
+const newRecipe = ref<Recipe>({ id: '' })
 const courseOptions = computed(getCourceOptions)
 function addRecipe() {
   addNewRecipe(newRecipe.value)
