@@ -42,12 +42,7 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
   const propertyMeal = mealType as MealsKey
   meals.value[propertyMeal] = meal
 }
-// watch(plannerDay, async () => {
-//   meals.value = {
-//     dinner: await getObject(plannerDay.value.dinnerId),
-//     supper: await getObject(plannerDay.value.supperId)
-//   }
-// })
+
 console.log(plannerDay.value.dinnerId, plannerDay.value.supperId)
 </script>
 

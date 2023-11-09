@@ -1,5 +1,7 @@
 <script setup>
 import AppSearch from './AppSearch.vue'
+import AppLogin from './AppLogin.vue'
+const props = defineProps(['isLoggedIn'])
 </script>
 <template>
   <header class="header">
@@ -11,6 +13,7 @@ import AppSearch from './AppSearch.vue'
         <slot name="navigation"></slot>
       </div>
       <app-search></app-search>
+      <app-login :is-logged-in="props.isLoggedIn"></app-login>
     </div>
   </header>
 </template>

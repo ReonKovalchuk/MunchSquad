@@ -17,23 +17,21 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
 </script>
 
 <template>
-  <main>
-    <app-hero :subtitle="heroSubtitle" />
-    <div class="container">
-      <div class="page__wrapper">
-        <div class="page__main-content">
-          <app-card
-            v-for="recipe in recipes"
-            :key="recipe.id"
-            :object="recipe"
-            :is-recipe="true"
-            @remove="remove"
-          ></app-card>
-        </div>
-        <aside class="new-x-form">
-          <new-recipe></new-recipe>
-        </aside>
+  <app-hero :subtitle="heroSubtitle" />
+  <div class="container">
+    <div class="page__wrapper">
+      <div class="page__main-content">
+        <app-card
+          v-for="recipe in recipes"
+          :key="recipe.id"
+          :object="recipe"
+          :is-recipe="true"
+          @remove="remove"
+        ></app-card>
       </div>
+      <aside class="new-x-form">
+        <new-recipe></new-recipe>
+      </aside>
     </div>
-  </main>
+  </div>
 </template>

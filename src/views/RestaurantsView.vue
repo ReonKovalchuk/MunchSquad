@@ -19,23 +19,21 @@ const remove = (id: string) => {
 }
 </script>
 <template>
-  <main>
-    <app-hero :subtitle="heroSubtitle" />
-    <div class="container">
-      <div class="page__wrapper">
-        <div class="page__main-content">
-          <app-card
-            v-for="restaurant in restaurants"
-            :key="restaurant.id"
-            :object="restaurant"
-            :is-recipe="false"
-            @remove="remove"
-          ></app-card>
-        </div>
-        <aside class="new-x-form">
-          <new-restaurant></new-restaurant>
-        </aside>
+  <app-hero :subtitle="heroSubtitle" />
+  <div class="container">
+    <div class="page__wrapper">
+      <div class="page__main-content">
+        <app-card
+          v-for="restaurant in restaurants"
+          :key="restaurant.id"
+          :object="restaurant"
+          :is-recipe="false"
+          @remove="remove"
+        ></app-card>
       </div>
+      <aside class="new-x-form">
+        <new-restaurant></new-restaurant>
+      </aside>
     </div>
-  </main>
+  </div>
 </template>

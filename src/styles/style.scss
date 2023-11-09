@@ -132,7 +132,7 @@ button:focus-visible {
 	background: url('../assets/Hero image.jpg'), rgb(155, 155, 155) 90% / contain no-repeat;
 	padding: 10px;
 	max-width: 100vw;
-	height: 262px;
+	height: 200px;
 	background-blend-mode: multiply;
 }
 .hero__text {
@@ -304,6 +304,18 @@ button:focus-visible {
 footer a {
 	text-decoration: underline;
 }
+
+////////////////////////////////////////////////signup and login
+
+.signup-login {
+	max-width: 300px;
+	margin: auto;
+}
+
+.visible-link {
+	text-decoration: underline;
+}
+
 @media (min-width: 1024px) {
 	.logo {
 		margin: 0 2rem 0 0;
