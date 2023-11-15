@@ -20,10 +20,10 @@ onMounted(() => {
   const auth = getAuth()
   onAuthStateChanged(auth, async (user) => {
     userInfoStore.getUserInfo(user)
-    await searchStore.getSearchData()
     await recipesStore.getRecipes()
     await restaurantsStore.getRestaurants()
     await plannerStore.getPlannerData()
+    await searchStore.getSearchData()
   })
 })
 </script>
