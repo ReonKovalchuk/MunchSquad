@@ -13,7 +13,6 @@ const register = () => {
   signInWithEmailAndPassword(auth, userData.value.email, userData.value.password)
     .then((user) => {
       console.log('User signed in:', user)
-      // TODO: handle successful registration
       router.push('/')
     })
     .catch((error) => {
@@ -35,28 +34,14 @@ const register = () => {
           errorMsg.value = 'Некорректный email или пароль'
           break
       }
-      // TODO: handle registration error
     })
 }
-
-const signInWithGoogle = () => {}
 </script>
 
 <template>
   <app-hero></app-hero>
   <div class="container">
     <form action="" class="signup-login" @submit.prevent="register()">
-      <!-- <div class="input-group">
-        <label for="username" class="input-label">Имя пользователя</label>
-        <input
-          type="text"
-          id="username"
-          class="input"
-          minlength="2"
-          maxlength="30"
-          v-model="userData.username"
-        />
-      </div> -->
       <div class="input-group">
         <label for="email" class="input-label">E-mail</label>
         <input

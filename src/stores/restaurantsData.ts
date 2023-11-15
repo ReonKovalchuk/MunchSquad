@@ -1,12 +1,32 @@
 import { firestore } from '@/firebase/init'
-import { doc, collection, setDoc, deleteDoc, getDocs, getDoc } from 'firebase/firestore'
+
+import {
+  doc,
+  collection,
+  setDoc,
+  deleteDoc,
+  getDocs,
+  getDoc,
+  query,
+  where
+} from 'firebase/firestore'
 import type { Restaurant } from '@/types/types'
+import { storeToRefs } from 'pinia'
+import { useUserInfoStore } from '@/stores/userInfo'
+
+const colRef = collection(firestore, 'restaurants')
 
 export async function getRestaurants() {
+  const userInfoStore = useUserInfoStore()
+  const { userInfo } = storeToRefs(userInfoStore)
   const firestoreData = <Restaurant[]>[]
-  const querySnapshot = await getDocs(collection(firestore, 'restaurants'))
-  querySnapshot.forEach((doc) => {
+  const q = query(colRef, where('uid', '==', userInfo.value.uid))
+  //const querySnapshot = await getDocs(collection(firestore, 'recipes'))
+  const querySnapshot = await getDocs(q)
+
+  querySnapshot.forEach((doc: any) => {
     // doc.data() is never undefined for query doc snapshots
+
     firestoreData.push({ id: doc.id, ...doc.data() })
   })
   return firestoreData

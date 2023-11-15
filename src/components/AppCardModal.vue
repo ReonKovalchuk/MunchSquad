@@ -1,11 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue'
-// import { useRestaurantsStore } from '@/stores/restaurants'
+import { ref } from 'vue'
 import CloseIcon from './icons/CloseIcon.vue'
-import { editRestaurantInfo } from '@/stores/restaurantsData'
-// import { Restaurant } from '@/types/types'
+import { useRestaurantsStore } from '@/stores/restaurants'
 const { show, object } = defineProps(['show', 'object'])
-// const { editRestaurantInfo } = useRestaurantsStore()
+const { editRestaurantInfo } = useRestaurantsStore()
 const thisObj = ref(object)
 const emit = defineEmits(['close'])
 const changeDescription = async () => {
@@ -18,20 +16,16 @@ const changeDescription = async () => {
   <transition name="modal">
     <div v-if="show" class="modal__mask">
       <div class="modal__outer-container">
-        <!-- <div> -->
         <button class="modal-default-button" @click="$emit('close')" tabindex="0">
           <close-icon color="black"></close-icon>
         </button>
-        <!-- </div> -->
         <div class="modal__inner-container">
-          <!-- <div class="modal-wrapper"> -->
           <img
             v-if="object.linkToImage"
             :src="object.linkToImage"
             :alt="object.name"
             class="modal__image"
           />
-          <!-- <div class="modal__content"> -->
           <div class="modal__header">
             <h3>{{ object.name }}</h3>
           </div>
@@ -47,17 +41,9 @@ const changeDescription = async () => {
               <button type="submit" class="btn btn-secondary">Сохранить</button>
             </form>
           </div>
-
-          <!-- <div class="modal__footer">
-            <slot name="footer"> -->
-
-          <!-- </slot>
-          </div> -->
-          <!-- </div> -->
         </div>
       </div>
     </div>
-    <!-- </div> -->
   </transition>
 </template>
 

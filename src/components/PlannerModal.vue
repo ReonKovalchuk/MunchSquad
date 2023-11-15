@@ -1,8 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 // import { useRestaurantsStore } from '@/stores/restaurants'
 import CloseIcon from './icons/CloseIcon.vue'
-import { editRestaurantInfo } from '@/stores/restaurantsData'
+
 // import { Restaurant } from '@/types/types'
 const { show, object } = defineProps(['show', 'object'])
 // const { editRestaurantInfo } = useRestaurantsStore()
@@ -39,17 +39,9 @@ const changeDescription = async () => {
               <button type="submit" class="btn btn-secondary">Сохранить</button>
             </form>
           </div>
-
-          <!-- <div class="modal__footer">
-            <slot name="footer"> -->
-
-          <!-- </slot>
-          </div> -->
-          <!-- </div> -->
         </div>
       </div>
     </div>
-    <!-- </div> -->
   </transition>
 </template>
 

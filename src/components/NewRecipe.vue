@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { addNewRecipe, getCourceOptions } from '@/stores/recipesData'
-// import { useRecipesStore } from '@/stores/recipes'
+import { ref } from 'vue'
+import { useRecipesStore } from '@/stores/recipes'
 import type { Recipe } from '@/types/types'
+import { useUserInfoStore } from '@/stores/userInfo'
+import { storeToRefs } from 'pinia'
 
-// const { addNewRecipe, courceOptions } = useRecipesStore()
-const newRecipe = ref<Recipe>({ id: '' })
-const courseOptions = computed(getCourceOptions)
+const userInfoStore = useUserInfoStore()
+const { userInfo } = storeToRefs(userInfoStore)
+const recipesStore = useRecipesStore()
+const newRecipe = ref<Recipe>({ id: '', uid: userInfo.value.uid })
 function addRecipe() {
-  addNewRecipe(newRecipe.value)
+  recipesStore.addNewRecipe(newRecipe.value)
+  newRecipe.value.uid = userInfo.value.uid
+
   newRecipe.value.course = undefined
   newRecipe.value.link = ''
   newRecipe.value.linkToImage = ''
@@ -39,7 +43,7 @@ function addRecipe() {
       <label for="recipe-course" class="input-label">Вид</label>
 
       <select id="recipe-course" v-model="newRecipe.course" class="input" required>
-        <option v-for="course in courseOptions" :value="course" :key="course">
+        <option v-for="course in recipesStore.courseOptions" :value="course" :key="course">
           {{ course }}
         </option>
       </select>

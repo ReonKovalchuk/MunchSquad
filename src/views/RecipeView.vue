@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import AppHero from '@/components/AppHero.vue'
 import { ref } from 'vue'
-import { findRecipeById } from '@/stores/recipesData'
+import { useRecipesStore } from '@/stores/recipes'
 import { useRoute } from 'vue-router'
 import type { Recipe } from '@/types/types'
 import NewRecipe from '@/components/NewRecipe.vue'
 
 const route = useRoute()
 
-const currentRecipe = ref<Recipe>(await findRecipeById(route.params.id.toString()))
+const recipesStore = useRecipesStore()
+
+const currentRecipe = ref<Recipe>(await recipesStore.findRecipeById(route.params.id.toString()))
 
 const heroSubtitle = 'Munch squad поможет сохранить любимые рецепты'
 </script>

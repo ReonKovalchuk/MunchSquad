@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import AppCardModal from '@/components/AppCardModal.vue'
-import { removeRecipe } from '@/stores/recipesData'
-import { removeRestaurant } from '@/stores/restaurantsData'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'
 

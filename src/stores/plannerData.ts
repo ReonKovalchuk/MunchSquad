@@ -1,11 +1,21 @@
 import { firestore } from '@/firebase/init'
-import { doc, collection, setDoc, getDocs, getDoc } from 'firebase/firestore'
+
+import { doc, collection, setDoc, getDoc, query, where, getDocs } from 'firebase/firestore'
 import type { PlannerDay } from '@/types/types'
+import { storeToRefs } from 'pinia'
+import { useUserInfoStore } from '@/stores/userInfo'
+
+const colRef = collection(firestore, 'planner')
 
 export async function getPlannerData() {
+  console.log('getting planner')
   const firestoreData = <PlannerDay[]>[]
-  const querySnapshot = await getDocs(collection(firestore, 'planner'))
-  querySnapshot.forEach((doc) => {
+  const userInfoStore = useUserInfoStore()
+  const { userInfo } = storeToRefs(userInfoStore)
+  const q = query(colRef, where('uid', '==', userInfo.value.uid))
+  const querySnapshot = await getDocs(q)
+
+  querySnapshot.forEach((doc: any) => {
     // doc.data() is never undefined for query doc snapshots
     firestoreData.push({ id: doc.id, ...doc.data() })
   })
@@ -17,10 +27,6 @@ export async function addNewPlannerDay(day: PlannerDay) {
   const docRef = doc(firestore, 'planner', day.id)
   await setDoc(docRef, data)
 }
-
-// export async function removeRecipe(id: string) {
-//   await deleteDoc(doc(firestore, 'planner', id))
-// }
 
 export async function findPlannerDayById(id: string) {
   const docRef = doc(firestore, 'planner', id)

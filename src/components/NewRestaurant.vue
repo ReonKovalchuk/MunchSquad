@@ -2,11 +2,16 @@
 import { ref } from 'vue'
 import { useRestaurantsStore } from '@/stores/restaurants'
 import type { Restaurant } from '@/types/types'
+import { useUserInfoStore } from '@/stores/userInfo'
+import { storeToRefs } from 'pinia'
 
+const userInfoStore = useUserInfoStore()
+const { userInfo } = storeToRefs(userInfoStore)
 const { addNewRestaurant } = useRestaurantsStore()
-const newRestaurant = ref<Restaurant>({ id: '' })
+const newRestaurant = ref<Restaurant>({ id: '', uid: userInfo.value.uid })
 
 function addRestaurant() {
+  newRestaurant.value.uid = userInfo.value.uid
   addNewRestaurant(newRestaurant.value)
   newRestaurant.value.name = ''
   newRestaurant.value.link = ''

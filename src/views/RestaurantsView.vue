@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { Restaurant } from '@/types/types'
 import AppHero from '@/components/AppHero.vue'
 import NewRestaurant from '@/components/NewRestaurant.vue'
 import AppCard from '@/components/AppCard.vue'
-import { getRestaurants } from '@/stores/restaurantsData'
-// import { storeToRefs } from 'pinia'
-import { removeRestaurant } from '@/stores/restaurantsData'
+import { useRestaurantsStore } from '@/stores/restaurants'
+import { storeToRefs } from 'pinia'
 
-const restaurants = ref<Restaurant[]>(await getRestaurants())
+const restaurantsStore = useRestaurantsStore()
+const { restaurants } = storeToRefs(restaurantsStore)
 
 const heroSubtitle = 'Munch squad - сохрани впечатления о ресторанах в одном месте'
 const remove = (id: string) => {
-  removeRestaurant(id)
+  restaurantsStore.removeRestaurant(id)
   restaurants.value = restaurants.value.filter((res) => {
     return res.id !== id
   })

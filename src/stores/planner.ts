@@ -1,40 +1,66 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { Recipe, Restaurant, PlannerDay, Meal } from '@/types/types'
+import { firestore } from '@/firebase/init'
+
+import { doc, collection, setDoc, getDoc, query, where, getDocs } from 'firebase/firestore'
+import type { PlannerDay } from '@/types/types'
+import { storeToRefs } from 'pinia'
+import { useUserInfoStore } from '@/stores/userInfo'
+
+const colRef = collection(firestore, 'planner')
 
 export const usePlannerStore = defineStore('planner', () => {
-  function getWeekMenu(firstDay: Date) {
-    const lastDay = new Date(firstDay.setDate(firstDay.getDate() + 6))
-    let planner
-    try {
-      // @ts-ignore
-      planner = JSON.parse(window.localStorage.getItem('planner')) || []
-    } catch (error) {
-      console.log('ошибка при получении данных из хранилища:', error)
-      planner = []
-    }
-    return planner.filter((day: PlannerDay) => {
-      return day.date >= firstDay && day.date <= lastDay
+  const planner = ref<PlannerDay[]>([])
+  const loading = ref(false)
+  const userInfoStore = useUserInfoStore()
+  const { userInfo } = storeToRefs(userInfoStore)
+
+  async function getPlannerData() {
+    loading.value = true
+    const firestoreData = <PlannerDay[]>[]
+    const q = query(colRef, where('uid', '==', userInfo.value.uid))
+    const querySnapshot = await getDocs(q)
+
+    querySnapshot.forEach((doc: any) => {
+      // doc.data() is never undefined for query doc snapshots
+      firestoreData.push({ id: doc.id, ...doc.data() })
     })
+    planner.value = firestoreData
+    loading.value = false
   }
 
-  function getDayMenu(date: Date) {
-    let planner
-    try {
-      // @ts-ignore
-      planner = JSON.parse(window.localStorage.getItem('planner')) || []
-    } catch (error) {
-      console.log('ошибка при получении данных из хранилища:', error)
-      planner = []
-    }
-    return planner.filter((day: PlannerDay) => {
-      return day.date === date
-    })
+  async function addNewPlannerDay(day: PlannerDay) {
+    const data = { dinnerId: day.dinnerId || '', supperId: day.supperId || '' }
+    const docRef = doc(firestore, 'planner', day.id)
+    await setDoc(docRef, data)
   }
-  // const recipes = ref<PlannerDay[]>(getWeekMenu())
 
-  function addNewMenuItem(date: Date, meal: Meal) {}
+  async function findPlannerDayById(id: string) {
+    const docRef = doc(firestore, 'planner', id)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+      return <PlannerDay>{ id, ...docSnap.data() }
+    } else {
+      return <PlannerDay>{ id, uid: userInfo.value.uid }
+    }
+  }
 
-  function removeMenuItem(id: string) {}
-  return
+  async function editPlannerDay(newData: PlannerDay) {
+    const docRef = doc(firestore, 'planner', newData.id)
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists()) {
+      await setDoc(docRef, newData, { merge: true })
+    } else {
+      await addNewPlannerDay(newData)
+    }
+  }
+  return {
+    planner,
+    loading,
+    getPlannerData,
+    addNewPlannerDay,
+    findPlannerDayById,
+    editPlannerDay
+  }
 })

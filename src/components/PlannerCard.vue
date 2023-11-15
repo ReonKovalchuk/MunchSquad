@@ -3,15 +3,18 @@ import AppCard from '@/components/AppCard.vue'
 import { ref } from 'vue'
 
 import AppSearch from './AppSearch.vue'
-import { findPlannerDayById, editPlannerDay } from '@/stores/plannerData'
-import { findRecipeById } from '@/stores/recipesData'
-import { findRestaurantById } from '@/stores/restaurantsData'
+import { usePlannerStore } from '@/stores/planner'
+import { useRecipesStore } from '@/stores/recipes'
+import { useRestaurantsStore } from '@/stores/restaurants'
 import type { PlannerDay, Recipe, Restaurant } from '@/types/types'
 
+const plannerStore = usePlannerStore()
+const recipesStore = useRecipesStore()
+const restaurantsStore = useRestaurantsStore()
 const { title, dayId } = defineProps(['title', 'dayId'])
 
 // const plannerDay = ref<PlannerDay>(await findPlannerDayById(dayId))
-const plannerDay = ref<PlannerDay>(await findPlannerDayById('' + dayId))
+const plannerDay = ref<PlannerDay>(await plannerStore.findPlannerDayById('' + dayId))
 const meals = ref({
   dinner: await getObject(plannerDay.value.dinnerId),
   supper: await getObject(plannerDay.value.supperId)
@@ -24,9 +27,9 @@ async function getObject(id: string | undefined) {
   let obj = {}
   if (id) {
     if (isRecipe(id)) {
-      obj = await findRecipeById(id)
+      obj = await recipesStore.findRecipeById(id)
     } else {
-      obj = await findRestaurantById(id)
+      obj = await restaurantsStore.findRestaurantById(id)
     }
   }
   return obj
@@ -36,14 +39,12 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
   type PlannerKey = keyof typeof plannerDay.value
   const propertyMealId = (mealType + 'Id') as PlannerKey
   plannerDay.value[propertyMealId] = mealId
-  await editPlannerDay(plannerDay.value)
+  await plannerStore.editPlannerDay(plannerDay.value)
 
   type MealsKey = keyof typeof meals.value
   const propertyMeal = mealType as MealsKey
   meals.value[propertyMeal] = meal
 }
-
-console.log(plannerDay.value.dinnerId, plannerDay.value.supperId)
 </script>
 
 <template>

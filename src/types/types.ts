@@ -5,6 +5,7 @@ export interface Recipe {
   name?: string
   course?: Course
   description?: string
+  uid: string
 }
 
 export enum CourseEnum {
@@ -15,26 +16,18 @@ export enum CourseEnum {
 }
 export type Course = keyof typeof CourseEnum
 
-export const DaysOfWeek = [
-  'Понедельник',
-  'Вторник',
-  'Среда',
-  'Четверг',
-  'Пятница',
-  'Суббота',
-  'Воскресенье'
-]
-
 export interface Restaurant {
   id: string
   name?: string
   link?: string
   linkToImage?: string
   review?: string
+  uid: string
 }
 
 export interface PlannerDay {
   id: string
   dinnerId?: string
   supperId?: string
+  uid: string
 }

@@ -1,35 +1,36 @@
 <script setup>
 import { ref } from 'vue'
 import AppHero from '@/components/AppHero.vue'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useRouter } from 'vue-router'
 import { useFirebaseAuth } from 'vuefire'
 
 const router = useRouter()
-const userData = ref({ email: '', password: '' })
+const userData = ref({ username: '', email: '', password: '' })
 const errorMsg = ref('')
 const auth = useFirebaseAuth()
 const register = () => {
   createUserWithEmailAndPassword(auth, userData.value.email, userData.value.password)
     .then((user) => {
+      updateProfile(auth.currentUser, {
+        displayName: userData.value.username
+      })
       console.log('User registered:', user)
       // TODO: handle successful registration
       router.push('/')
     })
     .catch((error) => {
       console.error('Registration error:', error)
-      // TODO: handle registration error
+      errorMsg.value = error.message
     })
 }
-
-const signInWithGoogle = () => {}
 </script>
 
 <template>
   <app-hero></app-hero>
   <div class="container">
     <form action="" class="signup-login" @submit.prevent="register()">
-      <!-- <div class="input-group">
+      <div class="input-group">
         <label for="username" class="input-label">Имя пользователя</label>
         <input
           type="text"
@@ -39,7 +40,7 @@ const signInWithGoogle = () => {}
           maxlength="30"
           v-model="userData.username"
         />
-      </div> -->
+      </div>
       <div class="input-group">
         <label for="email" class="input-label">E-mail</label>
         <input
@@ -57,7 +58,7 @@ const signInWithGoogle = () => {}
           type="password"
           class="input"
           id="password"
-          placeholder="6 знаков"
+          placeholder="от 6 знаков"
           minlength="6"
           required
           v-model="userData.password"

@@ -1,10 +1,12 @@
 <script setup>
 import { useFirebaseAuth } from 'vuefire'
 import { signOut } from 'firebase/auth'
+import { useUserInfoStore } from '@/stores/userInfo'
+import { storeToRefs } from 'pinia'
 
-const props = defineProps(['isLoggedIn'])
 const auth = useFirebaseAuth()
-
+const userInfoStore = useUserInfoStore()
+const { userInfo } = storeToRefs(userInfoStore)
 const handleSignOut = () => {
   signOut(auth)
     .then(() => {
@@ -17,7 +19,13 @@ const handleSignOut = () => {
 </script>
 
 <template>
-  <button v-if="props.isLoggedIn" class="btn btn-primary" @click="handleSignOut()">Выйти</button>
+  <div>
+    <span v-if="userInfo.displayName" class="display-name">{{ userInfo.displayName }}</span>
 
-  <router-link v-else to="/login" class="btn btn-primary">Войти</router-link>
+    <button v-if="userInfo.isLoggedIn" class="btn btn-primary" @click="handleSignOut()">
+      Выйти
+    </button>
+
+    <router-link v-else to="/login" class="btn btn-primary">Войти</router-link>
+  </div>
 </template>

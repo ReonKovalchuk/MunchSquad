@@ -1,19 +1,38 @@
 import { firestore } from '@/firebase/init'
-import { doc, collection, setDoc, deleteDoc, getDocs, getDoc } from 'firebase/firestore'
+
+import {
+  doc,
+  collection,
+  setDoc,
+  deleteDoc,
+  getDocs,
+  getDoc,
+  query,
+  where
+} from 'firebase/firestore'
 import type { Recipe, Course } from '@/types/types'
 import { CourseEnum } from '@/types/types'
+import { storeToRefs } from 'pinia'
+import { useUserInfoStore } from '@/stores/userInfo'
+
+const colRef = collection(firestore, 'recipes')
 
 export async function getRecipes() {
+  const userInfoStore = useUserInfoStore()
+  const { userInfo } = storeToRefs(userInfoStore)
   const firestoreData = <Recipe[]>[]
-  const querySnapshot = await getDocs(collection(firestore, 'recipes'))
-  querySnapshot.forEach((doc) => {
+  const q = query(colRef, where('uid', '==', userInfo.value.uid))
+  //const querySnapshot = await getDocs(collection(firestore, 'recipes'))
+  const querySnapshot = await getDocs(q)
+
+  querySnapshot.forEach((doc: any) => {
     // doc.data() is never undefined for query doc snapshots
     firestoreData.push({ id: doc.id, ...doc.data() })
   })
   return firestoreData
 }
 
-export const getCourceOptions = () => {
+export function getCourceOptions() {
   return Object.keys(CourseEnum).filter((v) => isNaN(Number(v)))
 }
 
