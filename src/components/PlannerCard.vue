@@ -1,37 +1,63 @@
 <script setup lang="ts">
 import AppCard from '@/components/AppCard.vue'
-import { ref } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 import AppSearch from './AppSearch.vue'
 import { usePlannerStore } from '@/stores/planner'
 import { useRecipesStore } from '@/stores/recipes'
 import { useRestaurantsStore } from '@/stores/restaurants'
 import type { PlannerDay, Recipe, Restaurant } from '@/types/types'
+import { storeToRefs } from 'pinia'
+import { useUserInfoStore } from '@/stores/userInfo'
 
 const plannerStore = usePlannerStore()
 const recipesStore = useRecipesStore()
 const restaurantsStore = useRestaurantsStore()
+const userStore = useUserInfoStore()
+const { userInfo } = storeToRefs(userStore)
+const { loading } = storeToRefs(plannerStore)
 const { title, dayId } = defineProps(['title', 'dayId'])
 
-// const plannerDay = ref<PlannerDay>(await findPlannerDayById(dayId))
-const plannerDay = ref<PlannerDay>(await plannerStore.findPlannerDayById('' + dayId))
+watch(loading, (newValue) => {
+  if (!newValue) {
+    console.log('subscription worked')
+
+    plannerDay.value = getPlannerDay()
+    console.log('planner day now is', plannerDay.value)
+    meals.value = {
+      dinner: getObject(plannerDay.value.dinnerId),
+      supper: getObject(plannerDay.value.supperId)
+    }
+  }
+})
+
+function getPlannerDay() {
+  console.log('looking for day', dayId)
+
+  const result = plannerStore.findPlannerDayById(dayId)
+
+  return result ? result : { id: dayId, uid: userInfo.value.uid }
+}
+const plannerDay = ref(getPlannerDay())
 const meals = ref({
-  dinner: await getObject(plannerDay.value.dinnerId),
-  supper: await getObject(plannerDay.value.supperId)
+  dinner: getObject(plannerDay.value.dinnerId),
+  supper: getObject(plannerDay.value.supperId)
 })
 function isRecipe(id: string) {
   return id.includes('rec')
 }
 
-async function getObject(id: string | undefined) {
+function getObject(id: string | undefined) {
   let obj = {}
+  console.log('looking for recipe/rest with id', id)
   if (id) {
     if (isRecipe(id)) {
-      obj = await recipesStore.findRecipeById(id)
+      obj = recipesStore.findRecipeById(id)
     } else {
-      obj = await restaurantsStore.findRestaurantById(id)
+      obj = restaurantsStore.findRestaurantById(id)
     }
   }
+  console.log('found recipe/rest', obj)
   return obj
 }
 

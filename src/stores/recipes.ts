@@ -8,35 +8,34 @@ import {
   deleteDoc,
   getDocs,
   getDoc,
-  query,
-  where
+  CollectionReference
 } from 'firebase/firestore'
 import type { Recipe, Course } from '@/types/types'
 import { CourseEnum } from '@/types/types'
 import { storeToRefs } from 'pinia'
 import { useUserInfoStore } from '@/stores/userInfo'
+import { readQuerySnapshot } from '@/functions'
+import { useFSRefsStore } from './FSRefs'
 
-const colRef = collection(firestore, 'recipes')
 export const useRecipesStore = defineStore('recipes', () => {
   const loading = ref(false)
   const recipes = ref<Recipe[]>([])
   const userInfoStore = useUserInfoStore()
   const { userInfo } = storeToRefs(userInfoStore)
-
+  const { colRefs } = storeToRefs(useFSRefsStore())
   async function getRecipes() {
     loading.value = true
 
-    const firestoreData = <Recipe[]>[]
-    const q = query(colRef, where('uid', '==', userInfo.value.uid))
-    //const querySnapshot = await getDocs(collection(firestore, 'recipes'))
-    const querySnapshot = await getDocs(q)
+    console.log(colRefs.value.recipesColRef.path)
+    const querySnapshot = await getDocs(colRefs.value.recipesColRef)
 
-    querySnapshot.forEach((doc: any) => {
-      // doc.data() is never undefined for query doc snapshots
-      firestoreData.push({ id: doc.id, ...doc.data() })
-    })
+    // querySnapshot.forEach((doc: any) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   firestoreData.push({ id: doc.id, ...doc.data() })
+    // })
     loading.value = false
-    recipes.value = firestoreData
+    recipes.value = <Recipe[]>readQuerySnapshot(querySnapshot)
+    console.log('recipes now have', recipes.value)
   }
 
   const courseOptions = computed(() => {
@@ -45,11 +44,13 @@ export const useRecipesStore = defineStore('recipes', () => {
 
   async function addNewRecipe(recipe: Recipe) {
     recipe.id = 'rec' + Date.now().toString()
-    await setDoc(doc(firestore, 'recipes', recipe.id), recipe)
+
+    console.log(colRefs.value.recipesColRef.path)
+    await setDoc(doc(colRefs.value.recipesColRef, recipe.id), recipe)
   }
 
   async function removeRecipe(id: string) {
-    await deleteDoc(doc(firestore, 'recipes', id))
+    await deleteDoc(doc(colRefs.value.recipesColRef, id))
   }
 
   function filterRecipesbyCourse(recipes: Recipe[], value: Course) {
@@ -58,20 +59,25 @@ export const useRecipesStore = defineStore('recipes', () => {
     })
   }
 
-  async function findRecipeById(id: string) {
-    const docRef = doc(firestore, 'recipes', id)
-    const docSnap = await getDoc(docRef)
+  function findRecipeById(id: string) {
+    // const docRef = doc(colRefs.value.recipesColRef, id)
+    // const docSnap = await getDoc(docRef)
 
-    if (docSnap.exists()) {
-      return { ...docSnap.data() } as Recipe
-    } else {
-      console.log(`No document with id ${id}!`)
-      return { id: '', uid: userInfo.value.uid } as Recipe
-    }
+    // if (docSnap.exists()) {
+    //   return { ...docSnap.data() } as Recipe
+    // } else {
+    //   console.log(`No document with id ${id}!`)
+    //   return { id: '', uid: userInfo.value.uid } as Recipe
+    // }
+
+    const res = recipes.value.find((recipe) => {
+      return recipe.id === id
+    })
+    return res ? res : ({ id: '', uid: userInfo.value.uid } as Recipe)
   }
 
   async function editRecipe(id: string, newData: Recipe) {
-    const recipeRef = doc(firestore, 'recipes', id)
+    const recipeRef = doc(colRefs.value.recipesColRef, id)
     await setDoc(recipeRef, newData, { merge: true })
   }
 

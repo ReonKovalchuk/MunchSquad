@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 
 export const useUserInfoStore = defineStore('userInfo', () => {
   const userInfo = ref({ isLoggedIn: false, displayName: '', uid: '' })
-  function getUserInfo(user: any) {
+  function init(user: any) {
     if (user) {
       userInfo.value.isLoggedIn = true
       userInfo.value.displayName = user.displayName!
@@ -14,7 +14,8 @@ export const useUserInfoStore = defineStore('userInfo', () => {
       userInfo.value.displayName = ''
       userInfo.value.uid = ''
     }
+    console.log('user info initialized with uid', userInfo.value.uid)
     // })
   }
-  return { userInfo, getUserInfo }
+  return { userInfo, init }
 })

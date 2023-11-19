@@ -10,7 +10,7 @@ const route = useRoute()
 
 const recipesStore = useRecipesStore()
 
-const currentRecipe = ref<Recipe>(await recipesStore.findRecipeById(route.params.id.toString()))
+const currentRecipe = ref<Recipe>(recipesStore.findRecipeById(route.params.id.toString()))
 
 const heroSubtitle = 'Munch squad поможет сохранить любимые рецепты'
 </script>

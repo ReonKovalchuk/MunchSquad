@@ -1,57 +1,74 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { firestore } from '@/firebase/init'
 
-import { doc, collection, setDoc, getDoc, query, where, getDocs } from 'firebase/firestore'
+import {
+  doc,
+  collection,
+  setDoc,
+  getDoc,
+  query,
+  where,
+  and,
+  or,
+  getDocs,
+  addDoc,
+  onSnapshot,
+  QuerySnapshot,
+  CollectionReference
+} from 'firebase/firestore'
 import type { PlannerDay } from '@/types/types'
 import { storeToRefs } from 'pinia'
 import { useUserInfoStore } from '@/stores/userInfo'
-
-const colRef = collection(firestore, 'planner')
+import { useFSRefsStore } from '@/stores/FSRefs'
+import { readQuerySnapshot } from '@/functions'
 
 export const usePlannerStore = defineStore('planner', () => {
   const planner = ref<PlannerDay[]>([])
   const loading = ref(false)
-  const userInfoStore = useUserInfoStore()
-  const { userInfo } = storeToRefs(userInfoStore)
+  const loaded = ref(false)
+  const { userInfo } = storeToRefs(useUserInfoStore())
+  const { colRefs } = storeToRefs(useFSRefsStore())
 
   async function getPlannerData() {
+    console.log(colRefs.value.plannerColRef.path)
     loading.value = true
-    const firestoreData = <PlannerDay[]>[]
-    const q = query(colRef, where('uid', '==', userInfo.value.uid))
-    const querySnapshot = await getDocs(q)
 
-    querySnapshot.forEach((doc: any) => {
-      // doc.data() is never undefined for query doc snapshots
-      firestoreData.push({ id: doc.id, ...doc.data() })
-    })
-    planner.value = firestoreData
+    const querySnapshot = await getDocs(colRefs.value.plannerColRef)
+    planner.value = <PlannerDay[]>readQuerySnapshot(querySnapshot)
     loading.value = false
+    loaded.value = true
+    console.log('loaded planner', planner.value)
   }
 
   async function addNewPlannerDay(day: PlannerDay) {
-    const data = { dinnerId: day.dinnerId || '', supperId: day.supperId || '' }
-    const docRef = doc(firestore, 'planner', day.id)
-    await setDoc(docRef, data)
+    const docRef = doc(colRefs.value.plannerColRef, day.id)
+
+    await setDoc(docRef, day)
   }
 
-  async function findPlannerDayById(id: string) {
-    const docRef = doc(firestore, 'planner', id)
-    const docSnap = await getDoc(docRef)
-    if (docSnap.exists()) {
-      return <PlannerDay>{ id, ...docSnap.data() }
+  function findPlannerDayById(id: string) {
+    if (loaded.value) {
+      console.log('planner has', planner.value)
+
+      const res = planner.value.find((day) => {
+        return day.id == id
+      })
+      console.log('found this', res)
+
+      return res
     } else {
-      return <PlannerDay>{ id, uid: userInfo.value.uid }
+      return undefined
     }
   }
 
   async function editPlannerDay(newData: PlannerDay) {
-    const docRef = doc(firestore, 'planner', newData.id)
-    const docSnap = await getDoc(docRef)
-
-    if (docSnap.exists()) {
+    const res = findPlannerDayById(newData.id)
+    if (res) {
+      const docRef = doc(colRefs.value.plannerColRef, res.id)
       await setDoc(docRef, newData, { merge: true })
     } else {
+      newData.uid = userInfo.value.uid
       await addNewPlannerDay(newData)
     }
   }

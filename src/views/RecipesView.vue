@@ -2,13 +2,15 @@
 import AppHero from '@/components/AppHero.vue'
 import NewRecipe from '@/components/NewRecipe.vue'
 import AppCard from '@/components/AppCard.vue'
-import { getRecipes, removeRecipe } from '@/stores/recipesData'
+import { useRecipesStore } from '@/stores/recipes'
 import { ref } from 'vue'
 import type { Recipe } from '@/types/types'
+import { storeToRefs } from 'pinia'
 
-const recipes = ref<Recipe[]>(await getRecipes())
+const recipesStore = useRecipesStore()
+const { recipes } = storeToRefs(recipesStore)
 const remove = (id: string) => {
-  removeRecipe(id)
+  recipesStore.removeRecipe(id)
   recipes.value = recipes.value.filter((rec) => {
     return rec.id !== id
   })

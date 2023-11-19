@@ -42,7 +42,10 @@ const heroSubtitle = 'Munch squad - удобный способ спланиро
     <div class="planner">
       <div v-for="day in currentWeek" :key="day.toUnixInteger()" class="planner__card-wrapper">
         <suspense>
-          <planner-card :dayId="day.toUnixInteger()" :title="getTitle(day)"></planner-card>
+          <planner-card
+            :dayId="day.toUnixInteger().toString()"
+            :title="getTitle(day)"
+          ></planner-card>
           <template #fallback>
             <p>грузимся</p>
           </template>

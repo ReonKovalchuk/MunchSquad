@@ -8,7 +8,7 @@ import type { Recipe, Restaurant } from '@/types/types'
 export const useSearchStore = defineStore('search', () => {
   const searchData = ref<Recipe | Restaurant[]>([])
   const loading = ref(false)
-  async function getSearchData() {
+  function getSearchData() {
     loading.value = true
     const recipesStore = useRecipesStore()
     const { recipes } = storeToRefs(recipesStore)
