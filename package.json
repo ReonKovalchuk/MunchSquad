@@ -13,9 +13,6 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@tiptap/pm": "^2.1.12",
-    "@tiptap/starter-kit": "^2.1.12",
-    "@tiptap/vue-3": "^2.1.12",
     "axios": "^1.6.0",
     "element-tiptap": "^2.2.1",
     "firebase": "^10.5.2",
