@@ -1,22 +1,7 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { firestore } from '@/firebase/init'
 
-import {
-  doc,
-  collection,
-  setDoc,
-  getDoc,
-  query,
-  where,
-  and,
-  or,
-  getDocs,
-  addDoc,
-  onSnapshot,
-  QuerySnapshot,
-  CollectionReference
-} from 'firebase/firestore'
+import { doc, setDoc, getDocs } from 'firebase/firestore'
 import type { PlannerDay } from '@/types/types'
 import { storeToRefs } from 'pinia'
 import { useUserInfoStore } from '@/stores/userInfo'

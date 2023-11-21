@@ -7,15 +7,14 @@ import { useRecipesStore } from '@/stores/recipes'
 import { useRestaurantsStore } from '@/stores/restaurants'
 import { usePlannerStore } from '@/stores/planner'
 import { useFSRefsStore } from './stores/FSRefs'
-// import { storeToRefs } from 'pinia'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { storeToRefs } from 'pinia'
 import type { PlannerDay, Recipe, Restaurant } from '@/types/types'
-import { firestore } from '@/firebase/init'
-import { collection, onSnapshot } from 'firebase/firestore'
 import { readQuerySnapshot } from './functions'
+import type { QuerySnapshot } from '@firebase/firestore'
+import { onSnapshot } from '@firebase/firestore'
 
 onMounted(async () => {
   const userInfoStore = useUserInfoStore()
@@ -43,7 +42,7 @@ onMounted(async () => {
   const { planner } = storeToRefs(plannerStore)
   const { recipes } = storeToRefs(recipesStore)
   const { restaurants } = storeToRefs(restaurantsStore)
-  onSnapshot(colRefs.value.plannerColRef, (querySnapshot) => {
+  onSnapshot(colRefs.value.plannerColRef, (querySnapshot: QuerySnapshot) => {
     planner.value = <PlannerDay[]>readQuerySnapshot(querySnapshot)
     searchStore.getSearchData()
   })

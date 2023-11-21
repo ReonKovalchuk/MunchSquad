@@ -6,7 +6,7 @@ import AppSearch from './AppSearch.vue'
 import { usePlannerStore } from '@/stores/planner'
 import { useRecipesStore } from '@/stores/recipes'
 import { useRestaurantsStore } from '@/stores/restaurants'
-import type { PlannerDay, Recipe, Restaurant } from '@/types/types'
+import type { Recipe, Restaurant } from '@/types/types'
 import { storeToRefs } from 'pinia'
 import { useUserInfoStore } from '@/stores/userInfo'
 
@@ -36,7 +36,7 @@ function getPlannerDay() {
 
   const result = plannerStore.findPlannerDayById(dayId)
 
-  return result ? result : { id: dayId, uid: userInfo.value.uid }
+  return result ? result : { id: dayId, uid: userInfo.value.uid, supperId: '', dinnerId: '' }
 }
 const plannerDay = ref(getPlannerDay())
 const meals = ref({

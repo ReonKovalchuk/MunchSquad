@@ -29,3 +29,13 @@ const handleSignOut = () => {
     <router-link v-else to="/login" class="btn btn-primary">Войти</router-link>
   </div>
 </template>
+
+<style scoped>
+.btn {
+  display: inline;
+}
+
+.display-name {
+  margin-right: 6px;
+}
+</style>

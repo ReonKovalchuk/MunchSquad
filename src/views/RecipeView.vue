@@ -5,6 +5,7 @@ import { useRecipesStore } from '@/stores/recipes'
 import { useRoute } from 'vue-router'
 import type { Recipe } from '@/types/types'
 import NewRecipe from '@/components/NewRecipe.vue'
+import TiptapEditor from '@/components/TiptapEditor.vue'
 
 const route = useRoute()
 
@@ -21,6 +22,7 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
     <div class="page__wrapper">
       <div class="page__main-content">
         <h2>{{ currentRecipe.name }}</h2>
+        <!-- <tiptap-editor v-model="currentRecipe.description" /> -->
       </div>
       <aside class="new-x-form">
         <new-recipe></new-recipe>
@@ -28,3 +30,11 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.tiptap {
+  > * + * {
+    margin-top: 0.75em;
+  }
+}
+</style>

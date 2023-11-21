@@ -71,5 +71,3 @@ const register = () => {
     </form>
   </div>
 </template>
-
-<style></style>

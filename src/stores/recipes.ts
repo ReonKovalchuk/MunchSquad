@@ -25,14 +25,7 @@ export const useRecipesStore = defineStore('recipes', () => {
   const { colRefs } = storeToRefs(useFSRefsStore())
   async function getRecipes() {
     loading.value = true
-
-    console.log(colRefs.value.recipesColRef.path)
     const querySnapshot = await getDocs(colRefs.value.recipesColRef)
-
-    // querySnapshot.forEach((doc: any) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   firestoreData.push({ id: doc.id, ...doc.data() })
-    // })
     loading.value = false
     recipes.value = <Recipe[]>readQuerySnapshot(querySnapshot)
     console.log('recipes now have', recipes.value)
@@ -60,16 +53,6 @@ export const useRecipesStore = defineStore('recipes', () => {
   }
 
   function findRecipeById(id: string) {
-    // const docRef = doc(colRefs.value.recipesColRef, id)
-    // const docSnap = await getDoc(docRef)
-
-    // if (docSnap.exists()) {
-    //   return { ...docSnap.data() } as Recipe
-    // } else {
-    //   console.log(`No document with id ${id}!`)
-    //   return { id: '', uid: userInfo.value.uid } as Recipe
-    // }
-
     const res = recipes.value.find((recipe) => {
       return recipe.id === id
     })
