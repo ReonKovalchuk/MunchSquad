@@ -38,18 +38,9 @@ const heroSubtitle = 'Munch squad - удобный способ спланиро
   <app-hero :subtitle="heroSubtitle" /><!-- :title="currentWeek" -->
 
   <div class="container">
-    <!-- <recipes-soups /> -->
     <div class="planner">
       <div v-for="day in currentWeek" :key="day.toUnixInteger()" class="planner__card-wrapper">
-        <suspense>
-          <planner-card
-            :dayId="day.toUnixInteger().toString()"
-            :title="getTitle(day)"
-          ></planner-card>
-          <template #fallback>
-            <p>грузимся</p>
-          </template>
-        </suspense>
+        <planner-card :dayId="day.toUnixInteger().toString()" :title="getTitle(day)"></planner-card>
       </div>
     </div>
   </div>
