@@ -21,6 +21,10 @@ const remove = () => {
     emit('remove', object.id)
   }
 }
+
+function handleImgError(e: any) {
+  e.target.src = './public/placeholder-image.png'
+}
 </script>
 
 <template>
@@ -28,7 +32,7 @@ const remove = () => {
     <button class="card__remove-btn" @click="remove()">
       <close-icon color="red"></close-icon>
     </button>
-    <img :src="object.linkToImage" class="card__image" />
+    <img :src="object.linkToImage" @error="handleImgError" class="card__image" />
     <div class="card__content">
       <strong class="card__title">{{ object.name }}</strong>
       <div class="card__actions">

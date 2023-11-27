@@ -1,13 +1,13 @@
 <script setup>
 import AppSearch from './AppSearch.vue'
 import AppLogin from './AppLogin.vue'
+import AppLogo from './AppLogo.vue'
 </script>
 <template>
   <header class="header">
     <div class="container header__container">
-      <div class="header__logo-group">
-        <img src="../assets/logo.svg" alt="" class="header__logo" /> Munch squad
-      </div>
+      <app-logo></app-logo>
+
       <div class="header__nav-wrapper">
         <slot name="navigation"></slot>
       </div>

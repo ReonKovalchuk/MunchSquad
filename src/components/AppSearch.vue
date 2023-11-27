@@ -38,6 +38,7 @@ const searchedItems = computed(() => {
         v-model="searchQuery"
         @focus="focus = true"
         @blur="focus = false"
+        placeholder="Поиск"
       />
       <button type="submit" class="search__btn">
         <search-icon color="lightgray"></search-icon>
@@ -51,8 +52,8 @@ const searchedItems = computed(() => {
   </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 .search-active {
   border-radius: var(--border-radius-primary) var(--border-radius-primary) 0 0;
 }
-</style>
+</style> -->

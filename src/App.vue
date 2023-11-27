@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { onMounted } from 'vue'
+import { watch, onMounted, ref } from 'vue'
 import { useSearchStore } from '@/stores/search'
 import { useUserInfoStore } from '@/stores/userInfo'
 import { useRecipesStore } from '@/stores/recipes'
@@ -15,6 +15,10 @@ import type { PlannerDay, Recipe, Restaurant } from '@/types/types'
 import { readQuerySnapshot } from './functions'
 import type { QuerySnapshot } from '@firebase/firestore'
 import { onSnapshot } from '@firebase/firestore'
+import { useRoute } from 'vue-router'
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+
+const route = useRoute()
 
 onMounted(async () => {
   const userInfoStore = useUserInfoStore()
@@ -43,36 +47,46 @@ onMounted(async () => {
   const { recipes } = storeToRefs(recipesStore)
   const { restaurants } = storeToRefs(restaurantsStore)
   onSnapshot(colRefs.value.plannerColRef, (querySnapshot: QuerySnapshot) => {
-    planner.value = <PlannerDay[]>readQuerySnapshot(querySnapshot)
+    planner.value = readQuerySnapshot(querySnapshot) as PlannerDay[]
     searchStore.getSearchData()
   })
   onSnapshot(colRefs.value.recipesColRef, (querySnapshot) => {
-    recipes.value = <Recipe[]>readQuerySnapshot(querySnapshot)
+    recipes.value = readQuerySnapshot(querySnapshot) as Recipe[]
     searchStore.getSearchData()
   })
   onSnapshot(colRefs.value.restaurantsColRef, (querySnapshot) => {
-    restaurants.value = <Restaurant[]>readQuerySnapshot(querySnapshot)
+    restaurants.value = readQuerySnapshot(querySnapshot) as Restaurant[]
     searchStore.getSearchData()
   })
+})
+const scroll = ref()
+watch(route, () => {
+  if (scroll.value) {
+    scroll.value.scrollTop = 0
+  }
 })
 </script>
 
 <template>
-  <app-header>
-    <template v-slot:navigation>
-      <nav>
-        <RouterLink to="/" class="header__nav-link">Планировщик</RouterLink>
-        <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
-        <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
-      </nav>
-    </template>
-  </app-header>
-  <Suspense>
+  <perfect-scrollbar ref="scroll">
+    <app-header>
+      <template v-slot:navigation>
+        <nav>
+          <RouterLink to="/" class="header__nav-link">Планировщик</RouterLink>
+          <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
+          <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
+        </nav>
+      </template>
+    </app-header>
+
     <main>
-      <RouterView />
+      <Suspense>
+        <RouterView />
+      </Suspense>
     </main>
-  </Suspense>
-  <app-footer></app-footer>
+
+    <app-footer></app-footer>
+  </perfect-scrollbar>
 </template>
 
 <style>
@@ -80,5 +94,8 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+.ps {
+  max-height: 100vh;
 }
 </style>

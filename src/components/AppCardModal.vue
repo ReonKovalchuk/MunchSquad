@@ -2,13 +2,26 @@
 import { ref } from 'vue'
 import CloseIcon from './icons/CloseIcon.vue'
 import { useRestaurantsStore } from '@/stores/restaurants'
+import EditIcon from './icons/EditIcon.vue'
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+
+// import LinkIcon from './icons/LinkIcon.vue'
 const { show, object } = defineProps(['show', 'object'])
-const { editRestaurantInfo } = useRestaurantsStore()
+const { editRestaurantInfo, findRestaurantById } = useRestaurantsStore()
 const thisObj = ref(object)
-const emit = defineEmits(['close'])
-const changeDescription = async () => {
+// const emit = defineEmits(['close'])
+const showInputs = ref(false)
+const saveInfo = async () => {
   await editRestaurantInfo(object.id, thisObj.value)
-  emit('close')
+  showInputs.value = false
+}
+function handleImgError(e) {
+  e.target.src = './public/placeholder-image.png'
+}
+
+const cancel = () => {
+  thisObj.value = findRestaurantById(thisObj.value.id)
+  showInputs.value = false
 }
 </script>
 
@@ -16,38 +29,98 @@ const changeDescription = async () => {
   <transition name="modal">
     <div v-if="show" class="modal__mask">
       <div class="modal__outer-container">
-        <button class="modal-default-button" @click="$emit('close')" tabindex="0">
+        <button class="btn-icon modal-default-button" @click="$emit('close')" tabindex="0">
           <close-icon color="black"></close-icon>
         </button>
-        <div class="modal__inner-container">
-          <img
-            v-if="object.linkToImage"
-            :src="object.linkToImage"
-            :alt="object.name"
-            class="modal__image"
-          />
-          <div class="modal__header">
-            <h3>{{ object.name }}</h3>
-          </div>
 
-          <div class="modal__body">
-            <form @submit.prevent="changeDescription()">
-              <div class="input-group">
-                <label for="description" class="input-label"> Впечатления: </label>
-
-                <textarea id="description" rows="5" class="input" v-model="thisObj.review">
-                </textarea>
+        <perfect-scrollbar>
+          <div class="modal__inner-container">
+            <form @submit.prevent="saveInfo">
+              <img
+                v-if="!showInputs"
+                :src="object.linkToImage"
+                :alt="object.name"
+                @error="handleImgError"
+                class="modal__image"
+              />
+              <div v-if="!showInputs" class="modal__header">
+                <h3>
+                  <a :href="object.link" class="visible-link"> {{ object.name }} </a>
+                </h3>
+                <button type="button" class="btn-icon edit-btn" @click="showInputs = true">
+                  <edit-icon color="black" />
+                </button>
               </div>
-              <button type="submit" class="btn btn-secondary">Сохранить</button>
+
+              <div class="modal__body">
+                <div v-if="showInputs">
+                  <div class="input-group">
+                    <label for="restaurant-linkToImage" class="input-label">
+                      Ссылка на картинку
+                    </label>
+
+                    <input
+                      id="restaurant-linkToImage"
+                      type="text"
+                      v-model="thisObj.linkToImage"
+                      class="input"
+                      required
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label for="restaurant-name" class="input-label"> Название ресторана </label>
+
+                    <input
+                      id="restaurant-name"
+                      type="text"
+                      v-model="thisObj.name"
+                      class="input"
+                      required
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label for="restaurant-link" class="input-label"
+                      >Ссылка на сайт ресторана
+                    </label>
+
+                    <input
+                      id="restaurant-link"
+                      type="text"
+                      v-model="thisObj.link"
+                      class="input"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="description" class="input-label"> Впечатления: </label>
+
+                  <textarea id="description" rows="5" class="input" v-model="thisObj.review">
+                  </textarea>
+                </div>
+                <div class="card__actions">
+                  <button type="submit" class="btn btn-primary">Сохранить</button>
+                  <button v-if="showInputs" type="button" class="btn btn-secondary" @click="cancel">
+                    Отмена
+                  </button>
+                </div>
+              </div>
             </form>
           </div>
-        </div>
+        </perfect-scrollbar>
       </div>
     </div>
   </transition>
 </template>
 
-<style>
+<style scoped>
+/* .scroll-area {
+  position: relative;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+} */
+
 .modal__mask {
   position: fixed;
 
@@ -71,39 +144,44 @@ const changeDescription = async () => {
   border-radius: var(--border-radius-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
-  /* overflow-y: scroll; */
 }
 .modal__inner-container {
   background-color: var(--card-background);
-  border-radius: var(--border-radius-primary) var(--border-radius-primary) 0 0;
-  overflow: hidden;
-  /* overflow-y: scroll; */
-  /*  */
+  max-height: 90vh;
 }
 
-.modal__header h3 {
-  /* padding: 12px; */
+.ps {
+  max-height: 700px;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
   margin-bottom: 12px;
+  max-width: 245px;
+}
+.modal__header h3 {
   font-weight: 700;
+  flex-grow: 1;
+}
+
+.edit-btn {
+  flex-grow: 0;
 }
 
 .modal__image {
   max-height: 200px;
   min-width: 100%;
   object-fit: cover;
-  /* border-radius: var(--border-radius-primary); */
+  border-radius: var(--border-radius-primary) var(--border-radius-primary) 0 0;
 }
 
 .modal-default-button {
-  height: 16px;
-  width: 16px;
-  padding: 0;
   position: absolute;
   top: 18px;
   right: 15px;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
 }
 /*
  * The following styles are auto-applied to elements with
@@ -128,3 +206,5 @@ const changeDescription = async () => {
   transform: scale(1.1);
 }
 </style>
+
+<style src="vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css" />

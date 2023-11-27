@@ -114,3 +114,5 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
     </div>
   </suspense>
 </template>
+
+<style scoped></style>

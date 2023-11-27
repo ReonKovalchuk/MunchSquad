@@ -13,7 +13,6 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "axios": "^1.6.0",
     "element-tiptap": "^2.2.1",
     "firebase": "^10.5.2",
     "firebaseui": "^6.1.0",
@@ -21,7 +20,7 @@
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",
-    "vue3-carousel": "^0.3.1",
+    "vue3-perfect-scrollbar": "^1.6.1",
     "vuefire": "^3.1.18"
   },
   "devDependencies": {
