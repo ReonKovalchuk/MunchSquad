@@ -24,7 +24,6 @@ export const useFSRefsStore = defineStore('FSRefs', () => {
       recipesColRef,
       restaurantsColRef
     }
-    console.log('col refs initialized with uid', userInfo.value.uid)
   }
   return {
     colRefs,

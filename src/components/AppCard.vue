@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import AppCardModal from '@/components/AppCardModal.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'
+import { handleImgError } from '@/functions'
 
 const { object, removeFromPlanner, isRecipe } = defineProps([
   'object',
@@ -20,10 +21,6 @@ const remove = () => {
     emit('removeFromPlanner')
     emit('remove', object.id)
   }
-}
-
-function handleImgError(e: any) {
-  e.target.src = './public/placeholder-image.png'
 }
 </script>
 

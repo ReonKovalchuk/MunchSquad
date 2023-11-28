@@ -16,14 +16,12 @@ export const usePlannerStore = defineStore('planner', () => {
   const { colRefs } = storeToRefs(useFSRefsStore())
 
   async function getPlannerData() {
-    console.log(colRefs.value.plannerColRef.path)
     loading.value = true
 
     const querySnapshot = await getDocs(colRefs.value.plannerColRef)
     planner.value = <PlannerDay[]>readQuerySnapshot(querySnapshot)
     loading.value = false
     loaded.value = true
-    console.log('loaded planner', planner.value)
   }
 
   async function addNewPlannerDay(day: PlannerDay) {
@@ -34,12 +32,9 @@ export const usePlannerStore = defineStore('planner', () => {
 
   function findPlannerDayById(id: string) {
     if (loaded.value) {
-      console.log('planner has', planner.value)
-
       const res = planner.value.find((day) => {
         return day.id == id
       })
-      console.log('found this', res)
 
       return res
     } else {

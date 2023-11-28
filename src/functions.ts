@@ -1,4 +1,4 @@
-import { query, where, type QuerySnapshot, type CollectionReference } from 'firebase/firestore'
+import { type QuerySnapshot } from 'firebase/firestore'
 
 export const readQuerySnapshot = (querySnapshot: QuerySnapshot) => {
   const firestoreData = <any[]>[]
@@ -9,6 +9,6 @@ export const readQuerySnapshot = (querySnapshot: QuerySnapshot) => {
   return firestoreData
 }
 
-// export const uidQuery = (colRef: CollectionReference, uid: string) => {
-//   return query(colRef, where('uid', '==', uid))
-// }
+export function handleImgError(e: any) {
+  e.target.src = '/placeholder-image.png'
+}

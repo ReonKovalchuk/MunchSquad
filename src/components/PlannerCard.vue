@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppCard from '@/components/AppCard.vue'
-import { ref, onMounted, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 import AppSearch from './AppSearch.vue'
 import { usePlannerStore } from '@/stores/planner'
@@ -20,10 +20,7 @@ const { title, dayId } = defineProps(['title', 'dayId'])
 
 watch(loading, (newValue) => {
   if (!newValue) {
-    console.log('subscription worked')
-
     plannerDay.value = getPlannerDay()
-    console.log('planner day now is', plannerDay.value)
     meals.value = {
       dinner: getObject(plannerDay.value.dinnerId),
       supper: getObject(plannerDay.value.supperId)
@@ -32,8 +29,6 @@ watch(loading, (newValue) => {
 })
 
 function getPlannerDay() {
-  console.log('looking for day', dayId)
-
   const result = plannerStore.findPlannerDayById(dayId)
 
   return result ? result : { id: dayId, uid: userInfo.value.uid, supperId: '', dinnerId: '' }
@@ -49,7 +44,6 @@ function isRecipe(id: string) {
 
 function getObject(id: string | undefined) {
   let obj = {}
-  console.log('looking for recipe/rest with id', id)
   if (id) {
     if (isRecipe(id)) {
       obj = recipesStore.findRecipeById(id)
@@ -57,7 +51,6 @@ function getObject(id: string | undefined) {
       obj = restaurantsStore.findRestaurantById(id)
     }
   }
-  console.log('found recipe/rest', obj)
   return obj
 }
 

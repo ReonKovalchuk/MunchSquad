@@ -12,7 +12,6 @@ const auth = useFirebaseAuth()
 const register = () => {
   signInWithEmailAndPassword(auth, userData.value.email, userData.value.password)
     .then((user) => {
-      console.log('User signed in:', user)
       router.push('/')
     })
     .catch((error) => {

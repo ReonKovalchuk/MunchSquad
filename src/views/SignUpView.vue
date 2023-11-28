@@ -15,8 +15,6 @@ const register = () => {
       updateProfile(auth.currentUser, {
         displayName: userData.value.username
       })
-      console.log('User registered:', user)
-      // TODO: handle successful registration
       router.push('/')
     })
     .catch((error) => {

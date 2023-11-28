@@ -19,7 +19,6 @@ export const useRestaurantsStore = defineStore('restaurants', () => {
     const querySnapshot = await getDocs(colRefs.value.restaurantsColRef)
     loading.value = false
     restaurants.value = <Restaurant[]>readQuerySnapshot(querySnapshot)
-    console.log('restaurants now have', restaurants.value)
   }
 
   async function addNewRestaurant(restaurant: Restaurant) {

@@ -33,13 +33,9 @@ onMounted(async () => {
   onAuthStateChanged(auth, async (user) => {
     userInfoStore.init(user)
     FSRefsStore.init()
-    console.log('getting recipes')
     await recipesStore.getRecipes()
-    console.log('getting restaurants')
     await restaurantsStore.getRestaurants()
-    console.log('getting planner')
     await plannerStore.getPlannerData()
-    console.log('getting search')
     searchStore.getSearchData()
   })
   const { colRefs } = storeToRefs(FSRefsStore)

@@ -14,8 +14,6 @@ export const useUserInfoStore = defineStore('userInfo', () => {
       userInfo.value.displayName = ''
       userInfo.value.uid = ''
     }
-    console.log('user info initialized with uid', userInfo.value.uid)
-    // })
   }
   return { userInfo, init }
 })

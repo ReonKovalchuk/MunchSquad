@@ -3,6 +3,10 @@ body {
   background-color: var(--primary-color);
 }
 
+h1, h2, h3 {
+  font-weight: 700;
+}
+
 a:link {
   opacity: 1;
   cursor: pointer;
@@ -26,6 +30,7 @@ a {
 
 select {
   background-color: unset;
+  height: 38px;
 }
 
 header,
@@ -38,7 +43,7 @@ main {
 }
 
 aside form {
-  border: 2px solid var(--primary-color);
+  border: 1px solid var(--primary-color);
   border-radius: var(--border-radius-primary);
   padding: 24px;
 }
@@ -114,7 +119,7 @@ nav a:hover {
   margin: 0px;
   border: 1px solid lightgray;
   border-radius: 6px;
-  padding: 8px;
+  padding: 6px 8px;
   width: 100%;
   line-height: 1.5rem;
 }
@@ -378,7 +383,7 @@ button:focus-visible {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  gap: 12px;
+  gap: 24px;
 }
 
 .page__main-content {

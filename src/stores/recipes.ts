@@ -28,7 +28,6 @@ export const useRecipesStore = defineStore('recipes', () => {
     const querySnapshot = await getDocs(colRefs.value.recipesColRef)
     loading.value = false
     recipes.value = <Recipe[]>readQuerySnapshot(querySnapshot)
-    console.log('recipes now have', recipes.value)
   }
 
   const courseOptions = computed(() => {
@@ -38,7 +37,6 @@ export const useRecipesStore = defineStore('recipes', () => {
   async function addNewRecipe(recipe: Recipe) {
     recipe.id = 'rec' + Date.now().toString()
 
-    console.log(colRefs.value.recipesColRef.path)
     await setDoc(doc(colRefs.value.recipesColRef, recipe.id), recipe)
   }
 

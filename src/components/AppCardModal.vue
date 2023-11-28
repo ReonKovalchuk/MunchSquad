@@ -4,6 +4,7 @@ import CloseIcon from './icons/CloseIcon.vue'
 import { useRestaurantsStore } from '@/stores/restaurants'
 import EditIcon from './icons/EditIcon.vue'
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+import { handleImgError } from '@/functions'
 
 // import LinkIcon from './icons/LinkIcon.vue'
 const { show, object } = defineProps(['show', 'object'])
@@ -14,9 +15,6 @@ const showInputs = ref(false)
 const saveInfo = async () => {
   await editRestaurantInfo(object.id, thisObj.value)
   showInputs.value = false
-}
-function handleImgError(e) {
-  e.target.src = './public/placeholder-image.png'
 }
 
 const cancel = () => {
