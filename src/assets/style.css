@@ -1,47 +1,4 @@
 @import './base.css';
-body {
-  background-color: var(--primary-color);
-}
-
-h1, h2, h3 {
-  font-weight: 700;
-}
-
-a:link {
-  opacity: 1;
-  cursor: pointer;
-}
-
-a:link:hover {
-  opacity: 0.75;
-}
-
-a {
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
-  opacity: 0.5;
-  cursor: not-allowed;
-  max-width: -webkit-fit-content;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
-  text-decoration: none;
-  color: var(--color-text);
-}
-
-select {
-  background-color: unset;
-  height: 38px;
-}
-
-header,
-main {
-  background-color: #fff;
-}
-
-main {
-  padding-bottom: 12px;
-}
-
 aside form {
   border: 1px solid var(--primary-color);
   border-radius: var(--border-radius-primary);
@@ -124,30 +81,13 @@ nav a:hover {
   line-height: 1.5rem;
 }
 
-input .input,
-select .input {
-  height: 40px;
-}
-
-button {
-  margin: 0px;
-  border: 0px;
-  background-color: transparent;
-  cursor: pointer;
-  padding: 0px;
-}
-
-button:focus,
-button:focus-visible {
-  outline: var(--primary-color) 2px solid;
-}
-
 .btn {
   display: block;
   border-radius: 32px;
   padding: 9px 12px;
   color: #000;
   font-weight: 600;
+  border: 2px solid;
 }
 
 .btn-icon {
@@ -160,10 +100,23 @@ button:focus-visible {
 
 .btn-primary {
   background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn:focus,
+.btn:focus-visible {
+  background-color: transparent;
+  border-width: 2px;
 }
 
 .btn-secondary {
   background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-icon:focus,
+.btn-icon:focus-visible {
+  outline: 2px solid var(--primary-color);
 }
 
 .input-group {

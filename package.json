@@ -13,7 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "element-tiptap": "^2.2.1",
+    "element-tiptap-vue3-fixed": "^1.2.3",
     "firebase": "^10.5.2",
     "firebaseui": "^6.1.0",
     "luxon": "^3.4.3",

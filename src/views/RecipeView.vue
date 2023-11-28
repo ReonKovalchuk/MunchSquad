@@ -8,11 +8,11 @@ import { storeToRefs } from 'pinia'
 import { handleImgError } from '@/functions'
 import CalendarAddIcon from '@/components/icons/CalendarAddIcon.vue'
 import EditIcon from '@/components/icons/EditIcon.vue'
-import ru from 'element-tiptap/lib/locales/ru'
+import ru from 'element-tiptap-vue3-fixed/lib/locales/ru'
 import {
   // necessary extensions
   ElementTiptap,
-  Document,
+  Doc,
   Text,
   Paragraph,
   Heading,
@@ -24,12 +24,12 @@ import {
   OrderedList,
   Fullscreen,
   TextAlign
-} from 'element-tiptap'
+} from 'element-tiptap-vue3-fixed'
 
 // editor extensions
 // they will be added to menubar and bubble menu by the order you declare.
 const extensions = [
-  Document,
+  Doc,
   Text,
   Paragraph,
   Heading.configure({ level: 5 }),
@@ -160,8 +160,8 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
             <button type="button" class="btn btn-primary" @click="saveInfo">Сохранить</button>
             <button type="button" class="btn btn-secondary" @click="cancel">Отмена</button>
           </div>
-          <textarea class="input" v-model="currentRecipe.description"></textarea>
-          <!-- <element-tiptap
+          <!-- <textarea class="input" v-model="currentRecipe.description"></textarea> -->
+          <element-tiptap
             v-if="showInputs.description"
             v-model:content="currentRecipe.description"
             :extensions="extensions"
@@ -169,7 +169,7 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
             width="100%"
             height="500"
             :locale="ru"
-          /> -->
+          />
         </div>
       </div>
       <aside class="new-x-form">
@@ -186,6 +186,7 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
 .btn-icon {
   width: 24px;
   height: 24px;
+  margin-right: 12px;
 }
 
 .inputs {

@@ -10,9 +10,9 @@ import { VueFire, VueFireAuth } from 'vuefire'
 import { firebaseApp } from '@/firebase/init'
 
 import ElementPlus from 'element-plus'
-import ElementTiptapPlugin from 'element-tiptap'
-
-import 'element-tiptap/lib/style.css'
+import ElementTiptapPlugin from 'element-tiptap-vue3-fixed'
+// import ElementTiptap's styles
+import 'element-tiptap-vue3-fixed/lib/style.css'
 
 const app = createApp(App)
 
