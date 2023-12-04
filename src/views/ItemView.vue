@@ -2,8 +2,9 @@
 import AppHero from '@/components/AppHero.vue'
 import { ref, watch } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
+import { useRestaurantsStore } from '@/stores/restaurants'
 import { useRoute } from 'vue-router'
-import NewRecipe from '@/components/NewRecipe.vue'
+
 import { storeToRefs } from 'pinia'
 import { handleImgError } from '@/functions'
 import CalendarAddIcon from '@/components/icons/CalendarAddIcon.vue'
@@ -42,24 +43,51 @@ const extensions = [
   OrderedList,
   Fullscreen
 ]
-const route = useRoute()
 
+const { isRecipe, heroSubtitle } = defineProps(['heroSubtitle', 'isRecipe'])
+const route = useRoute()
+const id = route.params.id.toString()
 const recipesStore = useRecipesStore()
 const { editRecipe, findRecipeById } = recipesStore
-const { loading } = storeToRefs(recipesStore)
-const showInputs = ref({ links: false, description: false })
+const restaurantsStore = useRestaurantsStore()
+const { editRestaurantInfo, findRestaurantById } = restaurantsStore
+function getCurrentItem() {
+  if (isRecipe) {
+    // const { loadingRec } = storeToRefs(recipesStore)
+    // return {
+    //   item: findRecipeById(id.toString()),
+    //   loading: loadingRec}
 
-const currentRecipe = ref(findRecipeById(route.params.id.toString()))
-watch(loading, (newValue) => {
+    return findRecipeById(id)
+  } else {
+    // const { loadingRes } = storeToRefs(restaurantsStore)
+
+    // return {
+    //     item:  findRestaurantById(id.toString()),
+    //     loading:loadingRes
+    //   }
+    return findRestaurantById(id)
+  }
+}
+
+const { loadingRes } = storeToRefs(restaurantsStore)
+const { loadingRec } = storeToRefs(recipesStore)
+const showInputs = ref({ links: false, description: false })
+const currentItem = ref(getCurrentItem())
+
+watch(isRecipe ? loadingRec : loadingRes, (newValue) => {
   if (!newValue) {
-    currentRecipe.value = findRecipeById(route.params.id.toString())
+    currentItem.value = getCurrentItem()
   }
 })
 
 const saveInfo = async () => {
-  console.log('saving')
   try {
-    await editRecipe(currentRecipe.value.id, currentRecipe.value)
+    if (isRecipe) {
+      await editRecipe(currentItem.value.id, currentItem.value)
+    } else {
+      await editRestaurantInfo(currentItem.value.id, currentItem.value)
+    }
   } catch (error) {
     console.log(error)
   }
@@ -71,27 +99,25 @@ const saveInfo = async () => {
 const cancel = () => {
   console.log('canselling')
   try {
-    currentRecipe.value = findRecipeById(currentRecipe.value.id)
+    currentItem.value = getCurrentItem()
   } catch (error) {
     console.log(error)
   }
   showInputs.value.links = false
   showInputs.value.description = false
 }
-
-const heroSubtitle = 'Munch squad поможет сохранить любимые рецепты'
 </script>
 
 <template>
   <app-hero :subtitle="heroSubtitle" />
   <div class="container">
     <div class="page__wrapper">
+      <img :src="currentItem.linkToImage" @error="handleImgError" class="recipe__image" />
       <div class="page__main-content">
         <div v-if="!showInputs.links" class="recipe__header">
-          <img :src="currentRecipe.linkToImage" @error="handleImgError" class="recipe__image" />
           <div class="recipe__title">
-            <a :href="currentRecipe.link" class="visible-link">
-              <h2>{{ currentRecipe.name }}</h2>
+            <a :href="currentItem.link" class="visible-link" target="_blank">
+              <h2>{{ currentItem.name }}</h2>
             </a>
             <div class="recipe__actions">
               <button class="btn-icon"><calendar-add-icon></calendar-add-icon></button>
@@ -111,7 +137,7 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
               <input
                 id="recipe-name"
                 type="text"
-                v-model="currentRecipe.name"
+                v-model="currentItem.name"
                 class="input"
                 required
               />
@@ -119,28 +145,28 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
             <div class="input-group">
               <label for="recipe-link" class="input-label"> Ссылка на рецепт </label>
 
-              <input id="recipe-link" type="text" v-model="currentRecipe.link" class="input" />
+              <input id="recipe-link" type="text" v-model="currentItem.link" class="input" />
             </div>
             <div class="input-group">
               <label for="recipe-link-to-image" class="input-label"> Ссылка на изображение </label>
               <input
                 id="recipe-link-to-image"
                 type="text"
-                v-model="currentRecipe.linkToImage"
+                v-model="currentItem.linkToImage"
                 class="input"
               />
             </div>
-            <div class="input-group">
+            <div v-if="isRecipe" class="input-group">
               <label for="recipe-course" class="input-label">Вид</label>
 
-              <select id="recipe-course" v-model="currentRecipe.course" class="input" required>
+              <select id="recipe-course" v-model="currentItem.course" class="input" required>
                 <option v-for="course in recipesStore.courseOptions" :value="course" :key="course">
                   {{ course }}
                 </option>
               </select>
             </div>
           </div>
-          <div class="card__actions">
+          <div v-if="showInputs.links && !showInputs.description" class="card__actions">
             <button type="submit" class="btn btn-primary">Сохранить</button>
             <button type="button" class="btn btn-secondary" @click="cancel">Отмена</button>
           </div>
@@ -153,17 +179,17 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
               <edit-icon color="black" />
             </button>
           </h3>
-          <div class="recipe__description" v-html="currentRecipe.description"></div>
+          <div class="recipe__description" v-html="currentItem.description"></div>
         </div>
         <div v-if="showInputs.description" class="editor-wrapper">
           <div class="card__actions">
             <button type="button" class="btn btn-primary" @click="saveInfo">Сохранить</button>
             <button type="button" class="btn btn-secondary" @click="cancel">Отмена</button>
           </div>
-          <!-- <textarea class="input" v-model="currentRecipe.description"></textarea> -->
+          <!-- <textarea class="input" v-model="currentItem.description"></textarea> -->
           <element-tiptap
             v-if="showInputs.description"
-            v-model:content="currentRecipe.description"
+            v-model:content="currentItem.description"
             :extensions="extensions"
             output="html"
             width="100%"
@@ -172,18 +198,24 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
           />
         </div>
       </div>
-      <aside class="new-x-form">
+      <!-- <aside class="new-x-form">
         <new-recipe></new-recipe>
-      </aside>
+      </aside> -->
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.page__main-content {
-  display: unset;
+.page__wrapper {
+  // display: flex;
+  flex-wrap: wrap;
+  // flex-direction: row;
 }
-.btn-icon {
+.page__main-content {
+  flex-direction: column;
+  flex-shrink: 1;
+}
+.page__main-content .btn-icon {
   width: 24px;
   height: 24px;
   margin-right: 12px;
@@ -220,6 +252,7 @@ const heroSubtitle = 'Munch squad поможет сохранить любимы
   flex-direction: column;
   justify-content: space-between;
   gap: 24px;
+  word-break: break-word;
 }
 
 .recipe__image {

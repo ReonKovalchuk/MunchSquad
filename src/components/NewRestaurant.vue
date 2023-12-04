@@ -21,8 +21,8 @@ function addRestaurant() {
 </script>
 
 <template>
-  <h2>Новый ресторан</h2>
   <form @submit.prevent="addRestaurant">
+    <h2>Новый ресторан</h2>
     <div class="input-group">
       <label for="restaurant-name" class="input-label"> Название ресторана </label>
 

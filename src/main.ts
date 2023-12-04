@@ -13,6 +13,7 @@ import ElementPlus from 'element-plus'
 import ElementTiptapPlugin from 'element-tiptap-vue3-fixed'
 // import ElementTiptap's styles
 import 'element-tiptap-vue3-fixed/lib/style.css'
+import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify'
 
 const app = createApp(App)
 
@@ -26,5 +27,9 @@ app.use(VueFire, {
 app.use(ElementPlus)
 // use this package's plugin
 app.use(ElementTiptapPlugin)
+
+app.use(Vue3Toastify, {
+  autoClose: 1500
+} as ToastContainerOptions)
 
 app.mount('#app')

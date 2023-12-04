@@ -34,14 +34,14 @@ const remove = () => {
       <strong class="card__title">{{ object.name }}</strong>
       <div class="card__actions">
         <a :href="object.link" class="card__link" target="_blank">
-          <link-icon></link-icon>
+          <link-icon v-if="object.link"></link-icon>
         </a>
-        <RouterLink v-if="isRecipe" :to="`/recipes/${object.id}`" class="btn btn-secondary">
-          Рецепт
+        <RouterLink
+          :to="`/${isRecipe ? 'recipes' : 'restaurants'}/${object.id}`"
+          class="btn btn-secondary"
+        >
+          {{ isRecipe ? 'Мой рецепт' : 'Ресторан' }}
         </RouterLink>
-        <button v-else type="button" class="btn btn-secondary" @click="showModal = true">
-          Впечатления
-        </button>
       </div>
     </div>
   </div>
@@ -50,3 +50,60 @@ const remove = () => {
     <app-card-modal :show="showModal" :object="object" @close="showModal = false"> </app-card-modal>
   </teleport>
 </template>
+
+<style>
+.card {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  flex-grow: 1;
+  border-radius: var(--border-radius-primary);
+  box-shadow: var(--shadow);
+  background-color: var(--card-background);
+  overflow: hidden;
+  max-width: 250px;
+}
+.card__image {
+  min-width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+}
+.card__content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  padding: 12px;
+}
+.card__title {
+  display: block;
+  margin-bottom: 12px;
+  line-height: 1.5;
+  font-size: 18px;
+  font-weight: 700;
+  word-break: break-word;
+}
+.card__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card__remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  transition: opacity ease-in 0.1s;
+  opacity: 0;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  line-height: 0;
+}
+.card:hover .card__remove-btn {
+  opacity: 1;
+}
+.card__link {
+  line-height: 0;
+}
+</style>

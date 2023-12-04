@@ -1,20 +1,11 @@
 <script setup lang="ts">
 import AppHero from '@/components/AppHero.vue'
-import NewRestaurant from '@/components/NewRestaurant.vue'
+import NewItem from '@/components/NewItem.vue'
 import AppCard from '@/components/AppCard.vue'
-import { useRestaurantsStore } from '@/stores/restaurants'
+
 import { storeToRefs } from 'pinia'
 
-const restaurantsStore = useRestaurantsStore()
-const { restaurants } = storeToRefs(restaurantsStore)
-
 const heroSubtitle = 'Munch squad - сохрани впечатления о ресторанах в одном месте'
-const remove = (id: string) => {
-  restaurantsStore.removeRestaurant(id)
-  restaurants.value = restaurants.value.filter((res) => {
-    return res.id !== id
-  })
-}
 </script>
 <template>
   <app-hero :subtitle="heroSubtitle" />
@@ -30,7 +21,7 @@ const remove = (id: string) => {
         ></app-card>
       </div>
       <aside class="new-x-form">
-        <new-restaurant></new-restaurant>
+        <new-item></new-item>
       </aside>
     </div>
   </div>

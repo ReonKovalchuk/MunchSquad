@@ -15,7 +15,11 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/RecipesView.vue')
+      component: () => import('../views/LibraryView.vue'),
+      props: {
+        isRecipe: true,
+        heroSubtitle: 'Munch squad поможет сохранить любимые рецепты'
+      }
     },
     {
       path: '/restaurants',
@@ -23,12 +27,29 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/RestaurantsView.vue')
+      component: () => import('../views/LibraryView.vue'),
+      props: {
+        isRecipe: false,
+        heroSubtitle: 'Munch squad - сохрани впечатления о ресторанах в одном месте'
+      }
     },
     {
       path: '/recipes/:id',
       name: 'recipe',
-      component: () => import('../views/RecipeView.vue')
+      component: () => import('../views/ItemView.vue'),
+      props: {
+        isRecipe: true,
+        heroSubtitle: 'Munch squad поможет сохранить любимые рецепты'
+      }
+    },
+    {
+      path: '/restaurants/:id',
+      name: 'restaurant',
+      component: () => import('../views/ItemView.vue'),
+      props: {
+        isRecipe: false,
+        heroSubtitle: 'Munch squad - сохрани впечатления о ресторанах в одном месте'
+      }
     },
 
     {

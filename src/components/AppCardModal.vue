@@ -43,7 +43,9 @@ const cancel = () => {
               />
               <div v-if="!showInputs" class="modal__header">
                 <h3>
-                  <a :href="object.link" class="visible-link"> {{ object.name }} </a>
+                  <a :href="object.link" class="visible-link" target="_blank">
+                    {{ object.name }}
+                  </a>
                 </h3>
                 <button type="button" class="btn-icon edit-btn" @click="showInputs = true">
                   <edit-icon color="black" />
@@ -112,13 +114,6 @@ const cancel = () => {
 </template>
 
 <style scoped>
-/* .scroll-area {
-  position: relative;
-  margin: auto;
-  height: 100%;
-  width: 100%;
-} */
-
 .modal__mask {
   position: fixed;
 
@@ -163,6 +158,7 @@ const cancel = () => {
 .modal__header h3 {
   font-weight: 700;
   flex-grow: 1;
+  word-break: break-word;
 }
 
 .edit-btn {

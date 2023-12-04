@@ -10,7 +10,7 @@ import { readQuerySnapshot } from '@/functions'
 
 export const usePlannerStore = defineStore('planner', () => {
   const planner = ref<PlannerDay[]>([])
-  const loading = ref(false)
+  const loading = ref(true)
   const loaded = ref(false)
   const { userInfo } = storeToRefs(useUserInfoStore())
   const { colRefs } = storeToRefs(useFSRefsStore())

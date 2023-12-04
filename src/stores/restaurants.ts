@@ -9,15 +9,15 @@ import { useFSRefsStore } from './FSRefs'
 
 export const useRestaurantsStore = defineStore('restaurants', () => {
   const restaurants = ref<Restaurant[]>([])
-  const loading = ref(false)
+  const loadingRes = ref(false)
   const userInfoStore = useUserInfoStore()
   const { userInfo } = storeToRefs(userInfoStore)
   const { colRefs } = storeToRefs(useFSRefsStore())
 
   async function getRestaurants() {
-    loading.value = true
+    loadingRes.value = true
     const querySnapshot = await getDocs(colRefs.value.restaurantsColRef)
-    loading.value = false
+    loadingRes.value = false
     restaurants.value = <Restaurant[]>readQuerySnapshot(querySnapshot)
   }
 
@@ -43,6 +43,7 @@ export const useRestaurantsStore = defineStore('restaurants', () => {
   }
 
   return {
+    loadingRes,
     restaurants,
     getRestaurants,
     addNewRestaurant,

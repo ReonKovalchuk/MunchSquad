@@ -8,15 +8,24 @@ import AppLogo from './AppLogo.vue'
       <div>
         <p>
           <a
+            class="visible-link"
             href="https://www.figma.com/file/fuEkLM8LQIvASS9PeiDWnb/Food-recipes-website-UI---Del%C3%ADcias-%C3%A0-Mesa-(Community)"
+            target="_blank"
             >Макет</a
           >, взятый за основу дизайна
         </p>
-        <p><a href="https://www.svgrepo.com/svg/245256/dinner">иконка</a> с тарелкой</p>
+        <p>
+          <a class="visible-link" href="https://www.svgrepo.com/svg/245256/dinner" target="_blank"
+            >иконка</a
+          >
+          с тарелкой
+        </p>
 
         <p>
           <a
+            class="visible-link"
             href="https://ru.freepik.com/free-photo/top-view-wooden-bowls-with-corn-seeds-on-table-with-copy-space_17236423.htm#query=top-view-seeds-and-herbs-for-cooking_5511902&position=0&from_view=search&track=ais"
+            target="_blank"
             >Изображение от KamranAydinov</a
           >
           на Freepik
@@ -31,5 +40,7 @@ import AppLogo from './AppLogo.vue'
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
 }
 </style>

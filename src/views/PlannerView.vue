@@ -1,49 +1,67 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-// import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 import AppHero from '@/components/AppHero.vue'
-// import NewRecipe from '@/components/NewRecipe.vue'
-import PlannerCard from '@/components/PlannerCard.vue'
-import { DateTime } from 'luxon'
 
-// const firstDay = computed(() => {
-//   const curr = new Date() // get current date
-//   const first = curr.getDate() - curr.getDay() + 1 // First day is the day of the month - the day of the week
-//   return new Date(curr.setDate(first))
-// })
+import PlannerCarousel from '@/components/PlannerCarousel.vue'
+import PlannerWeek from '@/components/PlannerWeek.vue'
 
-const currentWeek = computed(() => {
-  const firsDay = DateTime.now().startOf('week').startOf('day')
+const { heroSubtitle } = defineProps(['heroSubtitle'])
 
-  let week = [firsDay]
-
-  for (let index = 1; index < 7; index++) {
-    week.push(firsDay.plus({ days: index }))
-  }
-  // const last = first + 6 // last day is the first day + 6
-
-  // const formatOptions: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' }
-  // const firstday = new Date(curr.setDate(first)).toLocaleDateString('ru-RU', formatOptions)
-  // const lastday = new Date(curr.setDate(last)).toLocaleDateString('ru-RU', formatOptions)
-
-  return week
-})
-const getTitle = (day: DateTime) => {
-  return day.setLocale('ru').toLocaleString({ day: 'numeric', month: 'short', weekday: 'long' })
-}
-const heroSubtitle = 'Munch squad - удобный способ спланировать меню для вашей семьи!'
+const showCarousel = ref(true)
+const showBreakfast = ref(true)
 </script>
 
 <template>
-  <app-hero :subtitle="heroSubtitle" /><!-- :title="currentWeek" -->
+  <app-hero :subtitle="heroSubtitle" />
 
   <div class="container">
-    <div class="planner">
-      <div v-for="day in currentWeek" :key="day.toUnixInteger()" class="planner__card-wrapper">
-        <planner-card :dayId="day.toUnixInteger().toString()" :title="getTitle(day)"></planner-card>
+    <div class="planner-actions">
+      <div class="view-toggle">
+        <button
+          type="button"
+          class="view-toggle-btn"
+          :class="{ active: showCarousel }"
+          @click="showCarousel = true"
+        >
+          1 день
+        </button>
+        <button
+          type="button"
+          class="view-toggle-btn"
+          :class="{ active: !showCarousel }"
+          @click="showCarousel = false"
+        >
+          Неделя
+        </button>
       </div>
+      <label for="show-breakfast"
+        ><input type="checkbox" id="show-breakfast" v-model="showBreakfast" /> Завтрак</label
+      >
     </div>
+
+    <planner-carousel v-if="showCarousel" :show-breakfast="showBreakfast"> </planner-carousel>
+    <planner-week v-else :show-breakfast="showBreakfast"> </planner-week>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.view-toggle {
+  border-radius: var(--border-radius-primary);
+  background-color: var(--card-background);
+  overflow: hidden;
+}
+.active {
+  background-color: var(--primary-color);
+}
+.planner-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.view-toggle-btn {
+  font-size: 15px;
+  padding: 8px 6px;
+}
+</style>

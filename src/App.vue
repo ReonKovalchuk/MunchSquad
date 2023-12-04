@@ -65,23 +65,15 @@ watch(route, () => {
 
 <template>
   <perfect-scrollbar ref="scroll">
-    <app-header>
-      <template v-slot:navigation>
-        <nav>
-          <RouterLink to="/" class="header__nav-link">Планировщик</RouterLink>
-          <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
-          <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
-        </nav>
-      </template>
-    </app-header>
+    <app-header />
 
-    <main>
-      <Suspense>
-        <RouterView />
-      </Suspense>
+    <main id="page-wrap">
+      <!-- <Suspense> -->
+      <RouterView />
+      <!-- </Suspense> -->
     </main>
 
-    <app-footer></app-footer>
+    <app-footer />
   </perfect-scrollbar>
 </template>
 

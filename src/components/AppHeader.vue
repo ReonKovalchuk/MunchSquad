@@ -2,16 +2,35 @@
 import AppSearch from './AppSearch.vue'
 import AppLogin from './AppLogin.vue'
 import AppLogo from './AppLogo.vue'
+import { Slide } from 'vue3-burger-menu'
+import { useRouter } from 'vue-router'
+import { isRecipe } from '@/functions'
+
+const router = useRouter()
+function navigate(item) {
+  router.push(`/${isRecipe(item.id) ? 'recipes' : 'restaurants'}/${item.id}`)
+}
 </script>
 <template>
   <header class="header">
     <div class="container header__container">
+      <Slide>
+        <app-search></app-search>
+        <app-logo></app-logo>
+        <!-- <nav class="burger-nav"> -->
+        <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
+        <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
+        <!-- </nav> -->
+      </Slide>
       <app-logo></app-logo>
 
       <div class="header__nav-wrapper">
-        <slot name="navigation"></slot>
+        <nav>
+          <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
+          <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
+        </nav>
       </div>
-      <app-search></app-search>
+      <app-search @selected="navigate"></app-search>
       <app-login></app-login>
     </div>
   </header>

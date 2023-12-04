@@ -21,12 +21,13 @@ export interface Restaurant {
   name?: string
   link?: string
   linkToImage?: string
-  review?: string
+  description?: string
   uid: string
 }
 
 export interface PlannerDay {
   id: string
+  breakfastId?: string
   dinnerId?: string
   supperId?: string
   uid: string

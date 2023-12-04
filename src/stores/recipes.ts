@@ -1,15 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { firestore } from '@/firebase/init'
-import {
-  doc,
-  collection,
-  setDoc,
-  deleteDoc,
-  getDocs,
-  getDoc,
-  CollectionReference
-} from 'firebase/firestore'
+import { doc, setDoc, deleteDoc, getDocs } from 'firebase/firestore'
 import type { Recipe, Course } from '@/types/types'
 import { CourseEnum } from '@/types/types'
 import { storeToRefs } from 'pinia'
@@ -18,15 +9,16 @@ import { readQuerySnapshot } from '@/functions'
 import { useFSRefsStore } from './FSRefs'
 
 export const useRecipesStore = defineStore('recipes', () => {
-  const loading = ref(false)
+  const loadingRec = ref(false)
   const recipes = ref<Recipe[]>([])
   const userInfoStore = useUserInfoStore()
   const { userInfo } = storeToRefs(userInfoStore)
   const { colRefs } = storeToRefs(useFSRefsStore())
+
   async function getRecipes() {
-    loading.value = true
+    loadingRec.value = true
     const querySnapshot = await getDocs(colRefs.value.recipesColRef)
-    loading.value = false
+    loadingRec.value = false
     recipes.value = <Recipe[]>readQuerySnapshot(querySnapshot)
   }
 
@@ -64,7 +56,7 @@ export const useRecipesStore = defineStore('recipes', () => {
 
   return {
     recipes,
-    loading,
+    loadingRec,
     courseOptions,
     getRecipes,
     addNewRecipe,

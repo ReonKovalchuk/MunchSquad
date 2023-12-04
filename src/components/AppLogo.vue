@@ -3,7 +3,11 @@ import LogoIcon from './icons/LogoIcon.vue'
 </script>
 
 <template>
-  <div class="logo__group"><logo-icon></logo-icon> <span class="logo__text">Munch squad</span></div>
+  <RouterLink to="/">
+    <div class="logo__group">
+      <logo-icon></logo-icon> <span class="logo__text">Munch squad</span>
+    </div>
+  </RouterLink>
 </template>
 
 <style>

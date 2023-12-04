@@ -31,7 +31,7 @@ const searchedItems = computed(() => {
 
 <template>
   <div class="search__wrapper">
-    <form class="search__form" :class="{ 'search-active': show.value }">
+    <div class="search__form" :class="{ 'search-active': show.value }">
       <input
         type="text"
         class="search__input"
@@ -40,10 +40,8 @@ const searchedItems = computed(() => {
         @blur="focus = false"
         placeholder="Поиск"
       />
-      <button type="submit" class="search__btn">
-        <search-icon color="lightgray"></search-icon>
-      </button>
-    </form>
+      <search-icon color="lightgray"></search-icon>
+    </div>
     <search-items
       v-if="show.value"
       :items="searchedItems"
