@@ -13,7 +13,7 @@ function navigate(item) {
 </script>
 <template>
   <header class="header">
-    <div class="container header__container">
+    <div class="container">
       <Slide>
         <app-search></app-search>
         <app-logo></app-logo>
@@ -21,17 +21,20 @@ function navigate(item) {
         <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
         <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
         <!-- </nav> -->
+        <app-login></app-login>
       </Slide>
-      <app-logo></app-logo>
+      <div class="header__container">
+        <app-logo></app-logo>
 
-      <div class="header__nav-wrapper">
-        <nav>
-          <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
-          <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
-        </nav>
+        <div class="header__nav-wrapper">
+          <nav>
+            <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
+            <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
+          </nav>
+        </div>
+        <app-search @selected="navigate"></app-search>
+        <app-login></app-login>
       </div>
-      <app-search @selected="navigate"></app-search>
-      <app-login></app-login>
     </div>
   </header>
 </template>

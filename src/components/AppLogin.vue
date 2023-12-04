@@ -19,7 +19,7 @@ const handleSignOut = () => {
 </script>
 
 <template>
-  <div>
+  <div class="login-group">
     <span v-if="userInfo.displayName" class="display-name">{{ userInfo.displayName }}</span>
 
     <button v-if="userInfo.isLoggedIn" class="btn btn-primary" @click="handleSignOut()">

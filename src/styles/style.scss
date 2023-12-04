@@ -350,17 +350,33 @@ border: var(--border);
 }
 
 .burger-nav {
-	display: unset;
+	display: unset !important;
 }
 .bm-burger-bars {
-	color: var(--color-text);
+	color: var(--color-text) !important;
 }
 .line-style {
-	height: 13%;
+	height: 13% !important;
 }
-span.bm-cross>{
-	width:1px
+.bm-cross{
+	width:1px !important
 }
+.bm-burger-button {
+	position: relative !important;
+top: 0 !important;
+bottom: 0 !important;}
+
+.bm-item-list .display-name{
+	color: var(--color-text);
+	font-weight: normal;
+	margin-left: 0px;
+}
+
+
+// .bm-item-list .login-group {
+// 	display: flex;
+// 	flex-direction: row-reverse;
+// }
 
 @media (min-width: 1024px) {
 	.logo {
@@ -385,6 +401,13 @@ span.bm-cross>{
 .planner__card-wrapper {
 	flex-grow: 1;
 }
+.page__wrapper {
+	flex-wrap: wrap;
+	place-content:  center;
+}
+.page__main-content{
+	place-content: center;
+}
 }
 @media (min-width: 421px) {
 .bm-menu,.bm-burger-button {
@@ -402,5 +425,6 @@ span.bm-cross>{
 .hero__text {
 	font-size: 20px;
 }
+.header__container {display: none;}
 
 }
