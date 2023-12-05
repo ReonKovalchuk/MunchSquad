@@ -33,7 +33,7 @@ const cancel = () => {
 
         <perfect-scrollbar>
           <div class="modal__inner-container">
-            <form @submit.prevent="saveInfo">
+            <form @submit.prevent="saveInfo" role="форма">
               <img
                 v-if="!showInputs"
                 :src="object.linkToImage"

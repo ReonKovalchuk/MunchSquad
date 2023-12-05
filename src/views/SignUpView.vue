@@ -27,7 +27,7 @@ const register = () => {
 <template>
   <app-hero></app-hero>
   <div class="container">
-    <form action="" class="signup-login" @submit.prevent="register()">
+    <form action="" class="signup-login" @submit.prevent="register()" role="форма регистрации">
       <div class="input-group">
         <label for="username" class="input-label">Имя пользователя</label>
         <input

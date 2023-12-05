@@ -15,6 +15,8 @@ import LogoIcon from './icons/LogoIcon.vue'
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-wrap: wrap;
+  line-height: 1;
 }
 .logo__text {
   font-size: 26px;

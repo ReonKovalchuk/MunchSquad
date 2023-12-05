@@ -40,7 +40,7 @@ const register = () => {
 <template>
   <app-hero></app-hero>
   <div class="container">
-    <form action="" class="signup-login" @submit.prevent="register()">
+    <form action="" class="signup-login" @submit.prevent="register()" role="форма авторизации">
       <div class="input-group">
         <label for="email" class="input-label">E-mail</label>
         <input

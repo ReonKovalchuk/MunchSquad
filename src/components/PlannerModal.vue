@@ -29,7 +29,7 @@ const changeDescription = async () => {
           </div>
 
           <div class="modal__body">
-            <form @submit.prevent="changeDescription()">
+            <form @submit.prevent="changeDescription()" role="форма ">
               <div class="input-group">
                 <label for="description" class="input-label"> Впечатления: </label>
 

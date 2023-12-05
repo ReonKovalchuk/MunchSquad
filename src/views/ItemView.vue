@@ -53,19 +53,8 @@ const restaurantsStore = useRestaurantsStore()
 const { editRestaurantInfo, findRestaurantById } = restaurantsStore
 function getCurrentItem() {
   if (isRecipe) {
-    // const { loadingRec } = storeToRefs(recipesStore)
-    // return {
-    //   item: findRecipeById(id.toString()),
-    //   loading: loadingRec}
-
     return findRecipeById(id)
   } else {
-    // const { loadingRes } = storeToRefs(restaurantsStore)
-
-    // return {
-    //     item:  findRestaurantById(id.toString()),
-    //     loading:loadingRes
-    //   }
     return findRestaurantById(id)
   }
 }
@@ -120,7 +109,7 @@ const cancel = () => {
               <h2>{{ currentItem.name }}</h2>
             </a>
             <div class="recipe__actions">
-              <button class="btn-icon"><calendar-add-icon></calendar-add-icon></button>
+              <!-- <button class="btn-icon"><calendar-add-icon></calendar-add-icon></button> -->
               <button type="button" class="btn-icon edit-btn" @click="showInputs.links = true">
                 <edit-icon color="black" />
               </button>
@@ -128,7 +117,12 @@ const cancel = () => {
           </div>
         </div>
 
-        <form v-if="showInputs.links" @submit.prevent="saveInfo" class="edit-recipe__form">
+        <form
+          v-if="showInputs.links"
+          @submit.prevent="saveInfo"
+          class="edit-recipe__form"
+          role="изменения элемента"
+        >
           <h2>Изменить информацию о рецепте</h2>
           <div class="inputs">
             <div class="input-group">
@@ -198,19 +192,11 @@ const cancel = () => {
           />
         </div>
       </div>
-      <!-- <aside class="new-x-form">
-        <new-recipe></new-recipe>
-      </aside> -->
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.page__wrapper {
-  // display: flex;
-  flex-wrap: wrap;
-  // flex-direction: row;
-}
 .page__main-content {
   flex-direction: column;
   flex-shrink: 1;
@@ -239,12 +225,6 @@ const cancel = () => {
 
 .editor-wrapper {
   min-width: 100%;
-}
-
-.recipe__header {
-  display: flex;
-  align-items: center;
-  gap: 24px;
 }
 .recipe__title {
   display: flex;

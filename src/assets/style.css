@@ -27,6 +27,19 @@ textarea:focus-visible {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  gap: 24px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.header__nav-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -39,6 +52,11 @@ textarea:focus-visible {
           justify-content: space-between;
   gap: 32px;
 }
+.header__nav-group nav {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+}
 
 .header__logo-group {
   font-size: 26px;
@@ -48,12 +66,6 @@ textarea:focus-visible {
   display: inline;
   width: 28px;
   height: 28px;
-}
-
-nav {
-  width: 100%;
-  text-align: center;
-  font-size: 12px;
 }
 
 nav a.router-link-exact-active {
@@ -110,8 +122,7 @@ nav a:hover {
 
 .btn:focus,
 .btn:focus-visible {
-  background-color: transparent;
-  border-width: 2px;
+  background-color: transparent !important;
 }
 
 .btn-secondary {
@@ -126,10 +137,20 @@ nav a:hover {
 
 .input-group {
   margin-bottom: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .input-label {
   margin-bottom: 6px;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .edit-btn {
@@ -295,6 +316,9 @@ nav a:hover {
       -ms-flex-direction: row;
           flex-direction: row;
   gap: 24px;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .page__main-content {
@@ -434,18 +458,31 @@ footer {
 
 .bm-cross {
   width: 1px !important;
+  background: var(--color-text) !important;
 }
 
 .bm-burger-button {
   position: relative !important;
   top: 0 !important;
-  bottom: 0 !important;
+  left: 0 !important;
 }
 
+.bm-item-list {
+  color: unset !important;
+  font-size: unset !important;
+  padding-right: 12px;
+}
 .bm-item-list .display-name {
   color: var(--color-text);
   font-weight: normal;
   margin-left: 0px;
+}
+.bm-item-list .search__wrapper {
+  padding: unset !important;
+  display: block !important;
+}
+.bm-item-list > * {
+  place-items: center;
 }
 
 @media (min-width: 1024px) {
@@ -471,7 +508,13 @@ footer {
     font-size: 1rem;
   }
 }
-@media (max-width: 683px) {
+@media (max-width: 720px) {
+  .header__nav-group {
+    display: none;
+  }
+  .hero__text {
+    font-size: 30px;
+  }
   .planner__card-wrapper {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
@@ -486,22 +529,16 @@ footer {
     place-content: center;
   }
 }
-@media (min-width: 421px) {
-  .bm-menu, .bm-burger-button {
+@media (min-width: 719px) {
+  .burger {
     display: none;
   }
 }
 @media (max-width: 420px) {
-  .logo__text {
-    font-size: 14px !important;
-  }
   .hero {
     height: 100px;
   }
   .hero__text {
     font-size: 20px;
-  }
-  .header__container {
-    display: none;
   }
 }

@@ -141,9 +141,9 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
 </template>
 
 <style scoped>
-.card {
+/* .card {
   max-width: unset;
-}
+} */
 .card-placeholder {
   min-width: 200px;
   min-height: 200px;

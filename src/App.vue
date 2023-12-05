@@ -67,13 +67,13 @@ watch(route, () => {
   <perfect-scrollbar ref="scroll">
     <app-header />
 
-    <main id="page-wrap">
+    <main id="page-wrap" role="главное содержимое">
       <!-- <Suspense> -->
       <RouterView />
       <!-- </Suspense> -->
     </main>
 
-    <app-footer />
+    <app-footer role="дополнительная информация" />
   </perfect-scrollbar>
 </template>
 

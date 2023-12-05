@@ -48,7 +48,7 @@ function addItem() {
 </script>
 
 <template>
-  <form @submit.prevent="addItem" class="new-recipe__form">
+  <form @submit.prevent="addItem" class="new-recipe__form" role="форма добавления элемента">
     <h2>Новый {{ isRecipe ? 'рецепт' : 'ресторан' }}</h2>
 
     <div class="input-group">

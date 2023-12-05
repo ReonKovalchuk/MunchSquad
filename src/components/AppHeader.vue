@@ -13,19 +13,15 @@ function navigate(item) {
 </script>
 <template>
   <header class="header">
-    <div class="container">
-      <Slide>
-        <app-search></app-search>
-        <app-logo></app-logo>
-        <!-- <nav class="burger-nav"> -->
+    <div class="container header__container">
+      <Slide class="burger" role="навигация">
+        <app-search @selected="navigate"></app-search>
         <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
         <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
-        <!-- </nav> -->
         <app-login></app-login>
       </Slide>
-      <div class="header__container">
-        <app-logo></app-logo>
-
+      <app-logo></app-logo>
+      <div class="header__nav-group" role="навигациы">
         <div class="header__nav-wrapper">
           <nav>
             <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>

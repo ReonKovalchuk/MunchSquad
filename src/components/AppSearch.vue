@@ -30,7 +30,7 @@ const searchedItems = computed(() => {
 </script>
 
 <template>
-  <div class="search__wrapper">
+  <div class="search__wrapper" role="поиск">
     <div class="search__form" :class="{ 'search-active': show.value }">
       <input
         type="text"
