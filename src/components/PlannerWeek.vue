@@ -39,7 +39,13 @@ function handleNext() {
 <template>
   <div class="week-pagination">
     <div class="control-btn">
-      <button type="button" class="btn-icon previous" @click="handlePrevious">
+      <button
+        type="button"
+        class="btn-icon previous"
+        title="Предыдущая неделя"
+        aria-label="Предыдущая неделя"
+        @click="handlePrevious"
+      >
         <ArrowIcon></ArrowIcon>
       </button>
     </div>
@@ -47,7 +53,13 @@ function handleNext() {
       {{ currentWeekTitle }}
     </p>
     <div class="control-btn">
-      <button type="button" class="btn-icon next" @click="handleNext">
+      <button
+        type="button"
+        class="btn-icon next"
+        title="Следующая неделя"
+        aria-label="Следующая неделя"
+        @click="handleNext"
+      >
         <ArrowIcon></ArrowIcon>
       </button>
     </div>

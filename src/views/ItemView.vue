@@ -4,10 +4,8 @@ import { ref, watch } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
 import { useRestaurantsStore } from '@/stores/restaurants'
 import { useRoute } from 'vue-router'
-
 import { storeToRefs } from 'pinia'
 import { handleImgError } from '@/functions'
-import CalendarAddIcon from '@/components/icons/CalendarAddIcon.vue'
 import EditIcon from '@/components/icons/EditIcon.vue'
 import ru from 'element-tiptap-vue3-fixed/lib/locales/ru'
 import {
@@ -105,15 +103,31 @@ const cancel = () => {
       <div class="page__main-content">
         <div v-if="!showInputs.links" class="recipe__header">
           <div class="recipe__title">
-            <a :href="currentItem.link" class="visible-link" target="_blank">
-              <h2>{{ currentItem.name }}</h2>
-            </a>
-            <div class="recipe__actions">
-              <!-- <button class="btn-icon"><calendar-add-icon></calendar-add-icon></button> -->
-              <button type="button" class="btn-icon edit-btn" @click="showInputs.links = true">
+            <h1>
+              <a
+                :href="currentItem.link"
+                class="visible-link"
+                target="_blank"
+                :aria-label="`Открыть ${
+                  isRecipe ? ' страницу рецепта' : 'сайт ресторана'
+                } в новой вкладке`"
+                tabindex="0"
+              >
+                {{ currentItem.name }}
+              </a>
+              <button
+                type="button"
+                class="btn-icon edit-btn"
+                @click="showInputs.links = true"
+                title="Редактировать основную информацию"
+                aria-label="Редактировать основную информацию"
+              >
                 <edit-icon color="black" />
               </button>
-            </div>
+            </h1>
+            <!-- <div class="recipe__actions">
+              <button class="btn-icon"><calendar-add-icon></calendar-add-icon></button>
+            </div> -->
           </div>
         </div>
 
@@ -169,7 +183,13 @@ const cancel = () => {
         <div v-if="!showInputs.description" class="recipe__body">
           <h3>
             Описание
-            <button type="button" class="btn-icon edit-btn" @click="showInputs.description = true">
+            <button
+              type="button"
+              class="btn-icon edit-btn"
+              title="Редактировать описание"
+              aria-label="Редактировать описание"
+              @click="showInputs.description = true"
+            >
               <edit-icon color="black" />
             </button>
           </h3>
@@ -227,11 +247,11 @@ const cancel = () => {
   min-width: 100%;
 }
 .recipe__title {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 24px;
+  // display: flex;
+  // flex-grow: 1;
+  // flex-direction: column;
+  // justify-content: space-between;
+  // gap: 24px;
   word-break: break-word;
 }
 

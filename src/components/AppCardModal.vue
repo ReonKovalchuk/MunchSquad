@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import CloseIcon from './icons/CloseIcon.vue'
 import { useRestaurantsStore } from '@/stores/restaurants'
 import EditIcon from './icons/EditIcon.vue'
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+// import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import { handleImgError } from '@/functions'
 
 // import LinkIcon from './icons/LinkIcon.vue'
@@ -27,87 +27,95 @@ const cancel = () => {
   <transition name="modal">
     <div v-if="show" class="modal__mask">
       <div class="modal__outer-container">
-        <button class="btn-icon modal-default-button" @click="$emit('close')" tabindex="0">
+        <button
+          class="btn-icon modal-default-button"
+          title="Закрыть модальное окно"
+          @click="$emit('close')"
+          tabindex="0"
+        >
           <close-icon color="black"></close-icon>
         </button>
 
-        <perfect-scrollbar>
-          <div class="modal__inner-container">
-            <form @submit.prevent="saveInfo" role="форма">
-              <img
-                v-if="!showInputs"
-                :src="object.linkToImage"
-                :alt="object.name"
-                @error="handleImgError"
-                class="modal__image"
-              />
-              <div v-if="!showInputs" class="modal__header">
-                <h3>
-                  <a :href="object.link" class="visible-link" target="_blank">
-                    {{ object.name }}
-                  </a>
-                </h3>
-                <button type="button" class="btn-icon edit-btn" @click="showInputs = true">
-                  <edit-icon color="black" />
-                </button>
-              </div>
+        <!-- <perfect-scrollbar> -->
+        <div class="modal__inner-container">
+          <form @submit.prevent="saveInfo" role="форма">
+            <img
+              v-if="!showInputs"
+              :src="object.linkToImage"
+              :alt="object.name"
+              @error="handleImgError"
+              class="modal__image"
+            />
+            <div v-if="!showInputs" class="modal__header">
+              <h3>
+                <a :href="object.link" class="visible-link" target="_blank">
+                  {{ object.name }}
+                </a>
+              </h3>
+              <button
+                type="button"
+                class="btn-icon edit-btn"
+                title="Редактировать"
+                @click="showInputs = true"
+              >
+                <edit-icon color="black" />
+              </button>
+            </div>
 
-              <div class="modal__body">
-                <div v-if="showInputs">
-                  <div class="input-group">
-                    <label for="restaurant-linkToImage" class="input-label">
-                      Ссылка на картинку
-                    </label>
+            <div class="modal__body">
+              <div v-if="showInputs">
+                <div class="input-group">
+                  <label for="restaurant-linkToImage" class="input-label">
+                    Ссылка на картинку
+                  </label>
 
-                    <input
-                      id="restaurant-linkToImage"
-                      type="text"
-                      v-model="thisObj.linkToImage"
-                      class="input"
-                      required
-                    />
-                  </div>
-                  <div class="input-group">
-                    <label for="restaurant-name" class="input-label"> Название ресторана </label>
-
-                    <input
-                      id="restaurant-name"
-                      type="text"
-                      v-model="thisObj.name"
-                      class="input"
-                      required
-                    />
-                  </div>
-                  <div class="input-group">
-                    <label for="restaurant-link" class="input-label"
-                      >Ссылка на сайт ресторана
-                    </label>
-
-                    <input
-                      id="restaurant-link"
-                      type="text"
-                      v-model="thisObj.link"
-                      class="input"
-                      required
-                    />
-                  </div>
+                  <input
+                    id="restaurant-linkToImage"
+                    type="text"
+                    v-model="thisObj.linkToImage"
+                    class="input"
+                    required
+                  />
                 </div>
                 <div class="input-group">
-                  <label for="description" class="input-label"> Впечатления: </label>
+                  <label for="restaurant-name" class="input-label"> Название ресторана </label>
 
-                  <textarea id="description" rows="5" class="input" v-model="thisObj.review">
-                  </textarea>
+                  <input
+                    id="restaurant-name"
+                    type="text"
+                    v-model="thisObj.name"
+                    class="input"
+                    required
+                  />
                 </div>
-                <div class="card__actions">
-                  <button type="submit" class="btn btn-primary">Сохранить</button>
-                  <button v-if="showInputs" type="button" class="btn btn-secondary" @click="cancel">
-                    Отмена
-                  </button>
+                <div class="input-group">
+                  <label for="restaurant-link" class="input-label">Ссылка на сайт ресторана </label>
+
+                  <input
+                    id="restaurant-link"
+                    type="text"
+                    v-model="thisObj.link"
+                    class="input"
+                    required
+                  />
                 </div>
               </div>
-            </form>
-          </div>
-        </perfect-scrollbar>
+              <div class="input-group">
+                <label for="description" class="input-label"> Впечатления: </label>
+
+                <textarea id="description" rows="5" class="input" v-model="thisObj.review">
+                </textarea>
+              </div>
+              <div class="card__actions">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button v-if="showInputs" type="button" class="btn btn-secondary" @click="cancel">
+                  Отмена
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- </perfect-scrollbar> -->
       </div>
     </div>
   </transition>
@@ -143,9 +151,9 @@ const cancel = () => {
   max-height: 90vh;
 }
 
-.ps {
+/* .ps {
   max-height: 700px;
-}
+} */
 
 .modal__header {
   display: flex;
@@ -200,5 +208,3 @@ const cancel = () => {
   transform: scale(1.1);
 }
 </style>
-
-<style src="vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css" />

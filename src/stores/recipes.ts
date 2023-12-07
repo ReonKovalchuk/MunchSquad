@@ -36,8 +36,8 @@ export const useRecipesStore = defineStore('recipes', () => {
     await deleteDoc(doc(colRefs.value.recipesColRef, id))
   }
 
-  function filterRecipesbyCourse(recipes: Recipe[], value: Course) {
-    return recipes.filter((recipe) => {
+  function filterRecipesbyCourse(value: string) {
+    return recipes.value.filter((recipe) => {
       return recipe.course === value
     })
   }

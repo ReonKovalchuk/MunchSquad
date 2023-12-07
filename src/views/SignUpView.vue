@@ -64,7 +64,10 @@ const register = () => {
       </div>
       <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
       <button type="submit" class="btn btn-primary">Регистрация</button>
-      <p>Уже есть аккаунт? <router-link to="/login" class="visible-link">Войти</router-link></p>
+      <p>
+        Уже есть аккаунт?
+        <router-link to="/login" class="visible-link" tabindex="0">Войти</router-link>
+      </p>
     </form>
   </div>
 </template>

@@ -16,7 +16,7 @@ import { readQuerySnapshot } from './functions'
 import type { QuerySnapshot } from '@firebase/firestore'
 import { onSnapshot } from '@firebase/firestore'
 import { useRoute } from 'vue-router'
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+// import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 
 const route = useRoute()
 
@@ -64,17 +64,17 @@ watch(route, () => {
 </script>
 
 <template>
-  <perfect-scrollbar ref="scroll">
-    <app-header />
+  <!-- <perfect-scrollbar ref="scroll"> -->
+  <app-header />
 
-    <main id="page-wrap" role="главное содержимое">
-      <!-- <Suspense> -->
-      <RouterView />
-      <!-- </Suspense> -->
-    </main>
+  <main id="page-wrap" role="главное содержимое">
+    <!-- <Suspense> -->
+    <RouterView />
+    <!-- </Suspense> -->
+  </main>
 
-    <app-footer role="дополнительная информация" />
-  </perfect-scrollbar>
+  <app-footer role="дополнительная информация" />
+  <!-- </perfect-scrollbar> -->
 </template>
 
 <style>
@@ -83,7 +83,7 @@ watch(route, () => {
   flex-direction: column;
   min-height: 100vh;
 }
-.ps {
+/* .ps {
   max-height: 100vh;
-}
+} */
 </style>

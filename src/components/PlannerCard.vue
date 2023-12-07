@@ -11,6 +11,8 @@ import { storeToRefs } from 'pinia'
 import { useUserInfoStore } from '@/stores/userInfo'
 import { isRecipe } from '@/functions'
 
+import AppLoader from '@/components/AppLoader.vue'
+
 const plannerStore = usePlannerStore()
 const recipesStore = useRecipesStore()
 const restaurantsStore = useRestaurantsStore()
@@ -76,8 +78,8 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
 </script>
 
 <template>
-  <div class="planner__day-of-week" :class="{ today: isToday }">
-    {{ title }}
+  <div class="planner__day-of-week">
+    <h2 :class="{ today: isToday }">{{ title }}</h2>
   </div>
 
   <div class="planner__meals">
@@ -97,7 +99,7 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
           v-else-if="!loading"
           @selected="async (item) => await edit('breakfast', item.id, item)"
         ></app-search>
-        <div v-else class="card">ГРУЗИМСЯ</div>
+        <app-loader v-else></app-loader>
       </suspense>
     </div>
     <div class="planner__meal">
@@ -115,7 +117,7 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
           v-else-if="!loading"
           @selected="async (item) => await edit('dinner', item.id, item)"
         ></app-search>
-        <div v-else class="card">ГРУЗИМСЯ</div>
+        <app-loader v-else></app-loader>
       </suspense>
     </div>
     <div class="planner__meal">
@@ -134,20 +136,8 @@ const edit = async (mealType: string, mealId = '' as string, meal = {} as Recipe
           v-else-if="!loading"
           @selected="async (item) => await edit('supper', item.id, item)"
         ></app-search>
-        <div v-else class="card card-placeholder">ГРУЗИМСЯ</div>
+        <app-loader v-else></app-loader>
       </suspense>
     </div>
   </div>
 </template>
-
-<style scoped>
-/* .card {
-  max-width: unset;
-} */
-.card-placeholder {
-  min-width: 200px;
-  min-height: 200px;
-  flex-shrink: 0;
-  flex-grow: 1;
-}
-</style>

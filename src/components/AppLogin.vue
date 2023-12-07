@@ -26,7 +26,7 @@ const handleSignOut = () => {
       Выйти
     </button>
 
-    <router-link v-else to="/login" class="btn btn-primary">Войти</router-link>
+    <router-link v-else to="/login" class="btn btn-primary" tabindex="0">Войти</router-link>
   </div>
 </template>
 

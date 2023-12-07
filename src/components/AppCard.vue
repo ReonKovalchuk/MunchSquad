@@ -26,19 +26,33 @@ const remove = () => {
 
 <template>
   <div class="card">
-    <button class="card__remove-btn" @click="remove()">
+    <button
+      class="card__remove-btn"
+      :title="removeFromPlanner ? 'удалить из планировщика' : 'удалить'"
+      :aria-label="removeFromPlanner ? 'удалить из планировщика' : 'удалить'"
+      @click="remove()"
+    >
       <close-icon color="red"></close-icon>
     </button>
     <img :src="object.linkToImage" @error="handleImgError" class="card__image" />
     <div class="card__content">
       <strong class="card__title">{{ object.name }}</strong>
       <div class="card__actions">
-        <a :href="object.link" class="card__link" target="_blank">
+        <a
+          :href="object.link"
+          class="card__link"
+          target="_blank"
+          :aria-label="`Открыть ${
+            isRecipe ? ' страницу рецепта' : 'сайт ресторана'
+          } в новой вкладке`"
+          tabindex="0"
+        >
           <link-icon v-if="object.link"></link-icon>
         </a>
         <RouterLink
           :to="`/${isRecipe ? 'recipes' : 'restaurants'}/${object.id}`"
           class="btn btn-secondary"
+          tabindex="0"
         >
           {{ isRecipe ? 'Мой рецепт' : 'Ресторан' }}
         </RouterLink>

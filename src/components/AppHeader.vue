@@ -16,16 +16,18 @@ function navigate(item) {
     <div class="container header__container">
       <Slide class="burger" role="навигация">
         <app-search @selected="navigate"></app-search>
-        <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
-        <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
+        <RouterLink to="/recipes" class="header__nav-link" tabindex="0"> Рецепты </RouterLink>
+        <RouterLink to="/restaurants" class="header__nav-link" tabindex="0"> Рестораны </RouterLink>
         <app-login></app-login>
       </Slide>
       <app-logo></app-logo>
       <div class="header__nav-group" role="навигациы">
         <div class="header__nav-wrapper">
           <nav>
-            <RouterLink to="/recipes" class="header__nav-link">Рецепты</RouterLink>
-            <RouterLink to="/restaurants" class="header__nav-link">Рестораны</RouterLink>
+            <RouterLink to="/recipes" class="header__nav-link" tabindex="0"> Рецепты </RouterLink>
+            <RouterLink to="/restaurants" class="header__nav-link" tabindex="0">
+              Рестораны
+            </RouterLink>
           </nav>
         </div>
         <app-search @selected="navigate"></app-search>

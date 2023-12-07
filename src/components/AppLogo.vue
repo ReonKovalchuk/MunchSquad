@@ -4,7 +4,7 @@ import LogoIcon from './icons/LogoIcon.vue'
 
 <template>
   <RouterLink to="/">
-    <div class="logo__group">
+    <div class="logo__group" title="На главную" aria-label="На главную">
       <logo-icon></logo-icon> <span class="logo__text">Munch squad</span>
     </div>
   </RouterLink>
@@ -15,10 +15,10 @@ import LogoIcon from './icons/LogoIcon.vue'
   display: flex;
   gap: 12px;
   align-items: center;
-  flex-wrap: wrap;
   line-height: 1;
 }
 .logo__text {
   font-size: 26px;
+  white-space: nowrap;
 }
 </style>

@@ -64,6 +64,7 @@ defineEmits(['update:modelValue'])
   border-radius: var(--switch-size);
   background-color: var(--card-background);
   transition: background-color 0.25s ease-in-out;
+  border: 2px solid var(--card-background);
 }
 
 .switch::before {
@@ -80,14 +81,25 @@ defineEmits(['update:modelValue'])
   transition: transform 0.375s ease-in-out;
 }
 .switch__input:checked + .switch {
-  /* Teal background */
   background-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
 }
 
 .switch__input:checked + .switch::before {
   border-color: var(--primary-color);
   /* Move the inner circle to the right */
   transform: translateX(calc(var(--switch-container-width) - var(--switch-size)));
+}
+
+.switch__input:focus + .switch/*,
+ .switch__input:focus-visible + .switch  */ {
+  border: 2px solid var(--card-background);
+  background-color: transparent;
+}
+.switch__input:checked:focus + .switch/* ,
+.switch__input:checked:focus-visible + .switch  */ {
+  border: 2px solid var(--primary-color);
+  background-color: transparent;
 }
 
 .input:focus + .switch::before {
