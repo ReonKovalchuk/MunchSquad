@@ -79,7 +79,8 @@ const remove = () => {
 }
 .card__image {
   min-width: 100%;
-  max-height: 260px;
+  height: 250px;
+  width: 250px;
   object-fit: cover;
 }
 .card__content {

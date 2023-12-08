@@ -4,7 +4,7 @@ import { doc, setDoc, deleteDoc, getDocs } from 'firebase/firestore'
 import type { Restaurant } from '@/types/types'
 import { storeToRefs } from 'pinia'
 import { useUserInfoStore } from '@/stores/userInfo'
-import { readQuerySnapshot } from '@/functions'
+import { readQuerySnapshot, compareByName } from '@/functions'
 import { useFSRefsStore } from './FSRefs'
 
 export const useRestaurantsStore = defineStore('restaurants', () => {
@@ -19,6 +19,7 @@ export const useRestaurantsStore = defineStore('restaurants', () => {
     const querySnapshot = await getDocs(colRefs.value.restaurantsColRef)
     loadingRes.value = false
     restaurants.value = <Restaurant[]>readQuerySnapshot(querySnapshot)
+    restaurants.value.sort(compareByName)
   }
 
   async function addNewRestaurant(restaurant: Restaurant) {

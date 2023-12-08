@@ -14,6 +14,8 @@ import ElementTiptapPlugin from 'element-tiptap-vue3-fixed'
 // import ElementTiptap's styles
 import 'element-tiptap-vue3-fixed/lib/style.css'
 import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify'
+
+import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 const app = createApp(App)
 
 app.use(createPinia())

@@ -5,7 +5,7 @@ import type { Recipe, Course } from '@/types/types'
 import { CourseEnum } from '@/types/types'
 import { storeToRefs } from 'pinia'
 import { useUserInfoStore } from '@/stores/userInfo'
-import { readQuerySnapshot } from '@/functions'
+import { readQuerySnapshot, compareByName } from '@/functions'
 import { useFSRefsStore } from './FSRefs'
 
 export const useRecipesStore = defineStore('recipes', () => {
@@ -20,6 +20,7 @@ export const useRecipesStore = defineStore('recipes', () => {
     const querySnapshot = await getDocs(colRefs.value.recipesColRef)
     loadingRec.value = false
     recipes.value = <Recipe[]>readQuerySnapshot(querySnapshot)
+    recipes.value.sort(compareByName)
   }
 
   const courseOptions = computed(() => {

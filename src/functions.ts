@@ -1,5 +1,6 @@
 import { type QuerySnapshot } from 'firebase/firestore'
 import { DateTime } from 'luxon'
+import type { Recipe, Restaurant } from './types/types'
 
 export const getTitle = (day: DateTime) => {
   return day.setLocale('ru').toLocaleString({ day: 'numeric', month: 'short', weekday: 'short' })
@@ -23,4 +24,16 @@ export const isToday = (day: DateTime) => {
 
 export const isRecipe = (id: string) => {
   return id.includes('rec')
+}
+
+export function compareByName(a: Recipe | Restaurant, b: Recipe | Restaurant) {
+  if (a.name && b.name) {
+    if (a.name < b.name) {
+      return -1
+    }
+    if (a.name > b.name) {
+      return 1
+    }
+  }
+  return 0
 }

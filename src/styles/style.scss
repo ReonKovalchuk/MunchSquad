@@ -245,7 +245,7 @@ outline: 2px solid var(--primary-color);
 }
 .page__main-content {
 	display: flex;
-	// flex-grow: 1;
+	flex-basis: 75%;
 	// grid-template-columns: repeat(auto-fill, 250px);
 	// grid-auto-rows: 360px;
 	gap: 24px;
@@ -428,6 +428,7 @@ left: 0 !important;}
 	place-content:  center;
 }
 .page__main-content{
+	flex-basis: 100%;
 	place-content: center;
 }
 }

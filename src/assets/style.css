@@ -5,6 +5,7 @@ aside form {
   border-radius: var(--border-radius-primary);
   padding: 24px;
 }
+
 .header {
   margin-top: 30px;
   padding: 11px 0;
@@ -28,11 +29,11 @@ textarea:focus-visible {
   display: flex;
   gap: 24px;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .header__nav-group {
@@ -41,14 +42,14 @@ textarea:focus-visible {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   gap: 32px;
 }
 .header__nav-group nav {
@@ -131,15 +132,15 @@ nav a:hover {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .input-label {
   margin-bottom: 6px;
   -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .edit-btn {
@@ -152,18 +153,16 @@ nav a:hover {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: space-evenly;
-  -ms-flex-pack: space-evenly;
-  justify-content: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
   margin: 0 auto 24px;
-  background:
-    url('../assets/Hero image.jpg'),
-    rgb(155, 155, 155) 90% / contain no-repeat;
+  background: url("../assets/Hero image.jpg"), rgb(155, 155, 155) 90%/contain no-repeat;
   padding: 10px;
   max-width: 100vw;
   height: 200px;
@@ -189,10 +188,10 @@ nav a:hover {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
   gap: 24px;
 }
 
@@ -202,11 +201,11 @@ nav a:hover {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   place-items: center;
   -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
+      flex-wrap: nowrap;
   gap: 12px;
 }
 
@@ -216,22 +215,22 @@ nav a:hover {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   border-radius: var(--border-radius-primary);
   -webkit-box-shadow: var(--shadow);
-  box-shadow: var(--shadow);
+          box-shadow: var(--shadow);
   background-color: var(--card-background);
   margin: auto;
 }
 
 .planner__day-of-week {
   -webkit-box-flex: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
   border-bottom: var(--border);
   border-radius: var(--border-radius-primary) var(--border-radius-primary) 0px 0px;
   padding: 6px;
@@ -250,13 +249,13 @@ nav a:hover {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .planner__meal {
@@ -264,15 +263,15 @@ nav a:hover {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-preferred-size: 30%;
-  flex-basis: 30%;
+      flex-basis: 30%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   padding: 12px;
   -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 .planner__meal .card {
   max-width: unset;
@@ -285,7 +284,7 @@ nav a:hover {
 }
 
 .today::before {
-  content: 'Сегодня: ';
+  content: "Сегодня: ";
 }
 
 .planner-wrapper {
@@ -294,11 +293,11 @@ nav a:hover {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   place-items: center;
   -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
+      flex-wrap: nowrap;
 }
 
 .control-btn {
@@ -308,7 +307,7 @@ nav a:hover {
 
 .next {
   -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 
 .next,
@@ -323,31 +322,33 @@ nav a:hover {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   gap: 24px;
   -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .page__main-content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-preferred-size: 75%;
+      flex-basis: 75%;
   gap: 24px;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .new-x-form {
   -ms-flex-preferred-size: 25%;
-  flex-basis: 25%;
+      flex-basis: 25%;
   -ms-flex-negative: 0;
-  flex-shrink: 0;
+      flex-shrink: 0;
   min-width: 250px;
 }
 
@@ -355,8 +356,8 @@ nav a:hover {
   position: relative;
   background-color: inherit;
   -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .search__form {
@@ -375,8 +376,8 @@ nav a:hover {
 
 .search__input {
   -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   border: none;
   background-color: transparent;
   padding: 6px;
@@ -451,7 +452,7 @@ footer {
 .bm-menu {
   background-color: #fff !important;
   -webkit-box-shadow: var(--shadow);
-  box-shadow: var(--shadow);
+          box-shadow: var(--shadow);
 }
 
 .burger-nav {
@@ -504,13 +505,13 @@ footer {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
+        flex-wrap: wrap;
     place-items: flex-start;
     -webkit-box-flex: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
     -ms-flex-item-align: end;
-    align-self: flex-end;
+        align-self: flex-end;
   }
   nav {
     padding: 1rem 0;
@@ -527,15 +528,17 @@ footer {
   }
   .planner__card-wrapper {
     -webkit-box-flex: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
   }
   .page__wrapper {
     -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
+        flex-wrap: wrap;
     place-content: center;
   }
   .page__main-content {
+    -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
     place-content: center;
   }
 }
@@ -553,24 +556,24 @@ footer {
   }
   .planner-wrapper {
     -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
+        flex-wrap: wrap;
     -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
   .control-previous {
     -webkit-box-ordinal-group: 1;
-    -ms-flex-order: 0;
-    order: 0;
+        -ms-flex-order: 0;
+            order: 0;
   }
   .control-next {
     -webkit-box-ordinal-group: 2;
-    -ms-flex-order: 1;
-    order: 1;
+        -ms-flex-order: 1;
+            order: 1;
   }
   .planner__card-wrapper {
     -webkit-box-ordinal-group: 3;
-    -ms-flex-order: 2;
-    order: 2;
+        -ms-flex-order: 2;
+            order: 2;
   }
 }

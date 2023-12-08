@@ -16,7 +16,6 @@ import { readQuerySnapshot } from './functions'
 import type { QuerySnapshot } from '@firebase/firestore'
 import { onSnapshot } from '@firebase/firestore'
 import { useRoute } from 'vue-router'
-// import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 
 const route = useRoute()
 
