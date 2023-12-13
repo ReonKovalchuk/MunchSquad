@@ -9,22 +9,19 @@ import { useRestaurantsStore } from '@/stores/restaurants'
 import type { Recipe } from '@/types/types'
 
 const { isRecipe, heroSubtitle } = defineProps(['isRecipe', 'heroSubtitle'])
-const recFiltered = ref<Recipe[]>([])
 const recipesStore = useRecipesStore()
 const restaurantsStore = useRestaurantsStore()
 const { recipes, loadingRec } = storeToRefs(recipesStore)
 const { restaurants, loadingRes } = storeToRefs(restaurantsStore)
 const { filterRecipesbyCourse, courseOptions } = recipesStore
+const recFiltered = ref<Recipe[]>(recipes.value)
 const activeFilter = ref('Все')
-watch(isRecipe ? loadingRec : loadingRes, (newValue) => {
+watch(loadingRec, (newValue) => {
   if (!newValue) {
     recFiltered.value = recipes.value
   }
 })
 
-if (isRecipe) {
-  recFiltered.value = recipes.value
-}
 const remove = (id: string) => {
   if (isRecipe) {
     recipesStore.removeRecipe(id)

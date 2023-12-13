@@ -7,7 +7,10 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: PlannerView
+      component: PlannerView,
+      props: {
+        heroSubtitle: 'Munch squad - удобный способ спланировать меню для семьи'
+      }
     },
     {
       path: '/recipes',
@@ -62,6 +65,11 @@ const router = createRouter({
       path: '/signup',
       name: 'signup',
       component: () => import('../views/SignUpView.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: '404',
+      component: () => import('../views/NotFound.vue')
     }
   ]
 })
