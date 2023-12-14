@@ -84,7 +84,6 @@ const saveInfo = async () => {
 }
 
 const cancel = () => {
-  console.log('canselling')
   try {
     currentItem.value = getCurrentItem()
   } catch (error) {

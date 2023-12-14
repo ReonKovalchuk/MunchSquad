@@ -25,7 +25,6 @@ const { title, dayId, isToday, showBreakfast } = defineProps([
   'isToday',
   'showBreakfast'
 ])
-console.log('day id ', dayId)
 
 watch(loading, (newValue) => {
   if (!newValue) {
@@ -40,7 +39,6 @@ watch(loading, (newValue) => {
 
 function getPlannerDay() {
   const result = plannerStore.findPlannerDayById(dayId)
-  console.log('found planner day', result, 'by ID', dayId)
 
   return result
     ? result

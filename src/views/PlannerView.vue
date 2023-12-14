@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import AppHero from '@/components/AppHero.vue'
 import AppSwitch from '@/components/AppSwitch.vue'
 import PlannerCarousel from '@/components/PlannerCarousel.vue'
@@ -7,8 +7,14 @@ import PlannerWeek from '@/components/PlannerWeek.vue'
 
 const { heroSubtitle } = defineProps(['heroSubtitle'])
 
-const showCarousel = ref(true)
-const showBreakfast = ref(true)
+const showCarousel = ref(JSON.parse(localStorage.getItem('carousel')!))
+const showBreakfast = ref(JSON.parse(localStorage.getItem('breakfast')!))
+watch(showCarousel, (newValue) => {
+  localStorage.setItem('carousel', JSON.stringify(newValue))
+})
+watch(showBreakfast, (newValue) => {
+  localStorage.setItem('breakfast', JSON.stringify(newValue))
+})
 </script>
 
 <template>
@@ -34,9 +40,6 @@ const showBreakfast = ref(true)
           Неделя
         </button>
       </div>
-      <!-- <label for="show-breakfast"
-        ><input type="checkbox" id="show-breakfast" v-model="showBreakfast" /> Завтрак</label
-      > -->
       <app-switch v-model="showBreakfast" label="Завтрак"></app-switch>
     </div>
 
@@ -48,8 +51,6 @@ const showBreakfast = ref(true)
 <style scoped>
 .view-toggle {
   border-radius: var(--border-radius-primary);
-
-  /* overflow: hidden; */
 }
 .planner-actions {
   display: flex;
