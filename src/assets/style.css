@@ -227,7 +227,6 @@ nav a:hover {
   -webkit-box-shadow: var(--shadow);
           box-shadow: var(--shadow);
   background-color: var(--card-background);
-  margin: auto;
 }
 
 .planner__day-of-week {
