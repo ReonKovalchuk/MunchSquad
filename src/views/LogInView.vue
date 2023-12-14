@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-import AppHero from '@/components/AppHero.vue'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useRouter } from 'vue-router'
 import { useFirebaseAuth } from 'vuefire'
@@ -38,8 +37,8 @@ const register = () => {
 </script>
 
 <template>
-  <app-hero></app-hero>
-  <div class="container">
+  <!-- <app-hero></app-hero> -->
+  <div class="login-container">
     <form action="" class="signup-login" @submit.prevent="register()" role="форма авторизации">
       <div class="input-group">
         <label for="email" class="input-label">E-mail</label>

@@ -155,6 +155,7 @@ nav a:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  min-width: 100vw;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -162,7 +163,9 @@ nav a:hover {
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
   margin: 0 auto 24px;
-  background: url("../assets/Hero image.jpg"), rgb(155, 155, 155) 90%/contain no-repeat;
+  background: url("../assets/Hero image.jpg"), rgb(155, 155, 155) 90%;
+  background-repeat: no-repeat;
+  background-size: cover;
   padding: 10px;
   max-width: 100vw;
   height: 200px;
@@ -442,7 +445,28 @@ footer {
 
 .signup-login {
   max-width: 300px;
+  padding: 50px 30px;
+  background-color: #fff;
   margin: auto;
+  border-radius: var(--border-radius-primary);
+  -webkit-box-shadow: var(--shadow);
+          box-shadow: var(--shadow);
+}
+
+.login-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 50px 30px;
+  background-image: url("/src/assets/background-full.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  place-items: center;
 }
 
 .visible-link {

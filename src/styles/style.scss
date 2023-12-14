@@ -119,12 +119,15 @@ nav a:hover {
 .hero {
   display: flex;
   flex-direction: column;
+  min-width: 100vw;
   align-items: center;
   justify-content: space-evenly;
   margin: 0 auto 24px;
   background:
     url('../assets/Hero image.jpg'),
-    rgb(155, 155, 155) 90% / contain no-repeat;
+    rgb(155, 155, 155) 90%;
+  background-repeat: no-repeat;
+  background-size: cover;
   padding: 10px;
   max-width: 100vw;
   height: 200px;
@@ -334,7 +337,24 @@ footer {
 
 .signup-login {
   max-width: 300px;
+  padding: 50px 30px;
+  background-color: #fff;
   margin: auto;
+  border-radius: var(--border-radius-primary);
+  box-shadow: var(--shadow);
+}
+.login-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 50px 30px;
+  background-image: url('/src/assets/background-full.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  place-items: center;
 }
 
 .visible-link {
