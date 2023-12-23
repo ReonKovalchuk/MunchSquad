@@ -25,6 +25,7 @@ export const readQuerySnapshot = (querySnapshot: QuerySnapshot) => {
 
 export const handleImgError = (e: any) => {
   e.target.src = '/placeholder-image.png'
+  console.log('image replaced')
 }
 
 export const isToday = (day: DateTime) => {

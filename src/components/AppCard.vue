@@ -34,7 +34,11 @@ const remove = () => {
     >
       <close-icon color="red"></close-icon>
     </button>
-    <img :src="object.linkToImage" @error="handleImgError" class="card__image" />
+    <img
+      :src="object.linkToImage || '/placeholder-image.png'"
+      @error="handleImgError"
+      class="card__image"
+    />
     <div class="card__content">
       <strong class="card__title">{{ object.name }}</strong>
       <div class="card__actions">
