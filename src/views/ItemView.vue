@@ -3,7 +3,7 @@ import AppHero from '@/components/AppHero.vue'
 import { ref, watch } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
 import { useRestaurantsStore } from '@/stores/restaurants'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { handleImgError } from '@/functions'
 import EditIcon from '@/components/icons/EditIcon.vue'
@@ -41,7 +41,7 @@ const extensions = [
   OrderedList,
   Fullscreen
 ]
-
+const router = useRouter()
 const { isRecipe, heroSubtitle } = defineProps(['heroSubtitle', 'isRecipe'])
 const route = useRoute()
 const id = route.params.id.toString()
@@ -61,7 +61,9 @@ const { loadingRes } = storeToRefs(restaurantsStore)
 const { loadingRec } = storeToRefs(recipesStore)
 const showInputs = ref({ links: false, description: false })
 const currentItem = ref(getCurrentItem())
-
+if (!currentItem.value.id) {
+  router.push({ name: '404' })
+}
 watch(isRecipe ? loadingRec : loadingRes, (newValue) => {
   if (!newValue) {
     currentItem.value = getCurrentItem()
