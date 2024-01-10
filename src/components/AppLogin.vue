@@ -7,7 +7,7 @@ import { storeToRefs } from 'pinia'
 const auth = useFirebaseAuth()
 const userInfoStore = useUserInfoStore()
 const { userInfo } = storeToRefs(userInfoStore)
-const handleSignOut = () => {
+function handleSignOut() {
   signOut(auth)
     .then(() => {
       // Sign-out successful.

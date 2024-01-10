@@ -8,7 +8,7 @@ const router = useRouter()
 const userData = ref({ username: '', email: '', password: '' })
 const errorMsg = ref('')
 const auth = useFirebaseAuth()
-const register = () => {
+function register() {
   createUserWithEmailAndPassword(auth, userData.value.email, userData.value.password)
     .then((user) => {
       updateProfile(auth.currentUser, {

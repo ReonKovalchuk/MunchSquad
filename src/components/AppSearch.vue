@@ -14,8 +14,6 @@ const focus = ref(false)
 const show = computed(() => {
   return searchedItems.value.length > 0 && searchQuery.value && focus
 })
-// const handleSearch = () => {}
-
 const searchedItems = computed(() => {
   if (!loading.value) {
     const res = searchData.value.filter((item) => {

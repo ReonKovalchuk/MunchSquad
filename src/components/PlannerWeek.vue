@@ -18,10 +18,10 @@ const currentWeek = computed(() => {
   }
   return week
 })
-const today = computed(() => {
-  return DateTime.now().startOf('day')
-})
-const getDayMonth = (day: DateTime) => {
+// const today = computed(() => {
+//   return DateTime.now().startOf('day')
+// })
+function getDayMonth(day: DateTime) {
   return day.setLocale('ru').toLocaleString({ day: 'numeric', month: 'short' })
 }
 const currentWeekTitle = computed(() => {

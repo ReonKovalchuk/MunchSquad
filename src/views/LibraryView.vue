@@ -22,7 +22,7 @@ watch(loadingRec, (newValue) => {
   }
 })
 
-const remove = (id: string) => {
+function remove(id: string) {
   if (isRecipe) {
     recipesStore.removeRecipe(id)
   } else {
@@ -32,15 +32,15 @@ const remove = (id: string) => {
     return i.id !== id
   })
 }
-const filterRecipes = (course: string) => {
+function filterRecipes(course: string) {
   recFiltered.value = filterRecipesbyCourse(course)
   activeFilter.value = course
 }
-const clearFilters = () => {
+function clearFilters() {
   recFiltered.value = recipes.value
   activeFilter.value = 'Все'
 }
-const isActiveFilter = (option: string) => {
+function isActiveFilter(option: string) {
   return activeFilter.value == option
 }
 </script>

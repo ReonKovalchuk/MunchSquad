@@ -8,7 +8,7 @@ const router = useRouter()
 const userData = ref({ email: '', password: '' })
 const errorMsg = ref('')
 const auth = useFirebaseAuth()
-const register = () => {
+function register() {
   signInWithEmailAndPassword(auth, userData.value.email, userData.value.password)
     .then((user) => {
       router.push('/')

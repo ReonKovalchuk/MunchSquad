@@ -17,7 +17,7 @@ const saveInfo = async () => {
   showInputs.value = false
 }
 
-const cancel = () => {
+function cancel() {
   thisObj.value = findRestaurantById(thisObj.value.id)
   showInputs.value = false
 }

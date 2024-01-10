@@ -85,7 +85,7 @@ const saveInfo = async () => {
   showInputs.value.description = false
 }
 
-const cancel = () => {
+function cancel() {
   try {
     currentItem.value = getCurrentItem()
   } catch (error) {

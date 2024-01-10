@@ -11,10 +11,10 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { storeToRefs } from 'pinia'
 import { onSnapshot } from '@firebase/firestore'
 
-export const getTitle = (day: DateTime) => {
+export function getTitle(day: DateTime) {
   return day.setLocale('ru').toLocaleString({ day: 'numeric', month: 'short', weekday: 'short' })
 }
-export const readQuerySnapshot = (querySnapshot: QuerySnapshot) => {
+export function readQuerySnapshot(querySnapshot: QuerySnapshot) {
   const firestoreData = <any[]>[]
   querySnapshot.forEach((doc: any) => {
     // doc.data() is never undefined for query doc snapshots
@@ -23,16 +23,16 @@ export const readQuerySnapshot = (querySnapshot: QuerySnapshot) => {
   return firestoreData
 }
 
-export const handleImgError = (e: any) => {
+export function handleImgError(e: any) {
   e.target.src = '/placeholder-image.png'
   console.log('image replaced')
 }
 
-export const isToday = (day: DateTime) => {
+export function isToday(day: DateTime) {
   return DateTime.now().startOf('day').toMillis() == day.toMillis()
 }
 
-export const isRecipe = (id: string) => {
+export function isRecipe(id: string) {
   return id.includes('rec')
 }
 

@@ -14,7 +14,7 @@ const showModal = ref(false)
 
 const emit = defineEmits(['removeFromPlanner', 'remove'])
 
-const remove = () => {
+function remove() {
   if (removeFromPlanner) {
     emit('removeFromPlanner')
   } else {
