@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useRouter } from 'vue-router'
 import { useFirebaseAuth } from 'vuefire'
+import SwiperCustom from '@/components/SwiperCustom.vue'
 
 const router = useRouter()
 const userData = ref({ username: '', email: '', password: '' })
@@ -67,5 +68,8 @@ function register() {
         <router-link to="/login" class="visible-link" tabindex="0">Войти</router-link>
       </p>
     </form>
+    <div class="container">
+      <swiper-custom />
+    </div>
   </div>
 </template>

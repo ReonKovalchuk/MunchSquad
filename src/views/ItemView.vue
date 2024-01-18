@@ -6,6 +6,7 @@ import { useRestaurantsStore } from '@/stores/restaurants'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { handleImgError } from '@/functions'
+import { auth } from '@/firebase/init'
 import EditIcon from '@/components/icons/EditIcon.vue'
 import ru from 'element-tiptap-vue3-fixed/lib/locales/ru'
 import {
@@ -60,13 +61,13 @@ function getCurrentItem() {
 const { loadingRes } = storeToRefs(restaurantsStore)
 const { loadingRec } = storeToRefs(recipesStore)
 const showInputs = ref({ links: false, description: false })
-const currentItem = ref(getCurrentItem())
-if (!currentItem.value.id) {
-  router.push({ name: '404' })
-}
+const currentItem = ref()
 watch(isRecipe ? loadingRec : loadingRes, (newValue) => {
   if (!newValue) {
     currentItem.value = getCurrentItem()
+    if (!currentItem.value.id) {
+      router.push({ name: '404' })
+    }
   }
 })
 
@@ -138,10 +139,10 @@ function cancel() {
           class="edit-recipe__form"
           role="изменения элемента"
         >
-          <h2>Изменить информацию о рецепте</h2>
+          <h2>Изменить информацию о {{ isRecipe ? 'рецепте' : 'ресторане' }}</h2>
           <div class="inputs">
             <div class="input-group">
-              <label for="recipe-name" class="input-label"> Название блюда </label>
+              <label for="recipe-name" class="input-label"> Название </label>
 
               <input
                 id="recipe-name"
@@ -152,7 +153,7 @@ function cancel() {
               />
             </div>
             <div class="input-group">
-              <label for="recipe-link" class="input-label"> Ссылка на рецепт </label>
+              <label for="recipe-link" class="input-label"> Ссылка </label>
 
               <input id="recipe-link" type="text" v-model="currentItem.link" class="input" />
             </div>

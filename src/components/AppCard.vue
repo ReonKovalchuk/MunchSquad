@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import AppCardModal from '@/components/AppCardModal.vue'
+// import { ref } from 'vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'
 import { handleImgError } from '@/functions'
@@ -10,7 +9,7 @@ const { object, removeFromPlanner, isRecipe } = defineProps([
   'removeFromPlanner',
   'isRecipe'
 ])
-const showModal = ref(false)
+// const showModal = ref(false)
 
 const emit = defineEmits(['removeFromPlanner', 'remove'])
 
@@ -34,11 +33,17 @@ function remove() {
     >
       <close-icon color="red"></close-icon>
     </button>
-    <img
-      :src="object.linkToImage || '/placeholder-image.png'"
-      @error="handleImgError"
-      class="card__image"
-    />
+    <a
+      :href="`/${isRecipe ? 'recipes' : 'restaurants'}/${object.id}`"
+      class="card__link image-link"
+      target="”_blank”"
+    >
+      <img
+        :src="object.linkToImage || '/placeholder-image.png'"
+        @error="handleImgError"
+        class="card__image"
+      />
+    </a>
     <div class="card__content">
       <strong class="card__title">{{ object.name }}</strong>
       <div class="card__actions">
@@ -64,9 +69,9 @@ function remove() {
     </div>
   </div>
 
-  <teleport to="body">
+  <!-- <teleport to="body">
     <app-card-modal :show="showModal" :object="object" @close="showModal = false"> </app-card-modal>
-  </teleport>
+  </teleport> -->
 </template>
 
 <style>
@@ -124,5 +129,9 @@ function remove() {
 }
 .card__link {
   line-height: 0;
+}
+.image-link {
+  outline: none !important;
+  opacity: 1 !important;
 }
 </style>

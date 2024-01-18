@@ -2,7 +2,6 @@
 import AppHero from '@/components/AppHero.vue'
 </script>
 <template>
-  <app-hero />
   <div class="container">
     <h1>Страница не найдена</h1>
   </div>

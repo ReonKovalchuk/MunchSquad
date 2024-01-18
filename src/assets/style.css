@@ -21,6 +21,7 @@ textarea:focus-visible {
   margin: 0 auto;
   padding: 0 12px;
   max-width: 1286px;
+  min-width: min(1286px, 98%);
 }
 
 .header__container {
@@ -341,9 +342,6 @@ nav a:hover {
   gap: 24px;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
 }
 
 .new-x-form {
@@ -450,22 +448,18 @@ footer {
   border-radius: var(--border-radius-primary);
   -webkit-box-shadow: var(--shadow);
           box-shadow: var(--shadow);
+  margin-bottom: 32px;
 }
 
 .login-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  margin-bottom: -12px;
   padding: 50px 30px;
   background-image: url("/src/assets/background-full.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  place-items: center;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .visible-link {
@@ -519,6 +513,10 @@ footer {
   place-items: center;
 }
 
+.swiper-pagination-bullet-active {
+  background-color: var(--primary-color) !important;
+}
+
 @media (min-width: 1024px) {
   .logo {
     margin: 0 2rem 0 0;
@@ -563,6 +561,16 @@ footer {
     -ms-flex-preferred-size: 100%;
         flex-basis: 100%;
     place-content: center;
+  }
+  .planner__day-of-week {
+    font-size: 18px;
+  }
+  .slide-wrapper {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .slide-text {
+    font-size: 24px;
   }
 }
 @media (min-width: 719px) {

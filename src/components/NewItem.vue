@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, toRefs } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
 import type { Recipe } from '@/types/types'
 import { useRestaurantsStore } from '@/stores/restaurants'
@@ -9,7 +9,8 @@ import { storeToRefs } from 'pinia'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
-const { isRecipe } = defineProps(['isRecipe'])
+const props = defineProps(['isRecipe'])
+const { isRecipe } = toRefs(props)
 const userInfoStore = useUserInfoStore()
 const { userInfo } = storeToRefs(userInfoStore)
 const { addNewRecipe, courseOptions } = useRecipesStore()
@@ -19,7 +20,8 @@ const newItem = ref<Recipe & Restaurant>({ id: '', uid: userInfo.value.uid })
 
 //TODO: get rid of repeats
 function addItem() {
-  if (isRecipe) {
+  if (isRecipe.value) {
+    console.log('adding new recipe')
     addNewRecipe(newItem.value)
       .then(() => {
         toast.success('Рецепт добавлен!')
@@ -30,6 +32,7 @@ function addItem() {
       })
     newItem.value.course = undefined
   } else {
+    console.log('adding new restaurant')
     addNewRestaurant(newItem.value)
       .then(() => {
         toast.success('Ресторан добавлен!')

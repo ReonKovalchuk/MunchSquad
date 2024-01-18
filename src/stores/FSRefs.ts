@@ -25,6 +25,7 @@ export const useFSRefsStore = defineStore('FSRefs', () => {
       restaurantsColRef
     }
   }
+
   return {
     colRefs,
     init

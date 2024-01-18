@@ -7,7 +7,8 @@ import { useRecipesStore } from '@/stores/recipes'
 import { useRestaurantsStore } from '@/stores/restaurants'
 import { usePlannerStore } from '@/stores/planner'
 import { useFSRefsStore } from './stores/FSRefs'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '@/firebase/init'
 import { storeToRefs } from 'pinia'
 import { onSnapshot } from '@firebase/firestore'
 
@@ -25,7 +26,6 @@ export function readQuerySnapshot(querySnapshot: QuerySnapshot) {
 
 export function handleImgError(e: any) {
   e.target.src = '/placeholder-image.png'
-  console.log('image replaced')
 }
 
 export function isToday(day: DateTime) {
@@ -55,32 +55,37 @@ export async function storesInit() {
   const restaurantsStore = useRestaurantsStore()
   const plannerStore = usePlannerStore()
   const FSRefsStore = useFSRefsStore()
-  const auth = getAuth()
-  userInfoStore.init(auth.currentUser)
-  FSRefsStore.init()
+
   onAuthStateChanged(auth, async (user) => {
     userInfoStore.init(user)
-    FSRefsStore.init()
-    await recipesStore.getRecipes()
-    await restaurantsStore.getRestaurants()
-    await plannerStore.getPlannerData()
-    searchStore.getSearchData()
-  })
-  const { colRefs } = storeToRefs(FSRefsStore)
-  const { planner } = storeToRefs(plannerStore)
-  const { recipes } = storeToRefs(recipesStore)
-  const { restaurants } = storeToRefs(restaurantsStore)
-  onSnapshot(colRefs.value.plannerColRef, (querySnapshot: QuerySnapshot) => {
-    planner.value = readQuerySnapshot(querySnapshot) as PlannerDay[]
-    searchStore.getSearchData()
-  })
-  onSnapshot(colRefs.value.recipesColRef, (querySnapshot) => {
-    recipes.value = readQuerySnapshot(querySnapshot) as Recipe[]
-    searchStore.getSearchData()
-  })
-  onSnapshot(colRefs.value.restaurantsColRef, (querySnapshot) => {
-    restaurants.value = readQuerySnapshot(querySnapshot) as Restaurant[]
-    searchStore.getSearchData()
+    if (user) {
+      FSRefsStore.init()
+      await recipesStore.getRecipes()
+      await restaurantsStore.getRestaurants()
+      await plannerStore.getPlannerData()
+      searchStore.getSearchData()
+      const { colRefs } = storeToRefs(FSRefsStore)
+      const { planner } = storeToRefs(plannerStore)
+      const { recipes } = storeToRefs(recipesStore)
+      const { restaurants } = storeToRefs(restaurantsStore)
+      onSnapshot(colRefs.value.plannerColRef, (querySnapshot: QuerySnapshot) => {
+        planner.value = readQuerySnapshot(querySnapshot) as PlannerDay[]
+        searchStore.getSearchData()
+      })
+      onSnapshot(colRefs.value.recipesColRef, (querySnapshot) => {
+        recipes.value = readQuerySnapshot(querySnapshot) as Recipe[]
+        searchStore.getSearchData()
+      })
+      onSnapshot(colRefs.value.restaurantsColRef, (querySnapshot) => {
+        restaurants.value = readQuerySnapshot(querySnapshot) as Restaurant[]
+        searchStore.getSearchData()
+      })
+    } else {
+      recipesStore.$reset()
+      restaurantsStore.$reset()
+      plannerStore.$reset()
+      searchStore.$reset()
+    }
   })
 }
 

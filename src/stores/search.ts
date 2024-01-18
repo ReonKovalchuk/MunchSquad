@@ -18,9 +18,14 @@ export const useSearchStore = defineStore('search', () => {
     searchData.value = [...recipes.value, ...restaurants.value]
     loading.value = false
   }
+  function $reset() {
+    loading.value = false
+    searchData.value = []
+  }
   return {
     searchData,
     loading,
-    getSearchData
+    getSearchData,
+    $reset
   }
 })

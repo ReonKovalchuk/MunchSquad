@@ -52,12 +52,18 @@ export const usePlannerStore = defineStore('planner', () => {
       await addNewPlannerDay(newData)
     }
   }
+
+  function $reset() {
+    loading.value = false
+    planner.value = []
+  }
   return {
     planner,
     loading,
     getPlannerData,
     addNewPlannerDay,
     findPlannerDayById,
-    editPlannerDay
+    editPlannerDay,
+    $reset
   }
 })

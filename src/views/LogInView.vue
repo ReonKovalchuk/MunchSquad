@@ -10,7 +10,7 @@ const errorMsg = ref('')
 const auth = useFirebaseAuth()
 function register() {
   signInWithEmailAndPassword(auth, userData.value.email, userData.value.password)
-    .then((user) => {
+    .then(() => {
       router.push('/')
     })
     .catch((error) => {

@@ -1,11 +1,11 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { doc, setDoc, deleteDoc, getDocs } from 'firebase/firestore'
-import type { Recipe, Course } from '@/types/types'
+import type { Recipe } from '@/types/types'
 import { CourseEnum } from '@/types/types'
 import { storeToRefs } from 'pinia'
 import { useUserInfoStore } from '@/stores/userInfo'
-import { readQuerySnapshot, compareByName } from '@/functions'
+import { readQuerySnapshot } from '@/functions'
 import { useFSRefsStore } from './FSRefs'
 
 export const useRecipesStore = defineStore('recipes', () => {
@@ -20,7 +20,6 @@ export const useRecipesStore = defineStore('recipes', () => {
     const querySnapshot = await getDocs(colRefs.value.recipesColRef)
     loadingRec.value = false
     recipes.value = <Recipe[]>readQuerySnapshot(querySnapshot)
-    recipes.value.sort(compareByName)
   }
 
   const courseOptions = computed(() => {
@@ -54,6 +53,10 @@ export const useRecipesStore = defineStore('recipes', () => {
     const recipeRef = doc(colRefs.value.recipesColRef, id)
     await setDoc(recipeRef, newData, { merge: true })
   }
+  function $reset() {
+    loadingRec.value = false
+    recipes.value = []
+  }
 
   return {
     recipes,
@@ -64,6 +67,7 @@ export const useRecipesStore = defineStore('recipes', () => {
     removeRecipe,
     findRecipeById,
     filterRecipesbyCourse,
-    editRecipe
+    editRecipe,
+    $reset
   }
 })

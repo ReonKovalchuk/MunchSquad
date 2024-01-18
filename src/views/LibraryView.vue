@@ -7,19 +7,23 @@ import { useRecipesStore } from '@/stores/recipes'
 import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '@/stores/restaurants'
 import type { Recipe } from '@/types/types'
+import { compareByName } from '@/functions'
 
 const { isRecipe, heroSubtitle } = defineProps(['isRecipe', 'heroSubtitle'])
 const recipesStore = useRecipesStore()
 const restaurantsStore = useRestaurantsStore()
 const { recipes, loadingRec } = storeToRefs(recipesStore)
-const { restaurants, loadingRes } = storeToRefs(restaurantsStore)
+const { restaurants } = storeToRefs(restaurantsStore)
 const { filterRecipesbyCourse, courseOptions } = recipesStore
 const recFiltered = ref<Recipe[]>(recipes.value)
-const activeFilter = ref('Все')
+const activeFilter = ref('')
 watch(loadingRec, (newValue) => {
   if (!newValue) {
     recFiltered.value = recipes.value
   }
+})
+watch(recipes, () => {
+  filterRecipes()
 })
 
 function remove(id: string) {
@@ -28,19 +32,20 @@ function remove(id: string) {
   } else {
     restaurantsStore.removeRestaurant(id)
   }
-  recFiltered.value = recFiltered.value.filter((i) => {
-    return i.id !== id
-  })
 }
-function filterRecipes(course: string) {
-  recFiltered.value = filterRecipesbyCourse(course)
+function applyActiveFilter(course: string = '') {
   activeFilter.value = course
+  filterRecipes()
 }
-function clearFilters() {
-  recFiltered.value = recipes.value
-  activeFilter.value = 'Все'
+function filterRecipes() {
+  if (activeFilter.value == '') {
+    recFiltered.value = recipes.value
+  } else {
+    recFiltered.value = filterRecipesbyCourse(activeFilter.value)
+  }
+  recFiltered.value.sort(compareByName)
 }
-function isActiveFilter(option: string) {
+function isActiveFilter(option: string = '') {
   return activeFilter.value == option
 }
 </script>
@@ -53,8 +58,8 @@ function isActiveFilter(option: string) {
         <button
           type="button"
           class="course-btn"
-          :class="[isActiveFilter('Все') ? 'active-tab' : '']"
-          @click="clearFilters"
+          :class="[isActiveFilter() ? 'active-tab' : '']"
+          @click="applyActiveFilter()"
         >
           Все
         </button>
@@ -64,7 +69,7 @@ function isActiveFilter(option: string) {
           v-for="option in courseOptions"
           :key="option"
           :class="[isActiveFilter(option) ? 'active-tab' : '']"
-          @click="filterRecipes(option)"
+          @click="applyActiveFilter(option)"
         >
           {{ option }}
         </button>

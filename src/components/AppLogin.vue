@@ -3,14 +3,16 @@ import { useFirebaseAuth } from 'vuefire'
 import { signOut } from 'firebase/auth'
 import { useUserInfoStore } from '@/stores/userInfo'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const auth = useFirebaseAuth()
 const userInfoStore = useUserInfoStore()
 const { userInfo } = storeToRefs(userInfoStore)
 function handleSignOut() {
   signOut(auth)
     .then(() => {
-      // Sign-out successful.
+      router.push('/login')
     })
     .catch((error) => {
       console.log(error)

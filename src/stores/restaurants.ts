@@ -42,6 +42,10 @@ export const useRestaurantsStore = defineStore('restaurants', () => {
     const restaurantRef = doc(colRefs.value.restaurantsColRef, id)
     await setDoc(restaurantRef, newData, { merge: true })
   }
+  function $reset() {
+    loadingRes.value = false
+    restaurants.value = []
+  }
 
   return {
     loadingRes,
@@ -50,6 +54,7 @@ export const useRestaurantsStore = defineStore('restaurants', () => {
     addNewRestaurant,
     removeRestaurant,
     findRestaurantById,
-    editRestaurantInfo
+    editRestaurantInfo,
+    $reset
   }
 })
