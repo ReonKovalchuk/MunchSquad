@@ -5,51 +5,36 @@ import SlideCustom from '@/components/SlideCustom.vue'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
+import slide1 from '/src/assets/planner.png'
+import slide2 from '/src/assets/recipe-library.png'
+import slide3 from '/src/assets/restaurant-review.png'
 </script>
 
 <template>
   <div class="description">
-    <h1 class="about-title">Munch Squad - это</h1>
+    <h1 class="swiper-title">Munch Squad - это</h1>
 
     <swiper
       :slides-per-view="1"
       :modules="[Autoplay, Pagination]"
-      autoplay
+      :autoplay="{ delay: '5000', disableOnInteraction: true }"
       :pagination="{ clickable: true }"
     >
       <swiper-slide>
-        <slide-custom
-          slide-text="инструмент для планирования меню"
-          slide-image="/src/assets/planner.png"
-        />
+        <slide-custom slide-text="инструмент для планирования меню" :slide-image="slide1" />
       </swiper-slide>
 
       <swiper-slide>
-        <slide-custom
-          slide-text="способ сохранить любимые рецепты"
-          slide-image="/src/assets/recipe-library.png"
-        />
+        <slide-custom slide-text="способ сохранить любимые рецепты" :slide-image="slide2" />
       </swiper-slide>
 
       <swiper-slide
         ><slide-custom
           slide-text="место для хранения ваших впечатлений о ресторанах"
-          slide-image="/src/assets/restaurant-review.png"
+          :slide-image="slide3"
         />
       </swiper-slide>
     </swiper>
   </div>
 </template>
-<style>
-.description {
-  background-color: #fff;
-  border-radius: var(--border-radius-primary);
-  padding: 30px 20px;
-  margin-bottom: 24px;
-}
-.about-title {
-  text-align: center;
-  font-weight: 400;
-  font-size: 40px;
-}
-</style>
+<style></style>

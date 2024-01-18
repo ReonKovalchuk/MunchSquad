@@ -402,6 +402,34 @@ footer {
 .swiper-pagination-bullet-active {
   background-color: var(--primary-color) !important;
 }
+.description {
+  background-color: #fff;
+  border-radius: var(--border-radius-primary);
+  padding: 30px 20px;
+  margin-bottom: 24px;
+}
+.swiper-title {
+  text-align: center;
+  font-weight: 400;
+  font-size: 40px;
+}
+.slide-wrapper {
+  display: flex;
+  align-items: center;
+  padding-bottom: 50px;
+  gap: 24px;
+  background-color: #fff;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.slide-image {
+  max-width: 1000px;
+}
+.slide-text {
+  display: inline;
+  font-size: 30px;
+  text-align: center;
+}
 
 @media (min-width: 1024px) {
   .logo {
@@ -441,10 +469,14 @@ footer {
   .planner__day-of-week {
     font-size: 18px;
   }
-  .slide-wrapper {
-    flex-wrap: wrap;
-  }
+
   .slide-text {
+    font-size: 16px;
+  }
+  .slide-image {
+    overflow: scroll;
+  }
+  .swiper-title {
     font-size: 24px;
   }
 }

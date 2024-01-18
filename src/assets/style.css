@@ -517,6 +517,46 @@ footer {
   background-color: var(--primary-color) !important;
 }
 
+.description {
+  background-color: #fff;
+  border-radius: var(--border-radius-primary);
+  padding: 30px 20px;
+  margin-bottom: 24px;
+}
+
+.swiper-title {
+  text-align: center;
+  font-weight: 400;
+  font-size: 40px;
+}
+
+.slide-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-bottom: 50px;
+  gap: 24px;
+  background-color: #fff;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.slide-image {
+  max-width: 1000px;
+}
+
+.slide-text {
+  display: inline;
+  font-size: 30px;
+  text-align: center;
+}
+
 @media (min-width: 1024px) {
   .logo {
     margin: 0 2rem 0 0;
@@ -565,11 +605,13 @@ footer {
   .planner__day-of-week {
     font-size: 18px;
   }
-  .slide-wrapper {
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-  }
   .slide-text {
+    font-size: 16px;
+  }
+  .slide-image {
+    overflow: scroll;
+  }
+  .swiper-title {
     font-size: 24px;
   }
 }
