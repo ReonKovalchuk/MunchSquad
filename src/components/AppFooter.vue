@@ -7,33 +7,29 @@ import AppLogo from './AppLogo.vue'
       <app-logo></app-logo>
       <div>
         <p>
-          <a
-            class="visible-link"
-            href="https://www.figma.com/file/fuEkLM8LQIvASS9PeiDWnb/Food-recipes-website-UI---Del%C3%ADcias-%C3%A0-Mesa-(Community)"
-            target="_blank"
-            tabindex="0"
-            >Макет</a
-          >, взятый за основу дизайна
+          Сайт создан
+          <a href="https://github.com/ReonKovalchuk/" class="visible-link" target="_blank"
+            >Реон Ковальчук</a
+          >
         </p>
         <p>
           <a
             class="visible-link"
-            href="https://www.svgrepo.com/svg/245256/dinner"
+            href="https://www.figma.com/file/fuEkLM8LQIvASS9PeiDWnb/Food-recipes-website-UI---Del%C3%ADcias-%C3%A0-Mesa-(Community)"
             target="_blank"
-            tabindex="0"
-          >
-            иконка
+            >Макет</a
+          >, взятый за основу дизайна
+        </p>
+        <p>
+          <a class="visible-link" href="https://www.svgrepo.com/svg/245256/dinner" target="_blank">
+            Иконка
           </a>
           с тарелкой
         </p>
 
         <p>
           Фон от
-          <a
-            class="visible-link"
-            href="https://ru.freepik.com/author/kamranaydinov"
-            target="_blank"
-            tabindex="0"
+          <a class="visible-link" href="https://ru.freepik.com/author/kamranaydinov" target="_blank"
             >KamranAydinov</a
           >
           на Freepik
