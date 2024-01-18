@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, toRefs } from 'vue'
 import AppHero from '@/components/AppHero.vue'
 import NewItem from '@/components/NewItem.vue'
 import AppCard from '@/components/AppCard.vue'
@@ -8,8 +8,11 @@ import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '@/stores/restaurants'
 import type { Recipe } from '@/types/types'
 import { compareByName } from '@/functions'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
-const { isRecipe, heroSubtitle } = defineProps(['isRecipe', 'heroSubtitle'])
+const props = defineProps(['isRecipe', 'heroSubtitle'])
+const { isRecipe, heroSubtitle } = toRefs(props)
 const recipesStore = useRecipesStore()
 const restaurantsStore = useRestaurantsStore()
 const { recipes, loadingRec } = storeToRefs(recipesStore)
@@ -25,12 +28,31 @@ watch(loadingRec, (newValue) => {
 watch(recipes, () => {
   filterRecipes()
 })
+watch(restaurants, () => {
+  restaurants.value.sort(compareByName)
+})
 
 function remove(id: string) {
-  if (isRecipe) {
-    recipesStore.removeRecipe(id)
+  if (isRecipe.value) {
+    toast.promise(
+      recipesStore.removeRecipe(id),
+      {
+        pending: 'Удаляем рецепт',
+        success: 'Рецепт удален',
+        error: 'Не удалось удалить рецепт'
+      },
+      { autoClose: 1000 }
+    )
   } else {
-    restaurantsStore.removeRestaurant(id)
+    toast.promise(
+      restaurantsStore.removeRestaurant(id),
+      {
+        pending: 'Удаляем ресторан',
+        success: 'Ресторан удален',
+        error: 'Не удалось удалить ресторан'
+      },
+      { autoClose: 1000 }
+    )
   }
 }
 function applyActiveFilter(course: string = '') {

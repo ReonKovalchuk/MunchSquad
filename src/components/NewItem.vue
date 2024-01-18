@@ -21,26 +21,26 @@ const newItem = ref<Recipe & Restaurant>({ id: '', uid: userInfo.value.uid })
 //TODO: get rid of repeats
 function addItem() {
   if (isRecipe.value) {
-    console.log('adding new recipe')
-    addNewRecipe(newItem.value)
-      .then(() => {
-        toast.success('Рецепт добавлен!')
-      })
-      .catch((e) => {
-        toast.error('Не удалось добавить рецепт')
-        console.log(e)
-      })
+    toast.promise(
+      addNewRecipe(newItem.value),
+      {
+        pending: 'Добавляем рецепт',
+        success: 'Новый рецепт добавлен',
+        error: 'Не удалось добавить рецепт'
+      },
+      { autoClose: 1000 }
+    )
     newItem.value.course = undefined
   } else {
-    console.log('adding new restaurant')
-    addNewRestaurant(newItem.value)
-      .then(() => {
-        toast.success('Ресторан добавлен!')
-      })
-      .catch((e) => {
-        toast.error('Не удалось добавить ресторан')
-        console.log(e)
-      })
+    toast.promise(
+      addNewRestaurant(newItem.value),
+      {
+        pending: 'Добавляем ресторан',
+        success: 'Новый ресторан добавлен',
+        error: 'Не удалось добавить ресторан'
+      },
+      { autoClose: 1000 }
+    )
   }
   newItem.value.uid = userInfo.value.uid
   newItem.value.link = ''

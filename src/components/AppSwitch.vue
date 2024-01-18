@@ -12,10 +12,13 @@
 </template>
 
 <script setup>
+import { toRefs } from 'vue'
 defineOptions({
   inheritAttrs: false
 })
-const { label, modelValue } = defineProps(['label', 'modelValue'])
+const props = defineProps(['label', 'modelValue'])
+
+const { label, modelValue } = toRefs(props)
 defineEmits(['update:modelValue'])
 </script>
 

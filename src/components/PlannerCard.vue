@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppCard from '@/components/AppCard.vue'
-import { ref, watch } from 'vue'
+import { ref, watch, toRefs } from 'vue'
 
 import AppSearch from './AppSearch.vue'
 import { usePlannerStore } from '@/stores/planner'
@@ -19,12 +19,13 @@ const restaurantsStore = useRestaurantsStore()
 const userStore = useUserInfoStore()
 const { userInfo } = storeToRefs(userStore)
 const { loading } = storeToRefs(plannerStore)
-const { title, dayId, isToday, showBreakfast } = defineProps([
-  'title',
-  'dayId',
-  'isToday',
-  'showBreakfast'
-])
+const props = defineProps({
+  title: { type: String, required: true },
+  dayId: { type: String, required: true },
+  isToday: { type: Boolean, required: false },
+  showBreakfast: { type: Boolean, required: true }
+})
+const { title, dayId, isToday, showBreakfast } = toRefs(props)
 
 watch(loading, (newValue) => {
   if (!newValue) {
@@ -38,11 +39,11 @@ watch(loading, (newValue) => {
 })
 
 function getPlannerDay() {
-  const result = plannerStore.findPlannerDayById(dayId)
+  const result = plannerStore.findPlannerDayById(dayId.value)
 
   return result
     ? result
-    : { id: dayId, uid: userInfo.value.uid, breakfastId: '', supperId: '', dinnerId: '' }
+    : { id: dayId.value, uid: userInfo.value.uid, breakfastId: '', supperId: '', dinnerId: '' }
 }
 const plannerDay = ref(getPlannerDay())
 const meals = ref({

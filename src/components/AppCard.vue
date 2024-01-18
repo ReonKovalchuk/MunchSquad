@@ -3,22 +3,21 @@
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'
 import { handleImgError } from '@/functions'
+import { toRefs } from 'vue'
 
-const { object, removeFromPlanner, isRecipe } = defineProps([
-  'object',
-  'removeFromPlanner',
-  'isRecipe'
-])
+const props = defineProps(['object', 'removeFromPlanner', 'isRecipe'])
+
+const { object, removeFromPlanner, isRecipe } = toRefs(props)
 // const showModal = ref(false)
 
 const emit = defineEmits(['removeFromPlanner', 'remove'])
 
 function remove() {
-  if (removeFromPlanner) {
+  if (removeFromPlanner.value) {
     emit('removeFromPlanner')
   } else {
     emit('removeFromPlanner')
-    emit('remove', object.id)
+    emit('remove', object.value.id)
   }
 }
 </script>
